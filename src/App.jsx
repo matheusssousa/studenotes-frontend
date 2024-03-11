@@ -1,5 +1,5 @@
 import { BrowserRouter } from "react-router-dom"
-import ThemeProvider from "./contexts/ThemeContext";
+import ThemeProvider from "./context/Theme/ThemeContext";
 import MyRoute from "./routes/MyRoute";
 
 import { ToastContainer } from 'react-toastify';

@@ -1,7 +1,7 @@
 import React from "react";
-import { useAuth } from "../providers/AuthProvider";
+import { useAuth } from "../context/Authenticate/AuthContext";
 
-import StrutureRoute from "./StrutureRoute";
+import StrutureRoute from "./StrutureRoutes";
 
 const MyRoute = () => {
     const { authenticate, admin, user } = useAuth();
