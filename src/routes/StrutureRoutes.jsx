@@ -1,6 +1,6 @@
-import PublicRoutes from "./PublicRoutes";
-import PrivateRoutesUser from "./User/PrivateRoutesUser";
-import PrivateRoutesAdmin from "./Admin/PrivateRoutesAdmin";
+import PublicRoutes from "./Public/PublicRoutes";
+import PrivateRoutesUser from "./User/PrivateUserRoutes";
+import PrivateRoutesAdmin from "./Admin/PrivateAdminRoutes";
 
 export default function StrutureRoute({ route }) {
     switch (route) {

@@ -1,0 +1,21 @@
+.modal-login{
+    @apply w-full md:w-1/4 h-full md:h-[50%] bg-neutro-100 flex items-center justify-center md:justify-evenly flex-col rounded
+}
+.text-title-modal-login{
+    @apply text-5xl font-medium w-full text-center text-azul-200
+}
+.form-modal-login{
+    @apply w-full h-[50%] flex items-center flex-col justify-evenly md:justify-between
+}
+.input-group-login{
+    @apply w-full flex flex-col
+}
+.label-login{
+    @apply text-sm text-neutro-600 font-semibold
+}
+.input-login{
+    @apply px-1 py-2 rounded text-sm border border-neutro-200 text-neutro-600 focus:outline-neutro-300
+}
+.link-login{
+    @apply w-full text-center text-xs font-semibold text-neutro-400
+}
