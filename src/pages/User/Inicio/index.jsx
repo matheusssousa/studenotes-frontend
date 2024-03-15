@@ -1,6 +1,6 @@
 import React from "react";
 import ArtLogin from "../../../../assets/Art/ArtLogin.svg"
-import Logo from "../../../../assets/Logo";
+import Logo from "../../../assets/Logo";
 
 import { Link } from "react-router-dom";
 
