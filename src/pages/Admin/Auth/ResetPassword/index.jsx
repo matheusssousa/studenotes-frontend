@@ -34,12 +34,13 @@ export default function ResetPasswordAdminPage() {
         }
 
         try {
-            ApiAdmin.post(`/reset/resetpassword/${params.token}`, {
+            const response = await ApiAdmin.post(`/reset/resetpassword/${params.token}`, {
                 token: params.token,
                 email: email,
                 password: password,
                 password_confirmation: passwordConfirm,
             });
+            console.log(response);
             toast.success("Senha alterada com sucesso!", {
                 theme: "colored"
             });

@@ -9,7 +9,7 @@ export default function VerifyEmailUserPage() {
     const enviarDados = async (event) => {
         event.preventDefault();
         try {
-            ApiUser.post('/email/verification-notification')
+            await ApiUser.post('/email/verification-notification')
             toast.success("Enviado email de verificação.", {
                 theme: "colored",
             });

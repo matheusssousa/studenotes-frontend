@@ -13,7 +13,7 @@ export default function ForgotPasswordAdminPage() {
         event.preventDefault();
         setDisable(true);
         try {
-            const response = ApiAdmin.post('/reset/forgotpassword', { email: email });
+            const response = await ApiAdmin.post('/reset/forgotpassword', { email: email });
             if (response.data.message === 'Deu errado') {
                 return toast.error("Não foi possível enviar o e-mail para recuperação de sua senha, aguarde alguns minutos e tente novamente.", {
                     theme: 'colored',

@@ -44,6 +44,7 @@ export default function RegisterUserPage() {
             });
             LoginSistema(event);
         } catch (error) {
+            console.log(error);
             if (error.response.data.message === "The email has already been taken.") {
                 toast.error("Este e-mail já foi cadastrado.", {
                     theme: "colored"

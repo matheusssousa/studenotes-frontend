@@ -34,7 +34,7 @@ export default function ResetPasswordUserPage() {
         }
 
         try {
-            ApiUser.post(`/reset/resetpassword/${params.token}`, {
+            await ApiUser.post(`/reset/resetpassword/${params.token}`, {
                 token: params.token,
                 email: email,
                 password: password,
