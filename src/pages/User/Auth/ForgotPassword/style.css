@@ -1,0 +1,14 @@
+.label-forgot-password{
+    @apply text-sm text-neutro-600 font-medium
+}
+.modal-forgot-password{
+    @apply w-full md:h-full flex items-center justify-center flex-col bg-neutro-100 gap-10
+}
+.form-modal-forgot-password{
+    @apply w-full flex items-center flex-col justify-center
+}
+
+.button-back{
+    transition: ease 0.2s 100ms;
+    @apply px-2 py-1 fixed bg-azul-200 rounded-md flex gap-2 top-3 left-3 items-center hover:text-neutro-100
+}
