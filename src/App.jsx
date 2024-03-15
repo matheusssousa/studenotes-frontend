@@ -24,7 +24,6 @@ function App() {
         <ThemeProvider>
           <ToastContainer
             position="top-right"
-            enableMultiContainer
             limit={3}
             toastClassName={({ type }) => contextClass[type || "default"] + " relative flex p-1 rounded-md justify-between overflow-hidden cursor-pointer"}
             bodyClassName={() => "text-xs flex items-center p-3"}

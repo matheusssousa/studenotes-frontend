@@ -1,11 +1,14 @@
 .modal-login{
-    @apply w-full md:w-1/4 h-full md:h-[50%] bg-neutro-100 flex items-center justify-center md:justify-evenly flex-col rounded
+    @apply w-full md:h-full flex items-center justify-center gap-12 flex-col bg-neutro-100
 }
 .text-title-modal-login{
     @apply text-5xl font-medium w-full text-center text-azul-200
 }
+.subtitle-modal-login{
+    @apply text-xl font-medium w-full text-center text-azul-200 drop-shadow-sm
+}
 .form-modal-login{
-    @apply w-full h-[50%] flex items-center flex-col justify-evenly md:justify-between
+    @apply w-full h-[50%] flex items-center flex-col justify-evenly md:justify-evenly
 }
 .input-group-login{
     @apply w-full flex flex-col
