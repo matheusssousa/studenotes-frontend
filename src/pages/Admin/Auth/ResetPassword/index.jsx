@@ -34,7 +34,7 @@ export default function ResetPasswordAdminPage() {
         }
 
         try {
-            ApiAdmin.post(``, {
+            ApiAdmin.post(`/reset/resetpassword/${params.token}`, {
                 token: params.token,
                 email: email,
                 password: password,
