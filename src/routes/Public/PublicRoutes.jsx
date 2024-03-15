@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 // PAGINAS USUÁRIO
-import InicioUserPage from "../../pages/User/Auth/Inicio";
+import InicioUserPage from "../../pages/User/Inicio";
 import LoginUserPage from "../../pages/User/Auth/Login";
 import RegisterUserPage from "../../pages/User/Auth/Register";
 import ForgotPasswordUserPage from "../../pages/User/Auth/ForgotPassword";
