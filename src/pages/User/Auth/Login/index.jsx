@@ -46,7 +46,7 @@ export default function LoginUserPage() {
                     <button type="submit" className="py-2 rounded-md text-neutro-100 duration-300 bg-azul-200 hover:bg-azul-300 hover:shadow-lg text-center w-[80%] md:w-[50%]">Entrar</button>
                 </form>
             </div>
-            <div className="w-full md:h-full bg-azul-200 justify-center items-center flex">
+            <div className="w-full h-1/3 md:w-1/2 xl:w-1/2 md:h-screen bg-azul-200 justify-center items-center flex">
                 <Logo cor={'branco'} tamanho={'grande'} />
             </div>
         </div>

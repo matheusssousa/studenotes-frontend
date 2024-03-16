@@ -49,7 +49,7 @@ export default function ForgotPasswordAdminPage() {
                     </div>
                 </form>
             </div>
-            <div className="w-full md:h-full bg-neutro-500 justify-center items-center flex">
+            <div className="w-full h-full md:w-1/2 xl:w-1/2 md:h-screen bg-neutro-500 justify-center items-center hidden md:flex">
                 <img src={ArtForgotPassword} alt="ArtForgotPassword" />
             </div>
         </div>

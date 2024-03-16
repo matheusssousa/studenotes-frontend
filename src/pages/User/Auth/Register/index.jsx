@@ -69,10 +69,10 @@ export default function RegisterUserPage() {
 
     return (
         <div className="page-body flex flex-col md:flex-row">
-            <div className="w-full md:h-full bg-azul-200 justify-center items-center flex">
+            <div className="w-full h-full md:w-1/2 xl:w-1/2 md:h-screen bg-azul-200 justify-center items-center hidden md:flex">
                 <Logo cor={'branco'} tamanho={'grande'} />
             </div>
-            <div className="w-full md:h-full flex items-center justify-center gap-12 flex-col bg-neutro-100">
+            <div className="w-full h-full md:w-1/2 xl:w-1/2 md:h-screen flex items-center justify-center gap-12 flex-col bg-neutro-100">
                 <h2 className="text-title-modal-login">Cadastrar</h2>
                 <form onSubmit={CadastrarDados} className="form-modal-register">
                     <div className="flex flex-col gap-3 w-[80%] md:w-[50%]">

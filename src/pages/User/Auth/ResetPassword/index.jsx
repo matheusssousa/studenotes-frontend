@@ -53,7 +53,7 @@ export default function ResetPasswordUserPage() {
 
     return (
         <div className="page-body flex flex-col md:flex-row">
-            <div className="w-full md:h-full bg-neutro-500 justify-center items-center flex">
+            <div className="w-full h-full md:w-1/2 xl:w-1/2 md:h-screen bg-neutro-500 justify-center items-center hidden md:flex">
                 <img src={ArtForgotPassword} alt="ArtForgotPassword" />
             </div>
             <div className="modal-forgot-password">
@@ -68,6 +68,11 @@ export default function ResetPasswordUserPage() {
                             <label htmlFor="password" className="label-login">Senha</label>
                             <input type="password" name="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} className="input-login" required />
                         </span>
+                        <div>
+                            <p className="text-xs font-semibold text-gray-500 ml-2 text-start">A senha deve conter mais de 8 caracteres.</p>
+                            <p className="text-xs font-semibold text-gray-500 ml-2 text-start">A senha deve conter ao menos um caractere especial.</p>
+                            <p className="text-xs font-semibold text-gray-500 ml-2 text-start">A senha deve conter ao menos um caractere maiúsculo.</p>
+                        </div>
                         <span className="input-group-login">
                             <label htmlFor="password" className="label-login">Confirmar Senha</label>
                             <input type="password" name="passwordConfirm" id="passwordCofirm" value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} className="input-login" required />

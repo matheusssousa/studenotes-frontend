@@ -36,8 +36,8 @@ export default function Logo({ cor, tamanho }) {
                 setFont2('text-3xl -translate-y-3');
                 break;
             case 'grande':
-                setFont('text-9xl');
-                setFont2('text-8xl -translate-y-8');
+                setFont('text-6xl md:text-9xl');
+                setFont2('text-5xl md:text-8xl -translate-y-4 md:-translate-y-8');
                 break;
             default:
                 break;
