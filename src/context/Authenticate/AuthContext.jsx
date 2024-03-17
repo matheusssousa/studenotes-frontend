@@ -64,11 +64,11 @@ export const AuthProvider = ({ children }) => {
     async function LoginAdmin(dataLogin) {
         try {
             const response = await ApiAdmin.post('/auth/login', dataLogin);
-            const { access_token, user } = response.data;
+            const { access_token, admin } = response.data;
             sessionStorage.setItem('@App:token', access_token);
-            sessionStorage.setItem('@App:admin', JSON.stringify(user));
+            sessionStorage.setItem('@App:admin', JSON.stringify(admin));
             setAuthenticate(true);
-            setAdmin(user);
+            setAdmin(admin);
         } catch (error) {
             console.error(error);
         }

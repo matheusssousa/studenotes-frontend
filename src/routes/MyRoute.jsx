@@ -8,7 +8,7 @@ const MyRoute = () => {
 
     if (authenticate) {
         if (admin) {
-            return <StrutureRoute route='PrivateAdmin'/>;
+            return <StrutureRoute route='PrivateAdmin' />;
         } else if (user) {
             return <StrutureRoute route='PrivateUser' />;
         }
