@@ -1,9 +1,10 @@
 import React from "react";
+import MainHeader from "../../../components/Commons/MainHeader";
 
 export default function HomeAdminPage() {
     return (
         <div className="page-body">
-            Teste Home
+            <MainHeader page='Home'/>
         </div>
     )
 }
