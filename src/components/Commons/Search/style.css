@@ -1,0 +1,12 @@
+.search-content{
+    @apply flex items-center justify-center gap-1 flex-col
+}
+.input-search{
+    @apply w-full md:w-1/2 p-2 text-xs rounded-lg
+}
+.btn-filter{
+    @apply rounded-full bg-azul-200 p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
+}
+.subsearch-content{
+    @apply w-full md:w-1/2 p-2 rounded-lg text-xs bg-white
+}
