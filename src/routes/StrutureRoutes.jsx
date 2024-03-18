@@ -8,6 +8,7 @@ import EmailVerifyRouteUser from "./User/EmailVerifyRouteUser";
 
 // COMPONENTES
 import SidebarAdmin from "../components/Admin/Sidebar";
+import Footer from "../components/Commons/Footer";
 
 export default function StrutureRoute({ route }) {
     const { user } = useAuth();
@@ -33,8 +34,9 @@ export default function StrutureRoute({ route }) {
             return (
                 <div className="page-body flex">
                     <SidebarAdmin />
-                    <div className="subpage-body">
+                    <div className="subpage">
                         <PrivateRoutesAdmin />
+                        <Footer />
                     </div>
                 </div>
             );

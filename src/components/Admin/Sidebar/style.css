@@ -1,7 +1,8 @@
 .sidebar-admin {
     @apply w-14 h-full 
     flex flex-col items-center justify-between
-    bg-neutro-100
+    border-r border-neutro-300 border-opacity-20
+    bg-neutro-100 
 }
 
 /* LISTA DE ICONS */
@@ -21,7 +22,7 @@
 }
 .link-bar{
     transition: ease 0.2s 100ms;
-    @apply w-6 h-1 rounded-full translate-x-[0.6px] -scale-50
+    @apply w-6 h-1 rounded-full -translate-x-[0.3px] -scale-50
 }
 .link-active .link-bar {
     transition: ease 0.2s 100ms;

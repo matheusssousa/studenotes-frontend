@@ -48,6 +48,6 @@
 .page-body{
     @apply w-full h-screen
 }
-.subpage-body{
-    @apply w-full h-full bg-neutro-100
+.subpage{
+    @apply w-full h-full bg-neutro-100 flex flex-col
 }
