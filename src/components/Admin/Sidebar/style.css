@@ -1,7 +1,7 @@
 .sidebar-admin {
-    @apply w-14 h-full 
+    @apply md:w-14 h-full fixed md:relative z-10 md:z-0
     flex flex-col items-center justify-between
-    border-r border-neutro-300 border-opacity-20
+    md:border-r md:border-neutro-300 md:border-opacity-20
     bg-neutro-100 
 }
 
