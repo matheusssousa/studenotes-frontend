@@ -1,0 +1,47 @@
+.sidebar-admin {
+    @apply w-14 h-full 
+    flex flex-col items-center justify-between
+    bg-neutro-100
+}
+
+/* LISTA DE ICONS */
+.menu {
+    @apply w-14 flex flex-col gap-4 justify-center
+}
+.link-active {
+    @apply flex items-center justify-center
+}
+.link-pending {
+    @apply text-sm flex items-center justify-center
+}
+
+.link-pending:hover .link-bar {
+    transition: ease 0.2s 100ms;
+    @apply bg-neutro-600 dark:bg-neutro-100 scale-100 
+}
+.link-bar{
+    transition: ease 0.2s 100ms;
+    @apply w-6 h-1 rounded-full translate-x-[0.6px] -scale-50
+}
+.link-active .link-bar {
+    transition: ease 0.2s 100ms;
+    @apply bg-azul-200 drop-shadow-md scale-100 
+}
+
+.link-active .link-icon {
+    @apply text-azul-200 
+}
+.link-icon {
+    @apply w-8 h-8 flex items-center justify-center rounded-md flex-col 
+}
+
+.link-pending:hover .link-text {
+    @apply px-2 h-8 left-14 duration-300 w-fit text-neutro-600 dark:text-neutro-100
+}
+.link-active:hover .link-text {
+    @apply px-2 h-8 left-14 duration-300 w-fit text-azul-200
+}
+.link-text{
+    @apply absolute left-48 bg-transparent font-semibold whitespace-pre w-0 overflow-hidden rounded-md drop-shadow-lg px-0 py-0
+    hidden items-center md:flex text-transparent
+}
