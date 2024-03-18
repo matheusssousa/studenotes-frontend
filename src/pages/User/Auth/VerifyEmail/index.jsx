@@ -14,6 +14,7 @@ export default function VerifyEmailUserPage() {
                 theme: "colored",
             });
         } catch (error) {
+            console.log(error)
             toast.error("Erro ao reenviar email de verificação.", {
                 theme: "colored",
             });
