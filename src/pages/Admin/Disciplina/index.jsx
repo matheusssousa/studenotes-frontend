@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
-import ApiUser from "../../../services/ApiUser";
-import MainHeader from "../../../components/Commons/MainHeader";
-import Search from "../../../components/Commons/Search";
+import ApiAdmin from "../../../services/ApiAdmin";
 import Pagination from "../../../components/Commons/Pagination";
+import Search from "../../../components/Commons/Search";
+import MainHeader from "../../../components/Commons/MainHeader";
 
-export default function CategoriaUserPage() {
-    const [categorias, setCategorias] = useState(null);
+export default function DisciplinaAdminPage(params) {
+    const [disciplinas, setDisciplinas] = useState(null);
+    const [page, setPage] = useState("");
     const [pagination, setPagination] = useState("");
     const [searchNome, setSearchNome] = useState("");
     const [searchDateInicio, setSearchDateInicio] = useState("");
     const [searchDateFim, setSearchDateFim] = useState("");
 
-    const receiveCategorias = async () => {
+    const receiveDisciplinas = async () => {
         try {
-            const response = await ApiUser.get(`/categoria`, {
+            const response = await ApiAdmin.get(`/disciplina`, {
                 params: {
-                    page: pagination.current_page,
+                    page: page,
                     nome: searchNome,
                     data_inicio: searchDateInicio,
                     data_fim: searchDateFim
                 }
             });
-            setCategorias(response.data.data);
+            console.log(response.data);
+            setDisciplinas(response.data.data);
             const { data, ...paginationData } = response.data;
             setPagination(paginationData);
+            setPage(pagination.current_page);
         } catch (error) {
-            console.error("Erro ao receber categorias:", error);
+            console.error("Erro ao receber disciplinas:", error);
         }
     };
 
@@ -35,16 +38,22 @@ export default function CategoriaUserPage() {
         setSearchDateInicio("");
     };
 
+
     useEffect(() => {
-        receiveCategorias();
+        receiveDisciplinas();
     }, []);
+
+    const handlePaginationClick = async (newPage) => {
+        setPage(newPage);
+        receiveDisciplinas();
+    };
 
     return (
         <div className="page-body">
-            <MainHeader page='Categorias' />
-            <form onSubmit={receiveCategorias}>
+            <MainHeader page='Disciplinas' />
+            <form onSubmit={receiveDisciplinas}>
                 <Search
-                    type="categorias"
+                    type="disciplinas"
                     nome={searchNome}
                     setSearchNome={setSearchNome}
                     data_inicio={searchDateInicio}
@@ -55,10 +64,8 @@ export default function CategoriaUserPage() {
                 />
             </form>
             <div>
-                <form onSubmit={receiveCategorias}>
-                    <Pagination pagination={pagination} />
-                </form>
+                <Pagination pagination={pagination} setPage={handlePaginationClick} />
             </div>
         </div>
-    );
+    )
 }

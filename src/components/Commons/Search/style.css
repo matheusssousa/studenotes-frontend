@@ -7,6 +7,25 @@
 .btn-filter{
     @apply rounded-full bg-azul-200 p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
 }
+.btn-search{
+    @apply rounded-full bg-azul-200 p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
+}
+.btn-clear{
+    @apply rounded border border-azul-300 p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
+}
 .subsearch-content{
     @apply w-full md:w-1/2 p-2 rounded-lg text-xs bg-white
+}
+
+.row{
+    @apply flex justify-between items-center gap-2
+}
+.input-group-search{
+    @apply flex flex-col w-1/2
+}
+.label-input{
+    @apply text-neutro-600 font-semibold
+}
+.input-search-date{
+    @apply py-1 px-1 rounded border border-neutro-200 bg-neutro-100 cursor-pointer
 }
