@@ -9,6 +9,7 @@ import EmailVerifyRouteUser from "./User/EmailVerifyRouteUser";
 // COMPONENTES
 import SidebarAdmin from "../components/Admin/Sidebar";
 import Footer from "../components/Commons/Footer";
+import SidebarUser from "../components/User/Sidebar";
 
 export default function StrutureRoute({ route }) {
     const { user } = useAuth();
@@ -25,9 +26,13 @@ export default function StrutureRoute({ route }) {
                 return <EmailVerifyRouteUser />
             } else {
                 return (
-                    <>
-                        <PrivateRoutesUser />
-                    </>
+                    <div className="page-body flex">
+                        <SidebarUser />
+                        <div className="subpage">
+                            <PrivateRoutesUser />
+                            <Footer />
+                        </div>
+                    </div>
                 );
             }
         case 'PrivateAdmin':
