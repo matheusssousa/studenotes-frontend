@@ -46,6 +46,15 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    async function UserMe() {
+        try {
+            const response = await ApiUser.post('/me');
+            localStorage.setItem('@App:user', response.data);
+            setUser(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function RefreshTokenUser() {
         if (authenticate) {
@@ -117,7 +126,7 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     return (
-        <AuthContext.Provider value={{ authenticate, admin, user, LoginUser, LogoutUser, LoginAdmin, LogoutAdmin }}>
+        <AuthContext.Provider value={{ authenticate, admin, user, LoginUser, LogoutUser, LoginAdmin, LogoutAdmin, UserMe }}>
             {children}
         </AuthContext.Provider>
     );
