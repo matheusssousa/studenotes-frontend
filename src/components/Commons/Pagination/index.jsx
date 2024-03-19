@@ -4,14 +4,36 @@ import { CaretDoubleLeft, CaretDoubleRight, CaretLeft, CaretRight } from "@phosp
 import "./style.css";
 
 export default function Pagination({ pagination, setPage }) {
-    // console.log("CURRENT PAGE ",pagination.current_page);
+    const { from, to, current_page, per_page, total, prev_page_url, next_page_url } = pagination;
+
     return (
-        <div className="flex gap-7">
-            <button type="button" onClick={() => setPage(1)}><CaretDoubleLeft size={20} /></button>
-            <button type="button" disabled={!pagination.prev_page_url} onClick={() => setPage(pagination.current_page - 1)}><CaretLeft size={20} /></button>
-            <span className="pagination-current">{pagination.current_page}</span>
-            <button type="button" disabled={!pagination.next_page_url} onClick={() => setPage(pagination.current_page + 1)}><CaretRight size={20} /></button>
-            <button type="button" onClick={() => setPage(pagination.last_page)}><CaretDoubleRight size={20} /></button>
-        </div>
+        <nav className='pagination'>
+            <p>Mostrando<span className='font-medium'> {from} </span>ao<span className='font-medium'> {to} </span>de<span className='font-medium'> {total} </span>resultados</p>
+
+            <ul className="inline-flex items-center -space-x-px gap-2">
+                <button className="relative inline-flex items-center hover:text-azul-300"
+                    onClick={() => setPage(1)} disabled={!prev_page_url}>
+                    <CaretDoubleLeft size={16}/>
+                </button>
+
+                <button className="relative inline-flex items-center hover:text-azul-300"
+                    onClick={() => setPage(current_page - 1)} disabled={!prev_page_url}>
+                    <CaretLeft size={16}/>
+                </button>
+
+                <button className="relative inline-flex items-center text-sm font-medium px-3 py-1 rounded bg-azul-200 shadow"
+                    onClick={() => setPage(current_page)} disabled>{current_page}</button>
+
+                <button className="relative inline-flex items-center hover:text-azul-300"
+                    onClick={() => setPage(current_page + 1)} disabled={!next_page_url}>
+                    <CaretRight size={16}/>
+                </button>
+
+                <button className="relative inline-flex items-center hover:text-azul-300"
+                    onClick={() => setPage(Math.ceil(total / per_page))} disabled={!next_page_url}>
+                    <CaretDoubleRight size={16}/>
+                </button>
+            </ul>
+        </nav>
     )
 }
