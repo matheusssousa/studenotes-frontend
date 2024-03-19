@@ -2,19 +2,19 @@
     @apply flex items-center justify-center gap-1 flex-col
 }
 .input-search{
-    @apply w-full md:w-1/2 p-2 text-xs rounded-lg
+    @apply w-full p-2 text-sm rounded-lg focus:outline-none
 }
 .btn-filter{
-    @apply rounded-full bg-azul-200 p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
+    @apply rounded-full p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
 }
 .btn-search{
-    @apply rounded-full bg-azul-200 p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
+    @apply rounded-full p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
 }
 .btn-clear{
     @apply rounded border border-azul-300 p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow
 }
 .subsearch-content{
-    @apply w-full md:w-1/2 p-2 rounded-lg text-xs bg-white
+    @apply w-full md:w-1/2 p-2 rounded-lg text-xs bg-white gap-1 flex flex-col
 }
 
 .row{

@@ -8,7 +8,7 @@ export default function Search(search) {
 
     return (
         <div className="search-content">
-            <div className="flex w-full items-center justify-center gap-1">
+            <div className="flex w-full md:w-1/2 items-center justify-center gap-1 bg-white rounded-lg">
                 <input type="text" className="input-search" placeholder={`Pesquisar ${search.type}`} value={search.nome} onChange={(event) => search.setSearchNome(event.target.value)} />
                 <button type="button" className="btn-filter" onClick={() => setModalFilters(!modalFilters)} title="Filtros">{modalFilters ? <X size={17} /> : <Faders size={17} />}</button>
                 <button type="submit" className="btn-search" title="Pesquisar"><MagnifyingGlass size={17} /></button>
@@ -30,7 +30,7 @@ export default function Search(search) {
                         }
                     </div>
                     <div className="row">
-                        <button type="button" onClick={(event) => search.limpar(event)} className="btn-clear">Limpar campos</button>
+                        <button type="button" onClick={(event) => search.limpar(event)} className="btn-clear">Limpar filtros</button>
                     </div>
                 </div>
             }

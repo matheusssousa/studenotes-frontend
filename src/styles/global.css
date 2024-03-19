@@ -51,3 +51,17 @@
 .subpage{
     @apply w-full h-full bg-neutro-100 flex flex-col
 }
+.page-content{
+    @apply w-full h-full overflow-auto md:px-5
+}
+.conteudo-content{
+    @apply w-full min-h-[84%]
+}
+
+/* ESTILOS BÁSICOS CONTEUDOS */
+.header-content{
+    @apply text-sm flex items-center justify-between
+}
+.btn-add{
+    @apply bg-azul-200 p-2 rounded
+}
