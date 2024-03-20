@@ -2,9 +2,8 @@ import { Plus } from "@phosphor-icons/react";
 import React from "react";
 
 export default function MainHeader({ page, text, setFunction }) {
-    console.log(setFunction);
     return (
-        <div className="w-full py-1 select-none flex flex-col items-center">
+        <div className="w-full pt-1 select-none flex flex-col items-center">
             <div className="w-full flex items-center justify-between">
                 <span>
                     <p className="font-medium">{page}</p>
