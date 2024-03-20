@@ -52,10 +52,10 @@
     @apply w-full h-full bg-neutro-100 flex flex-col
 }
 .page-content{
-    @apply w-full h-full overflow-auto md:px-5
+    @apply w-full h-full overflow-auto md:px-5 flex flex-col gap-3
 }
 .conteudo-content{
-    @apply w-full min-h-[84%]
+    @apply w-full min-h-[83%] h-[83%]
 }
 
 /* ESTILOS BÁSICOS CONTEUDOS */
@@ -64,4 +64,36 @@
 }
 .btn-add{
     @apply bg-azul-200 p-2 rounded
+}
+
+/* TABELAS */
+.table{
+    @apply w-full h-full bg-white rounded-lg flex flex-col text-sm
+}
+.table-row-header th{
+    @apply p-3 bg-neutro-150 text-start
+}
+.table-row-body{
+    @apply border-b border-neutro-200
+}
+.table-row-body td{
+    @apply p-3 text-start 
+}
+.active-card{
+    @apply bg-verde-100 border border-verde-200 rounded-lg font-medium text-verde-200 px-2 w-fit 
+}
+.inactive-card{
+    @apply bg-vermelho-100 border border-vermelho-200 rounded-lg font-medium text-vermelho-300 px-2 w-fit 
+}
+.content-buttons-action{
+    @apply flex items-center gap-1
+}
+.edit-action-btn{
+    @apply bg-azul-100 border border-azul-300 rounded-lg text-azul-300 px-2 w-fit hover:shadow duration-150
+}
+.delete-action-btn{
+    @apply bg-vermelho-100 border border-vermelho-300 rounded-lg text-vermelho-300 px-2 w-fit hover:shadow duration-150
+}
+.restore-action-btn{
+    @apply bg-verde-100 border border-verde-200 rounded-lg text-verde-200 px-2 w-fit hover:shadow duration-150
 }
