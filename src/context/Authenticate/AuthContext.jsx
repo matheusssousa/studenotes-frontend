@@ -58,15 +58,20 @@ export const AuthProvider = ({ children }) => {
 
     async function RefreshTokenUser() {
         if (authenticate) {
-            await ApiUser.post('/auth/refresh').then(function (response) {
+            await ApiUser.post('/refresh').then(function (response) {
                 ApiUser.defaults.headers.Authorization = `Bearer ${response.data.access_token}`;
                 localStorage.setItem('@App:token', response.data.access_token);
             }).catch(function (error) {
+                console.log(error)
                 setAuthenticate(false)
                 setUser(null);
             })
         } else {
-            return setUser(null);
+            localStorage.removeItem('@App:user');
+            localStorage.removeItem('@App:token');
+            setAuthenticate(false)
+            setUser(null);
+            return;
         }
     }
 
@@ -100,16 +105,22 @@ export const AuthProvider = ({ children }) => {
     async function RefreshTokenAdmin() {
         if (authenticate) {
             await ApiAdmin.post('/refresh').then(function (response) {
+                console.log(response)
                 ApiAdmin.defaults.headers.Authorization = `Bearer ${response.data.access_token}`;
                 localStorage.setItem('@App:token', response.data.access_token);
             }).catch(function (error) {
+                console.log(error)
                 ApiAdmin.defaults.headers.Authorization = null;
                 localStorage.removeItem('@App:token');
                 setAuthenticate(false)
                 setAdmin(null);
             })
         } else {
-            return setAdmin(null);
+            localStorage.removeItem('@App:admin');
+            localStorage.removeItem('@App:token');
+            setAuthenticate(false)
+            setAdmin(null);
+            return;
         }
     }
 
@@ -121,7 +132,7 @@ export const AuthProvider = ({ children }) => {
             } else if (user) {
                 RefreshTokenUser();
             }
-        }, 3000000);
+        }, 1000000);
         return () => clearInterval(interval);
     }, []);
 
