@@ -12,6 +12,8 @@ export default function DisciplinaAdminPage(params) {
     const [searchDateInicio, setSearchDateInicio] = useState("");
     const [searchDateFim, setSearchDateFim] = useState("");
 
+    const [cadastrarDisciplina, setCadastrarDisciplina] = useState(false);
+
     const receiveDisciplinas = async (page = 1) => {
         try {
             const response = await ApiAdmin.get(`/disciplina`, {
@@ -45,7 +47,11 @@ export default function DisciplinaAdminPage(params) {
 
     return (
         <div className="page-content">
-            <MainHeader page='Disciplinas' />
+            <MainHeader
+                page='Disciplinas'
+                text='Uma lista das disciplinas cadastradas incluindo id, nome e status.'
+                setFunction={setCadastrarDisciplina}
+            />
             <form onSubmit={receiveDisciplinas}>
                 <Search
                     type="disciplinas"
