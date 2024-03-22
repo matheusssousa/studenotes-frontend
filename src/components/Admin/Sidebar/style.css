@@ -1,13 +1,40 @@
+/* FORMATO DA SIDEBAR */
 .sidebar-admin {
-    @apply md:w-14 h-full fixed md:relative z-10 
-    flex flex-col items-center justify-between
-    md:border-r md:border-neutro-300 md:border-opacity-20
-    bg-neutro-100 
+    transition: ease 0.2s 100ms;
+    @apply fixed z-10 flex items-center 
+    bg-neutro-100 border-neutro-300 border-opacity-20
+    dark:bg-neutro-600 
+    /* SIDEBAR PARA CELULAR */
+    w-full px-2
+    flex-col gap-5
+    border-b 
+    /* SIDEBAR PARA COMPUTADOR */
+    md:w-14 md:py-2 md:gap-0
+    md:flex-col md:relative md:justify-between
+    md:border-r md:border-b-0
+}
+.open{
+    transition: ease 0.2s 100ms;
+    @apply h-1/2
+}
+.close{
+    transition: ease 0.2s 100ms;
+    @apply h-14 md:h-full
 }
 
-/* LISTA DE ICONS */
+.row-cel-pc{
+    @apply w-full h-14 md:h-full
+    flex flex-row md:flex-col items-center justify-between
+}
+
+/* BOTÃO PARA ABRIR A SIDEBAR NO CELULAR */
+.btn-open-sidebar{
+    @apply md:hidden w-[30%] dark:text-neutro-100
+}
+
+/* LISTA DE ICONS NO COMPUTADOR*/
 .menu {
-    @apply w-14 flex flex-col gap-4 justify-center
+    @apply w-14 hidden md:flex flex-col gap-4 justify-center
 }
 .link-active {
     @apply flex items-center justify-center
@@ -15,7 +42,6 @@
 .link-pending {
     @apply text-sm flex items-center justify-center
 }
-
 .link-pending:hover .link-bar {
     transition: ease 0.2s 100ms;
     @apply bg-neutro-600 dark:bg-neutro-100 scale-100 
@@ -28,14 +54,12 @@
     transition: ease 0.2s 100ms;
     @apply bg-azul-200 drop-shadow-md scale-100 
 }
-
 .link-active .link-icon {
-    @apply text-azul-200 
+    @apply text-azul-200 dark:text-azul-200
 }
 .link-icon {
-    @apply w-8 h-8 flex items-center justify-center rounded-md flex-col 
+    @apply w-8 h-8 flex items-center justify-center rounded-md flex-col text-neutro-600 dark:text-neutro-100
 }
-
 .link-pending:hover .link-text {
     @apply px-2 h-8 left-14 duration-300 w-fit text-neutro-600 dark:text-neutro-100
 }
@@ -46,3 +70,59 @@
     @apply absolute left-48 bg-transparent font-semibold whitespace-pre w-0 overflow-hidden rounded-md drop-shadow-lg px-0 py-0
     hidden items-center md:flex text-transparent
 }
+
+/* LISTA DE ICONS NO CELULAR */
+.close .menu-cel{
+    @apply hidden opacity-0
+}
+.open .menu-cel{
+    @apply flex 
+}
+.menu-cel {
+    @apply w-14 md:hidden flex flex-col gap-4 justify-center
+}
+.menu-cel .link-text-cel{
+    @apply font-semibold whitespace-pre drop-shadow-lg
+}
+.link-active .link-text-cel {
+    @apply text-azul-200
+}
+
+/* OPTIONS */
+.options{
+    @apply flex items-center gap-1 w-[20%] md:w-full md:flex-col
+}
+
+/* BOTTONS DARK AND LIGHT MODE */
+.buttonmoon {
+    @apply cursor-pointer hover:rotate-90 duration-500 hover:text-azul-300 dark:text-neutro-100 dark:hover:text-azul-300
+}
+.buttonsun {
+    @apply cursor-pointer hover:text-laranja-200 duration-500 dark:text-neutro-100 dark:hover:text-laranja-200
+}
+
+/* @keyframes opacity {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+.animate-opacity {
+    animation: opacity 1s ease-in;
+    animation-delay: 200ms;
+}
+
+@keyframes opacity-inverse {
+    to {
+        opacity: 100%;
+    }
+    from {
+        opacity: 0%;
+    }
+}
+.animate-opacity-inverse {
+    animation: opacity-inverse 3s ease-in-out;
+    animation-delay: 200ms;
+} */
