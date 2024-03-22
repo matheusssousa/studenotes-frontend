@@ -1,53 +1,57 @@
 import React, { useEffect, useState } from "react";
-import ApiAdmin from "../../../services/ApiAdmin";
-import Pagination from "../../../components/Commons/Pagination";
-import Search from "../../../components/Commons/Search";
 import MainHeader from "../../../components/Commons/MainHeader";
+import ApiAdmin from "../../../services/ApiAdmin";
+import { toast } from "react-toastify";
+import Search from "../../../components/Commons/Search";
+import Loading from "../../../components/Commons/Loading";
+import { Link } from "react-router-dom";
 import { ArrowClockwise, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
-import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
-import Loading from "../../../components/Commons/Loading";
+import Pagination from "../../../components/Commons/Pagination";
 
-export default function DisciplinaAdminPage(params) {
-    const [disciplinas, setDisciplinas] = useState([]);
+export default function UserAdminPage(params) {
+    const [usuarios, setUsuarios] = useState([]);
     const [pagination, setPagination] = useState(null);
     const [searchNome, setSearchNome] = useState("");
     const [searchDateInicio, setSearchDateInicio] = useState("");
     const [searchDateFim, setSearchDateFim] = useState("");
     const [searchStatus, setSearchStatus] = useState("");
+    const [searchEmail, setSearchEmail] = useState("");
+    const [searchId, setSearchId] = useState("");
 
     const [loading, setLoading] = useState(false);
 
-    const [deleteDisciplina, setDeleteDisciplina] = useState(false);
+    const [deleteUser, setDeleteUser] = useState(false);
 
-    const receiveDisciplinas = async (page = 1) => {
+    const receiveUsers = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await ApiAdmin.get(`/disciplina`, {
+            const response = await ApiAdmin.get(`/user`, {
                 params: {
                     page: page,
-                    nome: searchNome,
+                    name: searchNome,
+                    id: searchId,
+                    email: searchEmail,
                     created_at_inicio: searchDateInicio,
                     created_at_fim: searchDateFim,
                     delete: searchStatus
                 }
             });
             console.log(response)
-            setDisciplinas(response.data.data);
+            setUsuarios(response.data.data);
             setPagination(response.data);
         } catch (error) {
-            console.error("Erro ao receber disciplinas:", error);
+            console.error("Erro ao receber usuários:", error);
         }
         setLoading(false);
     };
 
-    const deleteDisciplinas = async (disciplina) => {
+    const deleteUsers = async (user) => {
         try {
-            await ApiAdmin.delete(`/disciplina/${disciplina}`)
-            setDeleteDisciplina(false);
-            receiveDisciplinas();
-            toast.success("Disciplina excluída.", {
+            await ApiAdmin.delete(`/user/${user}`)
+            setDeleteUser(false);
+            receiveUsers();
+            toast.success("Usuário excluído.", {
                 theme: 'colored',
             });
         } catch (error) {
@@ -55,11 +59,11 @@ export default function DisciplinaAdminPage(params) {
         }
     }
 
-    const restoreDisciplinas = async (disciplina) => {
+    const restoreUsers = async (user) => {
         try {
-            await ApiAdmin.post(`/disciplina/restore/${disciplina}`)
-            receiveDisciplinas();
-            toast.success("Disciplina restaurada.", {
+            await ApiAdmin.post(`/user/restore/${user}`)
+            receiveUsers();
+            toast.success("Usuário restaurada.", {
                 theme: 'colored',
             });
         } catch (error) {
@@ -69,32 +73,36 @@ export default function DisciplinaAdminPage(params) {
 
     const limparSearch = () => {
         setSearchNome("");
+        setSearchEmail("");
+        setSearchId("");
         setSearchDateFim("");
         setSearchDateInicio("");
         setSearchStatus("");
-        receiveDisciplinas();
+        receiveUsers();
     };
 
     const handlePaginationClick = (newPage) => {
-        receiveDisciplinas(newPage);
+        receiveUsers(newPage);
     };
 
     useEffect(() => {
-        receiveDisciplinas();
+        receiveUsers();
     }, []);
-
 
     return (
         <div className="page-content">
             <MainHeader
-                page='Disciplinas'
-                text='Uma lista das disciplinas cadastradas incluindo id, nome e status.'
-                adicionar='/admin/disciplinas/addedit/'
+                page='Usuários'
+                text='Uma lista das usuários cadastrados incluindo id, nome, email e status.'
             />
             <Search
-                type="disciplinas"
+                type="usuários"
                 nome={searchNome}
                 setSearchNome={setSearchNome}
+                email={searchEmail}
+                setSearchEmail={setSearchEmail}
+                id={searchId}
+                setSearchId={setSearchId}
                 data_inicio={searchDateInicio}
                 setSearchDateInicio={setSearchDateInicio}
                 data_fim={searchDateFim}
@@ -102,25 +110,27 @@ export default function DisciplinaAdminPage(params) {
                 status={searchStatus}
                 setSearchStatus={setSearchStatus}
                 limpar={limparSearch}
-                buscar={receiveDisciplinas}
+                buscar={receiveUsers}
             />
             <div className="conteudo-content">
                 <table>
                     <thead>
                         <tr className="table-row-header">
-                            <th className="sticky w-[20%] rounded-tl-lg">ID</th>
+                            <th className="sticky w-[10%] rounded-tl-lg">ID</th>
                             <th className="sticky w-[40%]">Nome</th>
+                            <th className="sticky w-[40%]">Email</th>
                             <th className="sticky w-[20%]">Status</th>
                             <th className="sticky w-[20%] rounded-tr-lg">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
                         {loading ? <Loading /> :
-                            (disciplinas.map((disciplina, i) => (
+                            (usuarios.map((usuario, i) => (
                                 <tr key={i} className="table-row-body">
-                                    <td className="w-[20%] font-medium">{disciplina.id}</td>
-                                    <td className="w-[40%]">{disciplina.nome}</td>
-                                    {disciplina.deleted_at === null ?
+                                    <td className="w-[10%] font-medium">{usuario.id}</td>
+                                    <td className="w-[40%]">{usuario.name}</td>
+                                    <td className="w-[40%]">{usuario.email}</td>
+                                    {usuario.deleted_at === null ?
                                         <td className="w-[20%]">
                                             <div className="active-card">
                                                 Ativo
@@ -134,18 +144,18 @@ export default function DisciplinaAdminPage(params) {
                                         </td>
                                     }
                                     <td className="w-[20%]">
-                                        {disciplina.deleted_at === null ?
+                                        {usuario.deleted_at === null ?
                                             <div className="content-buttons-action">
-                                                <Link to={`/admin/disciplinas/addedit/${disciplina.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={20} /></Link>
-                                                <button type="button" className="delete-action-btn" title="Excluir" onClick={() => setDeleteDisciplina(disciplina.id)}><TrashSimple size={20} /></button>
+                                                <Link to={`/admin/usuarios/addedit/${usuario.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={20} /></Link>
+                                                <button type="button" className="delete-action-btn" title="Excluir" onClick={() => setDeleteUser(usuario.id)}><TrashSimple size={20} /></button>
                                             </div>
                                             :
                                             <div>
-                                                <button type="button" className="restore-action-btn" title="Restaurar" onClick={() => restoreDisciplinas(disciplina.id)} id="restore-button"><ArrowClockwise size={20} /></button>
+                                                <button type="button" className="restore-action-btn" title="Restaurar" onClick={() => restoreUsers(usuario.id)} id="restore-button"><ArrowClockwise size={20} /></button>
                                             </div>
                                         }
                                     </td>
-                                    {deleteDisciplina === disciplina.id && <ModalDelete item={disciplina} delete={deleteDisciplinas} cancel={setDeleteDisciplina} />}
+                                    {deleteUser === usuario.id && <ModalDelete item={usuario} delete={deleteUsers} cancel={setDeleteUser} />}
                                 </tr>
                             )))}
                     </tbody>
