@@ -24,8 +24,8 @@ export default function Logo({ cor, tamanho }) {
         }
         switch (tamanho) {
             case 'sidebar':
-                setFont('text-sm');
-                setFont2('text-xs -translate-y-2');
+                setFont('md:text-sm text-xl translate-y-2 md:translate-y-0');
+                setFont2('md:text-xs md:-translate-y-2 text-lg -translate-y-1');
                 break;
             case 'pequeno':
                 setFont('text-xl');
