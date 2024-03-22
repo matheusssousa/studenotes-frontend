@@ -1,0 +1,23 @@
+.modal-overlay{
+    @apply fixed w-full h-full bg-neutro-600 bg-opacity-60 backdrop-blur-md top-0 left-0 z-20
+    flex items-center justify-center
+}
+
+.modal{
+    @apply rounded-lg bg-neutro-100 dark:bg-neutro-600 p-3 flex flex-col items-center justify-center gap-2
+}
+.title-modal{
+    @apply font-semibold
+}
+.text-modal{
+    @apply text-sm 
+}
+.container-action-buttons{
+    @apply flex gap-1
+}
+.confirm-button-modal{
+    @apply rounded bg-verde-100 px-2 py-1 font-semibold hover:shadow-md hover:bg-verde-200 hover:text-neutro-100 duration-200
+}
+.cancel-button-modal{
+    @apply rounded bg-vermelho-200 px-2 py-1 font-semibold hover:shadow-md hover:bg-vermelho-300 hover:text-neutro-100 duration-200
+}
