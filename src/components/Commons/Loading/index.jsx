@@ -2,7 +2,7 @@ import React from "react";
 
 import "./style.css";
 
-export default function Loading({ loading }) {
+export default function Loading() {
     return (
         <div className="loading-content">
             <span className="loading-bar-1"/>
