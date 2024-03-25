@@ -56,7 +56,7 @@
     @apply w-full h-full overflow-auto px-2 md:px-5 flex flex-col gap-3 py-1
 }
 .conteudo-content{
-    @apply w-full md:min-h-[83%] md:h-[83%]
+    @apply w-full 
 }
 
 /* ESTILOS BÁSICOS CONTEUDOS */
