@@ -79,7 +79,7 @@ export default function LogsAdminPage(params) {
                         <tr className="table-row-header">
                             <th className="sticky w-[10%] rounded-tl-lg">ID</th>
                             <th className="sticky w-[40%]">Nome</th>
-                            <th className="sticky w-[40%]">Ator</th>
+                            <th className="sticky w-[40%] hidden md:table-cell">Ator</th>
                             <th className="sticky w-[40%]">Status</th>
                             <th className="sticky w-[20%] rounded-tr-lg">Ação</th>
                         </tr>
@@ -90,7 +90,7 @@ export default function LogsAdminPage(params) {
                                 <tr key={i} className="table-row-body">
                                     <td className="w-[10%] font-medium">{log.id}</td>
                                     <td className="w-[40%]">{log.log_name}</td>
-                                    <td className="w-[40%]">{log.log_name}</td>
+                                    <td className="w-[40%] hidden md:table-cell">{log.log_name}</td>
                                     <td className="w-[40%] capitalize">{log.description}</td>
                                     <td className="w-[20%]">
                                         <div className="content-buttons-action">

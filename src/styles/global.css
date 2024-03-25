@@ -86,6 +86,12 @@ table{
 .inactive-card{
     @apply bg-vermelho-100 border border-vermelho-200 rounded-lg font-semibold text-vermelho-300 px-2 w-fit text-xs
 }
+.active-email-card{
+    @apply bg-azul-100 border border-azul-300 rounded-lg font-semibold text-azul-300 px-2 w-fit text-xs
+}
+.inactive-email-card{
+    @apply bg-neutro-100 border border-neutro-200 rounded-lg font-semibold text-neutro-300 px-2 w-fit text-xs
+}
 .content-buttons-action{
     @apply flex items-center gap-1
 }
@@ -97,6 +103,9 @@ table{
 }
 .restore-action-btn{
     @apply bg-verde-100 border border-verde-200 rounded-lg text-verde-200 px-2 w-fit hover:bg-verde-200 hover:border-verde-100 hover:text-verde-100 duration-150
+}
+.view-action-btn{
+    @apply bg-neutro-300 border border-neutro-400 rounded-lg text-neutro-200 px-2 w-fit hover:bg-neutro-200 hover:border-neutro-100 hover:text-neutro-300 duration-150
 }
 
 /* ESTILOS BÁSICOS TELAS ADD E EDIT */

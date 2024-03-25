@@ -118,8 +118,9 @@ export default function UserAdminPage(params) {
                         <tr className="table-row-header">
                             <th className="sticky w-[10%] rounded-tl-lg">ID</th>
                             <th className="sticky w-[40%]">Nome</th>
-                            <th className="sticky w-[40%]">Email</th>
-                            <th className="sticky w-[20%]">Status</th>
+                            <th className="sticky w-[30%] hidden md:table-cell">Email</th>
+                            <th className="sticky w-[20%] hidden md:table-cell">Email Verificado</th>
+                            <th className="sticky w-[10%] hidden md:table-cell">Status</th>
                             <th className="sticky w-[20%] rounded-tr-lg">Ações</th>
                         </tr>
                     </thead>
@@ -129,15 +130,28 @@ export default function UserAdminPage(params) {
                                 <tr key={i} className="table-row-body">
                                     <td className="w-[10%] font-medium">{usuario.id}</td>
                                     <td className="w-[40%]">{usuario.name}</td>
-                                    <td className="w-[40%]">{usuario.email}</td>
+                                    <td className="w-[30%] hidden md:table-cell">{usuario.email}</td>
+                                    {usuario.email_verified_at === null ?
+                                        <td className="w-[20%] hidden md:table-cell">
+                                            <div className="inactive-email-card">
+                                                Não verificado
+                                            </div>
+                                        </td>
+                                        :
+                                        <td className="w-[20%] hidden md:table-cell">
+                                            <div className="active-email-card">
+                                                Verificado
+                                            </div>
+                                        </td>
+                                    }
                                     {usuario.deleted_at === null ?
-                                        <td className="w-[20%]">
+                                        <td className="w-[10%] hidden md:table-cell">
                                             <div className="active-card">
                                                 Ativo
                                             </div>
                                         </td>
                                         :
-                                        <td className="w-[20%]">
+                                        <td className="w-[10%] hidden md:table-cell">
                                             <div className="inactive-card">
                                                 Inativo
                                             </div>

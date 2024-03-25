@@ -15,7 +15,7 @@
 }
 .open{
     transition: ease 0.2s 100ms;
-    @apply h-1/2
+    @apply h-fit
 }
 .close{
     transition: ease 0.2s 100ms;
@@ -83,6 +83,9 @@
 }
 .menu-cel .link-text-cel{
     @apply font-semibold whitespace-pre drop-shadow-lg
+}
+.link-pending .link-text-cel{
+    @apply text-neutro-100
 }
 .link-active .link-text-cel {
     @apply text-azul-200
