@@ -43,8 +43,8 @@ export default function AddOrEditAdminsAdminPage() {
             }
         } else {
             try {
-                await ApiAdmin.post(`/admin`, {
-                    nome: nome,
+                await ApiAdmin.post(`/auth/register`, {
+                    name: nome,
                     email: email,
                 });
                 toast.success("Administrador cadastrado.", {
