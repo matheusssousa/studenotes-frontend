@@ -7,7 +7,7 @@ import UserAdminPage from "../../pages/Admin/User";
 import AddOrEditUserAdminPage from "../../pages/Admin/User/addoredit";
 import AdminsAdminPage from "../../pages/Admin/Admins";
 import AddOrEditAdminsAdminPage from "../../pages/Admin/Admins/addoredit";
-import LogsAdminPage from "../../pages/Admin/Logs";
+import LogsAdminPage from "../../pages/Admin/Log";
 
 export default function PrivateRoutesAdmin(params) {
     return (
