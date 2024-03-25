@@ -45,11 +45,10 @@ export default function RegisterUserPage() {
             LoginSistema(event);
         } catch (error) {
             console.log(error);
-            if (error.response.data.message === "The email has already been taken.") {
-                toast.error("Este e-mail já foi cadastrado.", {
+            if (error.response.data.message === "O valor informado para o campo e-mail já está em uso.") {
+                return toast.error("Este e-mail já está sendo utilizado.", {
                     theme: "colored"
                 });
-                return;
             }
             toast.error("Erro ao cadastrar. Verifique os dados e tente novamente.", {
                 theme: "colored"
@@ -64,7 +63,9 @@ export default function RegisterUserPage() {
                 email: email,
                 password: password,
             });
-        } catch (error) { }
+        } catch (error) { 
+            console.log(error)
+        }
     }
 
     return (

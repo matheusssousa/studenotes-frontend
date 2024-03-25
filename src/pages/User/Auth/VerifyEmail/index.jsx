@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ApiUser from "../../../../services/ApiUser";
 import { toast } from "react-toastify";
 import ArtVerifyEmail from "../../../../assets/Art/ArtVerifyEmail.svg";
+import { useAuth } from "../../../../context/Authenticate/AuthContext";
 
 import './style.css';
 
 export default function VerifyEmailUserPage() {
+    const { UserMe } = useAuth();
+
+    useEffect(() => {
+        UserMe();
+    }, []);
+
     const enviarDados = async (event) => {
         event.preventDefault();
         try {
@@ -14,6 +21,7 @@ export default function VerifyEmailUserPage() {
                 theme: "colored",
             });
         } catch (error) {
+            console.log(error)
             toast.error("Erro ao reenviar email de verificação.", {
                 theme: "colored",
             });

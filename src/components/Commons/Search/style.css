@@ -1,0 +1,44 @@
+.search-content{
+    @apply flex items-center justify-center gap-1 flex-col 
+}
+.input-search{
+    @apply w-full p-2 text-sm rounded-lg focus:outline-none placeholder:text-neutro-300 bg-transparent
+}
+.btn-filter{
+    @apply rounded-full p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow text-neutro-300
+}
+.btn-search{
+    @apply rounded-full p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow text-neutro-300
+}
+.btn-clear{
+    @apply rounded px-2 py-1 bg-neutro-300 hover:bg-neutro-400 duration-300 text-neutro-100
+}
+.subsearch-content{
+    @apply w-full md:w-1/2 p-2 rounded-lg text-xs bg-white dark:bg-neutro-500 gap-1 flex flex-col animate-pull
+}
+
+.row{
+    @apply flex justify-between items-center gap-2 flex-col md:flex-row
+}
+.input-group-search{
+    @apply flex flex-col w-full md:w-1/2
+}
+.label-input{
+    @apply text-neutro-600 dark:text-neutro-100 font-semibold
+}
+.input-search-date{
+    @apply py-1 px-1 rounded border border-neutro-200 bg-neutro-100 dark:border-neutro-300 dark:border-opacity-20 dark:bg-neutro-400 cursor-pointer dark:text-neutro-150
+}
+
+
+@keyframes pull {
+    from {
+        transform: scale(0.9);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+.animate-pull {
+    animation: pull 0.3s ease-in-out;
+}

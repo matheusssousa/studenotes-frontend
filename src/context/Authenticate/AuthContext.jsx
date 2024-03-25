@@ -22,8 +22,9 @@ export const AuthProvider = ({ children }) => {
     // USUÁRIO NORMAL
     async function LoginUser(dataLogin) {
         try {
-            const response = await ApiUser.post('/auth/login', { dataLogin });
+            const response = await ApiUser.post('/auth/login', dataLogin);
             const { access_token, user } = response.data;
+            ApiUser.defaults.headers.Authorization = `Bearer ${access_token}`;
             sessionStorage.setItem('@App:token', access_token);
             sessionStorage.setItem('@App:user', JSON.stringify(user));
             setAuthenticate(true);
@@ -45,18 +46,32 @@ export const AuthProvider = ({ children }) => {
         }
     }
 
+    async function UserMe() {
+        try {
+            const response = await ApiUser.post('/me');
+            sessionStorage.setItem('@App:user', response.data);
+            setUser(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     async function RefreshTokenUser() {
         if (authenticate) {
-            await ApiUser.post('/auth/refresh').then(function (response) {
+            await ApiUser.post('/refresh').then(function (response) {
                 ApiUser.defaults.headers.Authorization = `Bearer ${response.data.access_token}`;
                 sessionStorage.setItem('@App:token', response.data.access_token);
             }).catch(function (error) {
+                console.log(error)
                 setAuthenticate(false)
                 setUser(null);
             })
         } else {
-            return setUser(null);
+            sessionStorage.removeItem('@App:user');
+            sessionStorage.removeItem('@App:token');
+            setAuthenticate(false)
+            setUser(null);
+            return;
         }
     }
 
@@ -64,11 +79,12 @@ export const AuthProvider = ({ children }) => {
     async function LoginAdmin(dataLogin) {
         try {
             const response = await ApiAdmin.post('/auth/login', dataLogin);
-            const { access_token, user } = response.data;
+            const { access_token, admin } = response.data;
+            ApiAdmin.defaults.headers.Authorization = `Bearer ${access_token}`;
             sessionStorage.setItem('@App:token', access_token);
-            sessionStorage.setItem('@App:admin', JSON.stringify(user));
+            sessionStorage.setItem('@App:admin', JSON.stringify(admin));
             setAuthenticate(true);
-            setAdmin(user);
+            setAdmin(admin);
         } catch (error) {
             console.error(error);
         }
@@ -89,16 +105,22 @@ export const AuthProvider = ({ children }) => {
     async function RefreshTokenAdmin() {
         if (authenticate) {
             await ApiAdmin.post('/refresh').then(function (response) {
+                console.log(response)
                 ApiAdmin.defaults.headers.Authorization = `Bearer ${response.data.access_token}`;
                 sessionStorage.setItem('@App:token', response.data.access_token);
             }).catch(function (error) {
+                console.log(error)
                 ApiAdmin.defaults.headers.Authorization = null;
                 sessionStorage.removeItem('@App:token');
                 setAuthenticate(false)
                 setAdmin(null);
             })
         } else {
-            return setAdmin(null);
+            sessionStorage.removeItem('@App:admin');
+            sessionStorage.removeItem('@App:token');
+            setAuthenticate(false)
+            setAdmin(null);
+            return;
         }
     }
 
@@ -110,12 +132,12 @@ export const AuthProvider = ({ children }) => {
             } else if (user) {
                 RefreshTokenUser();
             }
-        }, 3000000);
+        }, 1000000);
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <AuthContext.Provider value={{ authenticate, admin, user, LoginUser, LogoutUser, LoginAdmin, LogoutAdmin }}>
+        <AuthContext.Provider value={{ authenticate, admin, user, LoginUser, LogoutUser, LoginAdmin, LogoutAdmin, UserMe }}>
             {children}
         </AuthContext.Provider>
     );
