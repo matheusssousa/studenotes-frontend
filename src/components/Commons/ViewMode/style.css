@@ -1,0 +1,12 @@
+.content-view-buttons{
+    @apply flex items-center justify-center w-fit px-2 py-1 gap-1 rounded-lg
+    bg-white dark:bg-neutro-500 text-neutro-300
+}
+.button-view-mode{
+    transition: ease 0.2s 100ms;
+    @apply p-1 hover:bg-neutro-200 rounded-md
+}
+.active{
+    transition: ease 0.2s 100ms;
+    @apply bg-azul-200 text-neutro-100 hover:bg-azul-300
+}
