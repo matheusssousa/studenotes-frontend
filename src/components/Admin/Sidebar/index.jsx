@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "../../../context/Theme/ThemeContext";
 import { useAuth } from "../../../context/Authenticate/AuthContext";
 import { Link, NavLink } from "react-router-dom";
@@ -35,10 +35,34 @@ export default function SidebarAdmin(params) {
         } catch (error) { }
     }
 
+    const handleNavLinkClick = () => {
+        if (sidebarOpen) {
+            setSidebarOpen(false);
+        }
+    };
+
+    const handleNavLinkUserClick = () => {
+        if (userOptions) {
+            setUserOptions(!userOptions)
+            setSidebarOpen(!sidebarOpen)
+        } else {
+            setSidebarOpen(!sidebarOpen)
+        }
+    }
+
+    const handleNavLinkUserOptionClick = () => {
+        if (sidebarOpen) {
+            setSidebarOpen(false)
+            setUserOptions(!userOptions)
+        } else {
+            setUserOptions(!userOptions)
+        }
+    }
+
     return (
         <nav className={`sidebar-admin ${sidebarOpen ? 'open' : 'close'}`}>
             <div className="row-cel-pc">
-                <button className={`btn-open-sidebar ${sidebarOpen && 'text-azul-200'}`} onClick={() => setSidebarOpen(!sidebarOpen)}><TextAlignLeft size={23} /></button>
+                <button className={`btn-open-sidebar ${sidebarOpen && 'text-azul-200'}`} onClick={handleNavLinkUserClick}><TextAlignLeft size={23} /></button>
                 <Logo cor='azul' tamanho='sidebar' />
                 <div className="menu" aria-hidden='true'>
                     {links.map((links, i) => (
@@ -60,7 +84,7 @@ export default function SidebarAdmin(params) {
                         <MoonStars size={23} onClick={() => setTheme("dark")} className="buttonmoon" /> :
                         <SunHorizon size={23} onClick={() => setTheme("light")} className="buttonsun" />
                     }
-                    <button className={`letters-user${userOptions ?'-active':''}`} onClick={() => setUserOptions(!userOptions)}>{letters}</button>
+                    <button className={`letters-user${userOptions ?'-active':''}`} onClick={handleNavLinkUserOptionClick}>{letters}</button>
                 </div>
             </div>
             <div className="menu-cel" aria-hidden='true'>
@@ -68,6 +92,7 @@ export default function SidebarAdmin(params) {
                     <NavLink
                         key={i}
                         to={links.link}
+                        onClick={handleNavLinkClick}
                         className={({ isActive, isPending }) =>
                             isPending ? "link-pending group" : isActive ? "link-active group" : "link-pending group"
                         }>

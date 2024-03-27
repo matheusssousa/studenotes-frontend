@@ -115,7 +115,7 @@
 /* MENU DE OPÇÕES DO USUÁRIO */
 .user-menu-options{
     @apply absolute 
-    md:left-16 md:bottom-1
+    top-16 md:top-auto md:left-16 md:bottom-1
     flex flex-col
     w-full md:w-36 p-2
     bg-neutro-100 dark:bg-neutro-600 border border-neutro-300 border-opacity-20 rounded-md
