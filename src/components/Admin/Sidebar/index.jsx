@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useTheme } from "../../../context/Theme/ThemeContext";
 import { useAuth } from "../../../context/Authenticate/AuthContext";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { House, ChatsTeardrop, BookBookmark, User, UserCircleGear, ClockCounterClockwise, SquaresFour, DotsThree, TextAlignLeft, MoonStars, SunHorizon } from "@phosphor-icons/react";
 // import BigHeads from "../../../hooks/Avatars";
 import Logo from "../../../assets/Logo";
@@ -9,9 +9,14 @@ import Logo from "../../../assets/Logo";
 import './style.css';
 
 export default function SidebarAdmin(params) {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
     const { theme, setTheme } = useTheme();
     const { admin, LogoutAdmin } = useAuth();
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+    const [userOptions, setUserOptions] = useState(false);
+
+    const firstName = admin.name.split(' ')[0];
+    const lastName = admin.name.split(' ')[1];
+    const letters = `${firstName.charAt(0)}${lastName ? lastName.charAt(0) : ''}`;
 
     const links = [
         { name: "Página Inicial", link: "/admin/home", icon: House },
@@ -55,7 +60,7 @@ export default function SidebarAdmin(params) {
                         <MoonStars size={23} onClick={() => setTheme("dark")} className="buttonmoon" /> :
                         <SunHorizon size={23} onClick={() => setTheme("light")} className="buttonsun" />
                     }
-                    <button className="w-10 h-10 hover:drop-shadow-lg duration-300 bg-azul-200 rounded-full"></button>
+                    <button className={`letters-user${userOptions ?'-active':''}`} onClick={() => setUserOptions(!userOptions)}>{letters}</button>
                 </div>
             </div>
             <div className="menu-cel" aria-hidden='true'>
@@ -72,6 +77,12 @@ export default function SidebarAdmin(params) {
                         </span>
                     </NavLink>
                 ))}
+            </div>
+            <div className={`user-menu-options ${!userOptions && 'hidden'}`}>
+                <Link to='/admin/conta' className="text-center hover:drop-shadow duration-300">Conta</Link>
+                <button type="button" onClick={Logout} className="hover:drop-shadow duration-300">Sair</button>
+                <div className="w-full h-px bg-neutro-300 bg-opacity-20 my-2"/>
+                <small className="text-center">{admin.name}</small>
             </div>
         </nav>
     )
