@@ -1,0 +1,26 @@
+.card-categoria{
+    @apply w-full h-24 md:w-[20%] md:h-32 
+}
+.card{
+    @apply w-full h-24 md:w-[19.63%] md:h-32 rounded-xl py-3 px-5
+    flex flex-col justify-evenly
+    border border-neutro-200 bg-neutro-150 
+    dark:bg-neutro-500 dark:border-neutro-400
+    text-neutro-600 dark:text-neutro-100
+    text-sm
+}
+
+.content-header-card{
+    @apply w-full h-1/2 flex flex-col items-center justify-center font-medium
+}
+.title-name-card{
+    @apply flex 
+}
+.email-card{
+    @apply text-xs text-neutro-300
+}
+
+
+.content-footer-card{
+    @apply w-full flex flex-col gap-2 justify-between items-center
+}
