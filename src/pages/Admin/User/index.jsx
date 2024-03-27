@@ -8,6 +8,10 @@ import { Link } from "react-router-dom";
 import { ArrowClockwise, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
 import Pagination from "../../../components/Commons/Pagination";
+import ErrorDenied from "../../../components/Commons/ErrorDenied";
+import useViewMode from "../../../hooks/ViewMode";
+import Table from "../../../components/Commons/Table";
+import Card from "../../../components/Commons/Card";
 
 export default function UserAdminPage(params) {
     const [usuarios, setUsuarios] = useState([]);
@@ -20,8 +24,9 @@ export default function UserAdminPage(params) {
     const [searchId, setSearchId] = useState("");
 
     const [loading, setLoading] = useState(false);
+    const [viewMode, setViewMode] = useViewMode();
 
-    const [deleteUser, setDeleteUser] = useState(false);
+    const [deleteUser, setDeleteUser] = useState();
 
     const receiveUsers = async (page = 1) => {
         setLoading(true);
@@ -46,18 +51,30 @@ export default function UserAdminPage(params) {
         setLoading(false);
     };
 
-    const deleteUsers = async (user) => {
+    const deleteUsers = async (usuario) => {
+        setDeleteUser(usuario);
+    };
+
+    const renderModalDelete = () => {
+        const usuario = usuarios.find(usuario => usuario.id === deleteUser);
+        console.log(usuario)
+        if (!usuario) return null;
+
+        return (
+            <ModalDelete item={usuario} delete={() => confirmDelete(usuario.id)} cancel={() => setDeleteUser()} />
+        );
+    };
+
+    const confirmDelete = async (usuario) => {
         try {
-            await ApiAdmin.delete(`/user/${user}`)
-            setDeleteUser(false);
+            await ApiAdmin.delete(`/user/${usuario}`);
             receiveUsers();
-            toast.success("Usuário excluído.", {
-                theme: 'colored',
-            });
+            setDeleteUser();
+            toast.success("Usuário excluído.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const restoreUsers = async (user) => {
         try {
@@ -109,80 +126,42 @@ export default function UserAdminPage(params) {
                 setSearchDateFim={setSearchDateFim}
                 status={searchStatus}
                 setSearchStatus={setSearchStatus}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
                 limpar={limparSearch}
                 buscar={receiveUsers}
             />
-            <div className="conteudo-content">
-                <table>
-                    <thead>
-                        <tr className="table-row-header">
-                            <th className="sticky w-[10%] rounded-tl-lg">ID</th>
-                            <th className="sticky w-[40%]">Nome</th>
-                            <th className="sticky w-[30%] hidden md:table-cell">Email</th>
-                            <th className="sticky w-[20%] hidden md:table-cell">Email Verificado</th>
-                            <th className="sticky w-[10%] hidden md:table-cell">Status</th>
-                            <th className="sticky w-[20%] rounded-tr-lg">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loading ? <Loading /> :
-                            (usuarios.map((usuario, i) => (
-                                <tr key={i} className="table-row-body">
-                                    <td className="w-[10%] font-medium">{usuario.id}</td>
-                                    <td className="w-[40%]">{usuario.name}</td>
-                                    <td className="w-[30%] hidden md:table-cell">{usuario.email}</td>
-                                    {usuario.email_verified_at === null ?
-                                        <td className="w-[20%] hidden md:table-cell">
-                                            <div className="inactive-email-card">
-                                                Não verificado
-                                            </div>
-                                        </td>
-                                        :
-                                        <td className="w-[20%] hidden md:table-cell">
-                                            <div className="active-email-card">
-                                                Verificado
-                                            </div>
-                                        </td>
-                                    }
-                                    {usuario.deleted_at === null ?
-                                        <td className="w-[10%] hidden md:table-cell">
-                                            <div className="active-card">
-                                                Ativo
-                                            </div>
-                                        </td>
-                                        :
-                                        <td className="w-[10%] hidden md:table-cell">
-                                            <div className="inactive-card">
-                                                Inativo
-                                            </div>
-                                        </td>
-                                    }
-                                    <td className="w-[20%]">
-                                        {usuario.deleted_at === null ?
-                                            <div className="content-buttons-action">
-                                                <Link to={`/admin/usuarios/addedit/${usuario.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={20} /></Link>
-                                                <button type="button" className="delete-action-btn" title="Excluir" onClick={() => setDeleteUser(usuario.id)}><TrashSimple size={20} /></button>
-                                            </div>
-                                            :
-                                            <div>
-                                                <button type="button" className="restore-action-btn" title="Restaurar" onClick={() => restoreUsers(usuario.id)} id="restore-button"><ArrowClockwise size={20} /></button>
-                                            </div>
-                                        }
-                                    </td>
-                                    {deleteUser === usuario.id && <ModalDelete item={usuario} delete={deleteUsers} cancel={setDeleteUser} />}
-                                </tr>
-                            )))}
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                {pagination && (
-                    <Pagination
-                        pagination={pagination}
-                        setPage={handlePaginationClick}
-                    />
-                )}
-            </div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <div className="conteudo-content">
+                    {usuarios.length === 0 ? (
+                        <ErrorDenied />
+                    ) : (
+                        <>
+                            {viewMode === 'card' && (
+                                <div className="content-cards">
+                                    {usuarios.map((usuario, i) => (
+                                        <Card key={i} type='usuarios' item={usuario} delete={deleteUsers} />
+                                    ))}
+                                </div>
+                            )}
+                            {viewMode === 'list' && (
+                                <Table type="usuarios" items={usuarios} delete={deleteUsers} restore={restoreUsers} />
+                            )}
+                        </>
+                    )}
+                    <div>
+                        {pagination && (
+                            <Pagination
+                                pagination={pagination}
+                                setPage={handlePaginationClick}
+                            />
+                        )}
+                    </div>
+                    {renderModalDelete()}
+                </div>
+            )}
         </div>
     )
 }

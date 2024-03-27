@@ -53,10 +53,13 @@
     @apply w-full h-full bg-neutro-100 dark:bg-neutro-600 flex flex-col pt-14 md:pt-0
 }
 .page-content{
-    @apply w-full h-full overflow-auto px-2 md:px-5 flex flex-col gap-3 py-1
+    @apply w-full h-full overflow-auto px-2 md:px-5 flex flex-col gap-3 pt-1 pb-3
 }
 .conteudo-content{
-    @apply w-full 
+    @apply w-full h-full flex flex-col gap-3 justify-between
+}
+.content-cards{
+    @apply flex flex-wrap gap-2
 }
 
 /* ESTILOS BÁSICOS CONTEUDOS */

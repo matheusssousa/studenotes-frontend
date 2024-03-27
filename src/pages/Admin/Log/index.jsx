@@ -6,6 +6,7 @@ import Loading from "../../../components/Commons/Loading";
 import { Eye } from "@phosphor-icons/react";
 import Search from "../../../components/Commons/Search";
 import { Link } from "react-router-dom";
+import ErrorDenied from "../../../components/Commons/ErrorDenied";
 
 export default function LogsAdminPage(params) {
     const [logs, setLogs] = useState([]);
@@ -73,43 +74,52 @@ export default function LogsAdminPage(params) {
                 limpar={limparSearch}
                 buscar={receiveLogs}
             />
-            <div className="conteudo-content">
-                <table>
-                    <thead>
-                        <tr className="table-row-header">
-                            <th className="sticky w-[10%] rounded-tl-lg">ID</th>
-                            <th className="sticky w-[40%]">Nome</th>
-                            <th className="sticky w-[40%] hidden md:table-cell">Ator</th>
-                            <th className="sticky w-[40%]">Status</th>
-                            <th className="sticky w-[20%] rounded-tr-lg">Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loading ? <Loading /> :
-                            (logs.map((log, i) => (
-                                <tr key={i} className="table-row-body">
-                                    <td className="w-[10%] font-medium">{log.id}</td>
-                                    <td className="w-[40%]">{log.log_name}</td>
-                                    <td className="w-[40%] hidden md:table-cell">{log.log_name}</td>
-                                    <td className="w-[40%] capitalize">{log.description}</td>
-                                    <td className="w-[20%]">
-                                        <div className="content-buttons-action">
-                                            <Link to={`/admin/logs/view/${log.id}`} className="view-action-btn" title="Visualizar"><Eye size={20} /></Link>
-                                        </div>
-                                    </td>
-                                </tr>
-                            )))}
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                {pagination && (
-                    <Pagination
-                        pagination={pagination}
-                        setPage={handlePaginationClick}
-                    />
-                )}
-            </div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <>
+                    {logs.length === 0 ? (
+                        <ErrorDenied />
+                    ) : (
+                        <div className="conteudo-content">
+                            <table>
+                                <thead>
+                                    <tr className="table-row-header">
+                                        <th className="sticky w-[10%] rounded-tl-lg">ID</th>
+                                        <th className="sticky w-[40%]">Nome</th>
+                                        <th className="sticky w-[40%] hidden md:table-cell">Ator</th>
+                                        <th className="sticky w-[40%]">Status</th>
+                                        <th className="sticky w-[20%] rounded-tr-lg">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {logs.map((log, i) => (
+                                        <tr key={i} className="table-row-body">
+                                            <td className="w-[10%] font-medium">{log.id}</td>
+                                            <td className="w-[40%]">{log.log_name}</td>
+                                            <td className="w-[40%] hidden md:table-cell">{log.log_name}</td>
+                                            <td className="w-[40%] capitalize">{log.description}</td>
+                                            <td className="w-[20%]">
+                                                <div className="content-buttons-action">
+                                                    <Link to={`/admin/logs/view/${log.id}`} className="view-action-btn" title="Visualizar"><Eye size={20} /></Link>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                    <div>
+                        {pagination && (
+                            <Pagination
+                                pagination={pagination}
+                                setPage={handlePaginationClick}
+                            />
+                        )}
+                    </div>
+                </>
+            )}
         </div>
     )
 }

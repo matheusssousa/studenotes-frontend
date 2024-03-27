@@ -3,11 +3,13 @@ import ApiAdmin from "../../../services/ApiAdmin";
 import Pagination from "../../../components/Commons/Pagination";
 import Search from "../../../components/Commons/Search";
 import MainHeader from "../../../components/Commons/MainHeader";
-import { ArrowClockwise, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
 import Loading from "../../../components/Commons/Loading";
+import ErrorDenied from "../../../components/Commons/ErrorDenied";
+import Card from "../../../components/Commons/Card";
+import Table from "../../../components/Commons/Table";
+import useViewMode from "../../../hooks/ViewMode";
 
 export default function DisciplinaAdminPage(params) {
     const [disciplinas, setDisciplinas] = useState([]);
@@ -18,8 +20,9 @@ export default function DisciplinaAdminPage(params) {
     const [searchStatus, setSearchStatus] = useState("");
 
     const [loading, setLoading] = useState(false);
+    const [viewMode, setViewMode] = useViewMode();
 
-    const [deleteDisciplina, setDeleteDisciplina] = useState(false);
+    const [deleteDisciplina, setDeleteDisciplina] = useState();
 
     const receiveDisciplinas = async (page = 1) => {
         setLoading(true);
@@ -43,17 +46,29 @@ export default function DisciplinaAdminPage(params) {
     };
 
     const deleteDisciplinas = async (disciplina) => {
+        setDeleteDisciplina(disciplina);
+        console.log(deleteDisciplina);
+    };
+
+    const renderModalDelete = () => {
+        const disciplina = disciplinas.find(disciplina => disciplina.id === deleteDisciplina);
+        if (!disciplina) return null;
+
+        return (
+            <ModalDelete item={disciplina} delete={() => confirmDelete(disciplina.id)} cancel={() => setDeleteDisciplina()} />
+        );
+    };
+
+    const confirmDelete = async (disciplinaId) => {
         try {
-            await ApiAdmin.delete(`/disciplina/${disciplina}`)
-            setDeleteDisciplina(false);
+            await ApiAdmin.delete(`/disciplina/${disciplinaId}`);
             receiveDisciplinas();
-            toast.success("Disciplina excluída.", {
-                theme: 'colored',
-            });
+            setDeleteDisciplina();
+            toast.success("Disciplina excluída.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const restoreDisciplinas = async (disciplina) => {
         try {
@@ -101,64 +116,42 @@ export default function DisciplinaAdminPage(params) {
                 setSearchDateFim={setSearchDateFim}
                 status={searchStatus}
                 setSearchStatus={setSearchStatus}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
                 limpar={limparSearch}
                 buscar={receiveDisciplinas}
             />
-            <div className="conteudo-content">
-                <table>
-                    <thead>
-                        <tr className="table-row-header">
-                            <th className="sticky w-[20%] rounded-tl-lg">ID</th>
-                            <th className="sticky w-[40%]">Nome</th>
-                            <th className="sticky w-[20%]">Status</th>
-                            <th className="sticky w-[20%] rounded-tr-lg">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loading ? <Loading /> :
-                            (disciplinas.map((disciplina, i) => (
-                                <tr key={i} className="table-row-body">
-                                    <td className="w-[20%] font-medium">{disciplina.id}</td>
-                                    <td className="w-[40%]">{disciplina.nome}</td>
-                                    {disciplina.deleted_at === null ?
-                                        <td className="w-[20%]">
-                                            <div className="active-card">
-                                                Ativo
-                                            </div>
-                                        </td>
-                                        :
-                                        <td className="w-[20%]">
-                                            <div className="inactive-card">
-                                                Inativo
-                                            </div>
-                                        </td>
-                                    }
-                                    <td className="w-[20%]">
-                                        {disciplina.deleted_at === null ?
-                                            <div className="content-buttons-action">
-                                                <Link to={`/admin/disciplinas/addedit/${disciplina.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={20} /></Link>
-                                                <button type="button" className="delete-action-btn" title="Excluir" onClick={() => setDeleteDisciplina(disciplina.id)}><TrashSimple size={20} /></button>
-                                            </div>
-                                            :
-                                            <div>
-                                                <button type="button" className="restore-action-btn" title="Restaurar" onClick={() => restoreDisciplinas(disciplina.id)} id="restore-button"><ArrowClockwise size={20} /></button>
-                                            </div>
-                                        }
-                                    </td>
-                                    {deleteDisciplina === disciplina.id && <ModalDelete item={disciplina} delete={deleteDisciplinas} cancel={setDeleteDisciplina} />}
-                                </tr>
-                            )))}
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                {pagination && (
-                    <Pagination
-                        pagination={pagination}
-                        setPage={handlePaginationClick}
-                    />
-                )}
-            </div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <div className="conteudo-content">
+                    {disciplinas.length === 0 ? (
+                        <ErrorDenied />
+                    ) : (
+                        <>
+                            {viewMode === 'card' && (
+                                <div className="content-cards">
+                                    {disciplinas.map((disciplina, i) => (
+                                        <Card key={i} type='disciplinas' item={disciplina} delete={deleteDisciplinas} />
+                                    ))}
+                                </div>
+                            )}
+                            {viewMode === 'list' && (
+                                <Table type="disciplinas" items={disciplinas} delete={deleteDisciplinas} restore={restoreDisciplinas} />
+                            )}
+                        </>
+                    )}
+                    <div>
+                        {pagination && (
+                            <Pagination
+                                pagination={pagination}
+                                setPage={handlePaginationClick}
+                            />
+                        )}
+                    </div>
+                    {renderModalDelete()}
+                </div>
+            )}
         </div>
     )
 }
