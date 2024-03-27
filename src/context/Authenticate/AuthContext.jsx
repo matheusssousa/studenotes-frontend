@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 import ApiAdmin from "../../services/ApiAdmin";
 import ApiUser from "../../services/ApiUser";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -86,7 +87,9 @@ export const AuthProvider = ({ children }) => {
             setAuthenticate(true);
             setAdmin(admin);
         } catch (error) {
-            console.error(error);
+            toast.error("Email e/ou senha incorretos", {
+                theme: 'colored',
+            })
         }
     }
     
