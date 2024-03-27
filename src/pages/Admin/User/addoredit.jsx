@@ -29,7 +29,7 @@ export default function AddOrEditUserAdminPage() {
         if (user) {
             try {
                 await ApiAdmin.put(`/user/${user}`, {
-                    nome: nome,
+                    name: nome,
                     email: email,
                 });
                 toast.success("Usuário atualizado.", {
@@ -44,7 +44,7 @@ export default function AddOrEditUserAdminPage() {
         } else {
             try {
                 await ApiAdmin.post(`/user`, {
-                    nome: nome,
+                    name: nome,
                     email: email,
                 });
                 toast.success("Usuário cadastrado cadastrado.", {

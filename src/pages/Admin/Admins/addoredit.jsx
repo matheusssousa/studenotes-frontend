@@ -29,7 +29,7 @@ export default function AddOrEditAdminsAdminPage() {
         if (admin) {
             try {
                 await ApiAdmin.put(`/admin/${admin}`, {
-                    nome: nome,
+                    name: nome,
                     email: email,
                 });
                 toast.success("Administrador atualizada.", {
@@ -37,6 +37,7 @@ export default function AddOrEditAdminsAdminPage() {
                 });
                 navigate("/admin/admins");
             } catch (error) {
+                console.log(error)
                 return toast.error(error.response.data.message, {
                     theme: 'colored',
                 });
