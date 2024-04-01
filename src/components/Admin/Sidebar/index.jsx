@@ -63,7 +63,7 @@ export default function SidebarAdmin(params) {
         <nav className={`sidebar-admin ${sidebarOpen ? 'open' : 'close'}`}>
             <div className="row-cel-pc">
                 <button className={`btn-open-sidebar ${sidebarOpen && 'text-azul-200'}`} onClick={handleNavLinkUserClick}><TextAlignLeft size={23} /></button>
-                <Logo cor='azul' tamanho='sidebar' />
+                <Link to='/admin/home'><Logo cor='azul' tamanho='sidebar' /></Link>
                 <div className="menu" aria-hidden='true'>
                     {links.map((links, i) => (
                         <NavLink
