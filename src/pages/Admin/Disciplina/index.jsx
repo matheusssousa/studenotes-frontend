@@ -132,7 +132,7 @@ export default function DisciplinaAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {disciplinas.map((disciplina, i) => (
-                                        <Card key={i} type='disciplinas' item={disciplina} delete={deleteDisciplinas} />
+                                        <Card key={i} type='disciplinas' item={disciplina} delete={deleteDisciplinas} restore={restoreDisciplinas}/>
                                     ))}
                                 </div>
                             )}

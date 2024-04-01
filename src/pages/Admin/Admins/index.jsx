@@ -19,7 +19,7 @@ export default function AdminsAdminPage(params) {
     const [searchDateFim, setSearchDateFim] = useState("");
     const [searchStatus, setSearchStatus] = useState("");
     const [searchEmail, setSearchEmail] = useState("");
-    const [searchId, setSearchId] = useState("");
+    const [searchVerifyEmail, setSearchVerifyEmail] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [viewMode, setViewMode] = useViewMode();
@@ -33,7 +33,7 @@ export default function AdminsAdminPage(params) {
                 params: {
                     page: page,
                     name: searchNome,
-                    id: searchId,
+                    emailverify: searchVerifyEmail,
                     email: searchEmail,
                     created_at_inicio: searchDateInicio,
                     created_at_fim: searchDateFim,
@@ -88,7 +88,7 @@ export default function AdminsAdminPage(params) {
     const limparSearch = () => {
         setSearchNome("");
         setSearchEmail("");
-        setSearchId("");
+        setSearchVerifyEmail("");
         setSearchDateFim("");
         setSearchDateInicio("");
         setSearchStatus("");
@@ -116,8 +116,8 @@ export default function AdminsAdminPage(params) {
                 setSearchNome={setSearchNome}
                 email={searchEmail}
                 setSearchEmail={setSearchEmail}
-                id={searchId}
-                setSearchId={setSearchId}
+                verifyemail={searchVerifyEmail}
+                setSearchVerifyEmail={setSearchVerifyEmail}
                 data_inicio={searchDateInicio}
                 setSearchDateInicio={setSearchDateInicio}
                 data_fim={searchDateFim}
@@ -138,9 +138,9 @@ export default function AdminsAdminPage(params) {
                     ) : (
                         <>
                             {viewMode === 'card' && (
-                                <div>
+                                <div className="content-cards">
                                     {admins.map((admin, i) => (
-                                        <Card key={i} type='admins' item={admin} delete={deleteAdmins} />
+                                        <Card key={i} type='admins' item={admin} delete={deleteAdmins} restore={restoreAdmins}/>
                                     ))}
                                 </div>
                             )}

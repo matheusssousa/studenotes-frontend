@@ -6,10 +6,7 @@ import Pagination from "../../../components/Commons/Pagination";
 import { toast } from "react-toastify";
 import ErrorDenied from "../../../components/Commons/ErrorDenied";
 import Loading from "../../../components/Commons/Loading";
-import { PencilSimple, TrashSimple } from "@phosphor-icons/react";
 
-import './style.css';
-import { Link } from "react-router-dom";
 import Card from "../../../components/Commons/Card";
 import Table from "../../../components/Commons/Table";
 
@@ -118,9 +115,9 @@ export default function CategoriaUserPage() {
                     ) : (
                         <>
                             {viewMode === 'card' && (
-                                <div>
+                                <div className="content-cards">
                                     {categorias.map((categoria, i) => (
-                                        <Card key={i} type='categorias' item={categoria} delete={deleteCategorias} />
+                                        <Card key={i} type='categorias' item={categoria} delete={deleteCategorias} restore={restoreCategorias}/>
                                     ))}
                                 </div>
                             )}

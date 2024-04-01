@@ -4,8 +4,6 @@ import ApiAdmin from "../../../services/ApiAdmin";
 import { toast } from "react-toastify";
 import Search from "../../../components/Commons/Search";
 import Loading from "../../../components/Commons/Loading";
-import { Link } from "react-router-dom";
-import { ArrowClockwise, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
 import Pagination from "../../../components/Commons/Pagination";
 import ErrorDenied from "../../../components/Commons/ErrorDenied";
@@ -21,7 +19,7 @@ export default function UserAdminPage(params) {
     const [searchDateFim, setSearchDateFim] = useState("");
     const [searchStatus, setSearchStatus] = useState("");
     const [searchEmail, setSearchEmail] = useState("");
-    const [searchId, setSearchId] = useState("");
+    const [searchVerifyEmail, setSearchVerifyEmail] = useState("");
 
     const [loading, setLoading] = useState(false);
     const [viewMode, setViewMode] = useViewMode();
@@ -35,8 +33,8 @@ export default function UserAdminPage(params) {
                 params: {
                     page: page,
                     name: searchNome,
-                    id: searchId,
                     email: searchEmail,
+                    emailverify: searchVerifyEmail,
                     created_at_inicio: searchDateInicio,
                     created_at_fim: searchDateFim,
                     delete: searchStatus
@@ -57,7 +55,6 @@ export default function UserAdminPage(params) {
 
     const renderModalDelete = () => {
         const usuario = usuarios.find(usuario => usuario.id === deleteUser);
-        console.log(usuario)
         if (!usuario) return null;
 
         return (
@@ -91,11 +88,11 @@ export default function UserAdminPage(params) {
     const limparSearch = () => {
         setSearchNome("");
         setSearchEmail("");
-        setSearchId("");
+        setSearchVerifyEmail("");
         setSearchDateFim("");
         setSearchDateInicio("");
         setSearchStatus("");
-        receiveUsers();
+        receiveUsers();  
     };
 
     const handlePaginationClick = (newPage) => {
@@ -118,8 +115,8 @@ export default function UserAdminPage(params) {
                 setSearchNome={setSearchNome}
                 email={searchEmail}
                 setSearchEmail={setSearchEmail}
-                id={searchId}
-                setSearchId={setSearchId}
+                verifyemail={searchVerifyEmail}
+                setSearchVerifyEmail={setSearchVerifyEmail}
                 data_inicio={searchDateInicio}
                 setSearchDateInicio={setSearchDateInicio}
                 data_fim={searchDateFim}
@@ -142,7 +139,7 @@ export default function UserAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {usuarios.map((usuario, i) => (
-                                        <Card key={i} type='usuarios' item={usuario} delete={deleteUsers} />
+                                        <Card key={i} type='usuarios' item={usuario} delete={deleteUsers} restore={restoreUsers}/>
                                     ))}
                                 </div>
                             )}
