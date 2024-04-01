@@ -53,7 +53,7 @@
     @apply w-full h-full bg-neutro-100 dark:bg-neutro-600 flex flex-col pt-14 md:pt-0
 }
 .page-content{
-    @apply w-full h-full overflow-auto px-2 md:px-5 flex flex-col gap-3 pt-1 pb-3
+    @apply w-full h-full overflow-auto px-2 md:px-5 flex flex-col gap-3 py-1
 }
 .conteudo-content{
     @apply w-full h-full flex flex-col gap-3 justify-between
@@ -93,7 +93,7 @@ table{
     @apply bg-azul-100 border border-azul-300 rounded-lg font-semibold text-azul-300 px-2 w-fit text-xs
 }
 .inactive-email-card{
-    @apply bg-neutro-100 border border-neutro-200 rounded-lg font-semibold text-neutro-300 px-2 w-fit text-xs
+    @apply bg-neutro-100 border border-neutro-300 rounded-lg font-semibold text-neutro-300 px-2 w-fit text-xs
 }
 .content-buttons-action{
     @apply flex items-center gap-1
