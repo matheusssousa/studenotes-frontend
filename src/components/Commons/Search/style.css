@@ -21,7 +21,7 @@
     @apply flex justify-between items-center gap-2 flex-col md:flex-row
 }
 .input-group-search{
-    @apply flex flex-col w-full md:w-1/2
+    @apply flex flex-col w-full 
 }
 .label-input{
     @apply text-neutro-600 dark:text-neutro-100 font-semibold

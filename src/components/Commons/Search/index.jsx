@@ -30,9 +30,21 @@ export default function Search(search) {
             {modalFilters &&
                 <div className="subsearch-content">
                     <div className="row">
+                        {search.setSearchVerifyEmail &&
+                            <span className="input-group-search">
+                                <label htmlFor="verifyemail" className="label-input">Email verificado</label>
+                                <select name="verifyemail" id="verifyemail" className="input-search-date" onChange={(event) => search.setSearchVerifyEmail(event.target.value)}>
+                                    <option defaultValue selected={search.verifyemail === ""}>Ambos</option>
+                                    <option value="verificados" selected={search.verifyemail === "verificados"}>Verificado</option>
+                                    <option value="nao_verificados" selected={search.verifyemail === "nao_verificados"}>Não Verifificado</option>
+                                </select>
+                            </span>
+                        }
+                    </div>
+                    <div className="row">
                         {search.setSearchDateInicio &&
                             <span className="input-group-search">
-                                <label htmlFor="data_inicio" className="label-input">Criado de</label>
+                                <label htmlFor="data_inicio" className="label-input">Criado a partir de</label>
                                 <input type="date" name="data_inicio" id="data_inicio" value={search.data_inicio} onChange={(event) => search.setSearchDateInicio(event.target.value)} className="input-search-date" />
                             </span>
                         }
@@ -47,7 +59,7 @@ export default function Search(search) {
                                 <label htmlFor="status" className="label-input">Status</label>
                                 <select name="status" id="status" className="input-search-date" onChange={(event) => search.setSearchStatus(event.target.value)}>
                                     <option defaultValue selected={search.status === ""}>Ativos</option>
-                                    <option value="deletados" selected={search.status === "deletados"}>Inativos</option>
+                                    <option value="deletados" selected={search.status === "deletados"}>Excluídos</option>
                                     <option value="ambos" selected={search.status === "ambos"}>Ambos</option>
                                 </select>
                             </span>
@@ -55,6 +67,7 @@ export default function Search(search) {
                     </div>
                     <div className="row flex justify-end">
                         <button type="button" onClick={(event) => search.limpar(event)} className="btn-clear">Limpar</button>
+                        <button type="submit" onClick={buscar} className="btn-clear">Filtrar</button>
                     </div>
                 </div>
             }
