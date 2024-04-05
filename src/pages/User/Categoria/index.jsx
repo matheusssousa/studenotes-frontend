@@ -9,6 +9,7 @@ import Loading from "../../../components/Commons/Loading";
 
 import Card from "../../../components/Commons/Card";
 import Table from "../../../components/Commons/Table";
+import ModalDelete from "../../../components/Commons/Modals/Delete";
 
 export default function CategoriaUserPage() {
     const [categorias, setCategorias] = useState([]);
@@ -45,16 +46,28 @@ export default function CategoriaUserPage() {
     };
 
     const deleteCategorias = async (categoria) => {
+        setDeleteCategoria(categoria);
+    };
+
+    const renderModalDelete = () => {
+        const categoria = categorias.find(categoria => categoria.id === deleteCategoria);
+        if (!categoria) return null;
+
+        return (
+            <ModalDelete item={categoria} delete={() => confirmDelete(categoria.id)} cancel={() => setDeleteCategoria()} />
+        );
+    };
+
+    const confirmDelete = async (categoria) => {
         try {
-            await ApiUser.delete(`/categoria/${categoria}`)
+            await ApiUser.delete(`/categoria/${categoria}`);
             receiveCategorias();
-            toast.success("Categoria excluída.", {
-                theme: 'colored',
-            });
+            setDeleteCategoria();
+            toast.success("Categoria excluída.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const restoreCategorias = async (categoria) => {
         try {
@@ -126,6 +139,15 @@ export default function CategoriaUserPage() {
                             )}
                         </>
                     )}
+                    <div>
+                        {pagination && (
+                            <Pagination
+                                pagination={pagination}
+                                setPage={handlePaginationClick}
+                            />
+                        )}
+                    </div>
+                    {renderModalDelete()}
                 </div>
             )}
         </div >

@@ -17,6 +17,7 @@ export default function AddOrEditCategoriaUserPage() {
         try {
             const response = await ApiUser.get(`/categoria/${params.id}`);
             setNome(response.data.nome);
+            setCor(response.data.cor)
         } catch (error) {
             console.log(error);
         }
@@ -77,7 +78,7 @@ export default function AddOrEditCategoriaUserPage() {
                     </span>
                     <span className="input-group-add-edit">
                         <label htmlFor="cor" className="label-add-edit">Cor</label>
-                        <input type="color" name="cor" value={cor} onChange={(event) => setCor(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit`} required />
+                        <input type="color" name="cor" value={cor} onChange={(event) => setCor(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-color`} required />
                     </span>
                 </div>
                 <div className="container-buttons-add-edit">

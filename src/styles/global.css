@@ -127,6 +127,9 @@ table{
 .input-add-edit{
     @apply bg-neutro-100 dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 dark:text-neutro-100 rounded placeholder:text-neutro-300 p-2 text-sm border border-neutro-200
 }
+.input-add-edit-color{
+    @apply bg-neutro-100 dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 dark:text-neutro-100 rounded placeholder:text-neutro-300 text-sm border border-neutro-200 cursor-pointer
+}
 .container-buttons-add-edit{
     @apply w-full py-3 px-2 bg-neutro-200 dark:bg-neutro-400 rounded-b-lg flex justify-end gap-2 
 }
