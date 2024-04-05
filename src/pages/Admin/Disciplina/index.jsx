@@ -132,12 +132,12 @@ export default function DisciplinaAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {disciplinas.map((disciplina, i) => (
-                                        <Card key={i} type='disciplinas' item={disciplina} delete={deleteDisciplinas} restore={restoreDisciplinas}/>
+                                        <Card key={i} type='disciplinas' admin={true} item={disciplina} delete={deleteDisciplinas} restore={restoreDisciplinas}/>
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="disciplinas" items={disciplinas} delete={deleteDisciplinas} restore={restoreDisciplinas} />
+                                <Table type="disciplinas" admin={true} items={disciplinas} delete={deleteDisciplinas} restore={restoreDisciplinas} />
                             )}
                         </>
                     )}

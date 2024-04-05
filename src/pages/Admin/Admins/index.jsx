@@ -140,12 +140,12 @@ export default function AdminsAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {admins.map((admin, i) => (
-                                        <Card key={i} type='admins' item={admin} delete={deleteAdmins} restore={restoreAdmins}/>
+                                        <Card key={i} type='admins' admin={true} item={admin} delete={deleteAdmins} restore={restoreAdmins}/>
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="admins" items={admins} delete={deleteAdmins} restore={restoreAdmins} />
+                                <Table type="admins" admin={true} items={admins} delete={deleteAdmins} restore={restoreAdmins} />
                             )}
                         </>
                     )}

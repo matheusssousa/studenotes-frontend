@@ -139,12 +139,12 @@ export default function UserAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {usuarios.map((usuario, i) => (
-                                        <Card key={i} type='usuarios' item={usuario} delete={deleteUsers} restore={restoreUsers}/>
+                                        <Card key={i} type='usuarios' admin={true} item={usuario} delete={deleteUsers} restore={restoreUsers}/>
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="usuarios" items={usuarios} delete={deleteUsers} restore={restoreUsers} />
+                                <Table type="usuarios" admin={true} items={usuarios} delete={deleteUsers} restore={restoreUsers} />
                             )}
                         </>
                     )}
