@@ -60,10 +60,13 @@ export const AuthProvider = ({ children }) => {
     async function RefreshTokenUser() {
         if (authenticate) {
             await ApiUser.post('/refresh').then(function (response) {
+                console.log(response)
                 ApiUser.defaults.headers.Authorization = `Bearer ${response.data.access_token}`;
                 sessionStorage.setItem('@App:token', response.data.access_token);
             }).catch(function (error) {
                 console.log(error)
+                ApiUser.defaults.headers.Authorization = null;
+                sessionStorage.removeItem('@App:token');
                 setAuthenticate(false)
                 setUser(null);
             })

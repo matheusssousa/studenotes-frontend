@@ -7,14 +7,14 @@ import Loading from "../../../components/Commons/Loading";
 import ErrorDenied from "../../../components/Commons/ErrorDenied";
 import Pagination from "../../../components/Commons/Pagination";
 
-import Card from "../../../components/Commons/Card";
 import Table from "../../../components/Commons/Table";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
+import AnotacaoCard from "../../../components/Commons/Anotacao/Card";
 
 export default function AnotacaoUserPage(params) {
     const [anotacoes, setAnotacoes] = useState([]);
     const [categorias, setCategorias] = useState([]);
-    const [discilinas, setDisciplinas] = useState([]);
+    const [disciplinas, setDisciplinas] = useState([]);
     const [pagination, setPagination] = useState(null);
     const [searchNome, setSearchNome] = useState("");
     const [searchDateInicio, setSearchDateInicio] = useState("");
@@ -39,7 +39,7 @@ export default function AnotacaoUserPage(params) {
                 }
             });
             setAnotacoes(response.data.anotacoes.data);
-            setDisciplinas(response.data.discilinas);
+            setDisciplinas(response.data.disciplinas);
             setCategorias(response.data.categorias);
         } catch (error) {
             console.error("Erro ao receber anotacões:", error);
@@ -118,6 +118,8 @@ export default function AnotacaoUserPage(params) {
                 setSearchStatus={setSearchStatus}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
+                disciplinas={disciplinas}
+                categorias={categorias}
                 limpar={limparSearch}
                 buscar={receiveAnotacoes}
             />
@@ -132,7 +134,7 @@ export default function AnotacaoUserPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {anotacoes.map((anotacao, i) => (
-                                        <Card key={i} type='anotacoes' item={anotacao} delete={deleteAnotacoes} restore={restoreAnotacoes} />
+                                        <AnotacaoCard key={i} type='anotacoes' item={anotacao} delete={deleteAnotacoes} restore={restoreAnotacoes} />
                                     ))}
                                 </div>
                             )}

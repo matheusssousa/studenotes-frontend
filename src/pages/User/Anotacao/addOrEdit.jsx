@@ -3,7 +3,6 @@ import MainHeader from "../../../components/Commons/MainHeader";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import ApiUser from "../../../services/ApiUser";
-import TextEditor from "../../../components/Commons/TextEditor";
 
 export default function AddOrEditAnotacaoUserPage() {
     const params = useParams();
@@ -87,8 +86,7 @@ export default function AddOrEditAnotacaoUserPage() {
                 page={params.id ? 'Editar Anotação' : 'Cadastrar Anotação'}
                 text={params.id ? 'Editar uma anotação já cadastrada.' : 'Cadastrar uma nova anotação.'}
             />
-            <form onSubmit={(e) => enviarDados(e, params.id)} className="form-add-edit">
-                <TextEditor texto={texto} setTexto={setTexto} />
+            <form onSubmit={(e) => enviarDados(e, params.id)} className="">
                 <div className="container-buttons-add-edit">
                     <Link to='/anotacoes' className="btn-cancel">Cancelar</Link>
                     <button type="submit" className="btn-save">Salvar</button>

@@ -1,0 +1,11 @@
+.card-anotacao{
+    @apply w-full h-24 md:w-[33%] md:h-56 rounded-xl py-3 px-5
+    flex flex-col justify-evenly
+    border border-neutro-200 bg-neutro-150 
+    dark:bg-neutro-500 dark:border-neutro-400
+    text-neutro-600 dark:text-neutro-100
+    text-sm
+}
+.content-header-card-anotacao{
+    @apply flex w-full
+}
