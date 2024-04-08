@@ -115,6 +115,9 @@ table{
 .form-add-edit{
     @apply w-full md:w-1/2 bg-white dark:bg-neutro-500 rounded-lg text-sm flex flex-col gap-5 shadow-sm 
 }
+.form-view{
+    @apply w-full bg-white dark:bg-neutro-500 rounded-lg text-sm flex flex-col gap-5 shadow-sm 
+}
 .content-inputs{
     @apply flex p-2 flex-col gap-2
 }
@@ -138,4 +141,9 @@ table{
 }
 .btn-cancel{
     @apply rounded bg-vermelho-200 px-2 py-1 font-semibold hover:shadow-md hover:bg-vermelho-300 hover:text-neutro-100 duration-200
+}
+
+/* ESTILOS BÁSICOS DE LINHAS */
+.line-horizontal {
+    @apply w-full h-px my-2 bg-neutro-100 dark:bg-neutro-300
 }

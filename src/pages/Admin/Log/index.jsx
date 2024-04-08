@@ -7,6 +7,7 @@ import { Eye } from "@phosphor-icons/react";
 import Search from "../../../components/Commons/Search";
 import { Link } from "react-router-dom";
 import ErrorDenied from "../../../components/Commons/ErrorDenied";
+import moment from "moment";
 
 export default function LogsAdminPage(params) {
     const [logs, setLogs] = useState([]);
@@ -84,18 +85,24 @@ export default function LogsAdminPage(params) {
                         <table>
                             <thead>
                                 <tr className="table-row-header">
-                                    <th className="sticky w-[10%] rounded-tl-lg">ID</th>
-                                    <th className="sticky w-[20%]">Nome</th>
-                                    <th className="sticky w-[70%]">Status</th>
-                                    <th className="sticky w-[20%] rounded-tr-lg">Ação</th>
+                                    <th className="sticky w-[5%] rounded-tl-lg">ID</th>
+                                    <th className="sticky w-[10%]">ID do Objeto</th>
+                                    <th className="sticky w-[10%]">ID do Autor</th>
+                                    <th className="sticky w-[10%]">Modelo</th>
+                                    <th className="sticky w-[40%]">Ação</th>
+                                    <th className="sticky w-[20%]">Dia/Horário</th>
+                                    <th className="sticky w-[20%] rounded-tr-lg">Visualizar</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {logs.map((log, i) => (
                                     <tr key={i} className="table-row-body">
-                                        <td className="w-[10%] font-medium">{log.id}</td>
-                                        <td className="w-[20%]">{log.log_name}</td>
-                                        <td className="w-[70%] capitalize">{log.description}</td>
+                                        <td className="w-[5%] font-medium">{log.id}</td>
+                                        <td className="w-[10%]">{log.subject_id}</td>
+                                        <td className="w-[10%]">{log.causer_id}</td>
+                                        <td className="w-[10%]">{log.log_name}</td>
+                                        <td className="w-[40%]">{log.description}</td>
+                                        <td className="w-[20%]">{moment(log.created_at).format('DD-MM-YYYY HH:mm')}</td>
                                         <td className="w-[20%]">
                                             <div className="content-buttons-action">
                                                 <Link to={`/admin/logs/view/${log.id}`} className="view-action-btn" title="Visualizar"><Eye size={20} /></Link>
