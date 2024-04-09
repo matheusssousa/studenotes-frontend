@@ -1,30 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowClockwise, PencilSimple, SealCheck, SealWarning, TrashSimple } from "@phosphor-icons/react";
+import darkColor from "../../../hooks/DarkColor";
 
 import './style.css';
-
-function darkColor(hex, percent) {
-    // Convertendo a cor hexadecimal para RGB
-    let r = parseInt(hex.substring(1, 3), 16);
-    let g = parseInt(hex.substring(3, 5), 16);
-    let b = parseInt(hex.substring(5, 7), 16);
-
-    // Diminuindo os valores RGB para escurecer a cor
-    r = Math.floor(r * (1 - percent / 100));
-    g = Math.floor(g * (1 - percent / 100));
-    b = Math.floor(b * (1 - percent / 100));
-
-    // Garantindo que os valores RGB estejam dentro do intervalo [0, 255]
-    r = r < 0 ? 0 : r > 255 ? 255 : r;
-    g = g < 0 ? 0 : g > 255 ? 255 : g;
-    b = b < 0 ? 0 : b > 255 ? 255 : b;
-
-    // Convertendo os valores RGB de volta para hexadecimal
-    const newHex = `#${(r * 0x10000 + g * 0x100 + b).toString(16).padStart(6, '0')}`;
-
-    return newHex;
-}
 
 export default function Card(params) {
     const darkenColor = params.type === 'categorias' ? darkColor(params.item.cor, 40) : params.item.cor;

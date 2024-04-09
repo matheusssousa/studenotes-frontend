@@ -2,16 +2,27 @@ import React, { useEffect, useState } from "react";
 import MainHeader from "../../../components/Commons/MainHeader";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { X, Check } from "@phosphor-icons/react";
 import ApiUser from "../../../services/ApiUser";
+
+import "./style.css";
+import UploadFile from "../../../components/Commons/UploadFile";
+import MultiSelect from "../../../components/Commons/MultiSelect";
 
 export default function AddOrEditAnotacaoUserPage() {
     const params = useParams();
     const navigate = useNavigate();
+
     const [categorias, setCategorias] = useState([]);
     const [disciplinas, setDisciplinas] = useState([]);
 
     const [nome, setNome] = useState();
+    const [data, setData] = useState();
     const [texto, setTexto] = useState();
+    const [disciplina, setDisciplina] = useState();
+    const [comunidade, setComunidade] = useState();
+    const [selectCategorias, setSelectCategorias] = useState([]);
+    const [arquivos, setArquivos] = useState([]);
 
     const [loading, setLoading] = useState(false);
 
@@ -19,7 +30,7 @@ export default function AddOrEditAnotacaoUserPage() {
         setLoading(true);
         try {
             const response = await ApiUser.get(`/anotacao/${params.id}`);
-            setTexto(response.data.texto)
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -30,7 +41,8 @@ export default function AddOrEditAnotacaoUserPage() {
         setLoading(true);
         try {
             const response = await ApiUser.get(`/anotacao/create`);
-            console.log(response)
+            setCategorias(response.data.categorias);
+            setDisciplinas(response.data.disciplinas);
         } catch (error) {
             console.log(error);
         }
@@ -86,7 +98,59 @@ export default function AddOrEditAnotacaoUserPage() {
                 page={params.id ? 'Editar Anotação' : 'Cadastrar Anotação'}
                 text={params.id ? 'Editar uma anotação já cadastrada.' : 'Cadastrar uma nova anotação.'}
             />
-            <form onSubmit={(e) => enviarDados(e, params.id)} className="">
+            <form onSubmit={(e) => enviarDados(e, params.id)} className="form-add-edit-note" encType="multipart/form-data">
+                <div className="row">
+                    <div className="content-note-left">
+                        <span className="input-group-add-edit-note">
+                            <label htmlFor="nome" className="label-add-edit">Nome</label>
+                            <input type="text" name="nome" value={nome} onChange={(event) => setNome(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note`} placeholder={loading ? '' : 'Ex: Anotação de JavaScript'} required />
+                        </span>
+                        <div className="row">
+                            <span className="input-group-add-edit-note">
+                                <label htmlFor="data" className="label-add-edit">Definir lembrete</label>
+                                <input type="date" name="data" value={data} onChange={(event) => setData(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note uppercase`} />
+                            </span>
+                            <span className="input-group-add-edit-note">
+                                <label htmlFor="disciplina" className="label-add-edit">Disciplina</label>
+                                <select name="disciplina" id="disciplina" onChange={(event) => setDisciplina(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note`}>
+                                    <option value='' disabled selected>Selecione uma disciplina</option>
+                                    {disciplinas.map((disciplina) => (
+                                        <option value={disciplina.id}>{disciplina.nome}</option>
+                                    ))}
+                                </select>
+                            </span>
+                        </div>
+                        <div className="line-horizontal" />
+                        <span className="group-input-comunidade">
+                            <p className="label-add-edit">Compartilhar na comunidade?</p>
+                            <label className={`toogle-label ${comunidade === 1 ? 'bg-azul-200' : 'bg-neutro-300'}`}>
+                                <input
+                                    type="checkbox"
+                                    name="comunidade"
+                                    checked={comunidade === 1}
+                                    onChange={() => { setComunidade(comunidade === 1 ? 0 : 1) }}
+                                    className="hidden" />
+                                <span className={`toogle-button ${comunidade === 1 ? 'translate-x-6 text-azul-200' : 'text-neutro-300'}`}>{comunidade !== 1 ? <X size={12} weight="bold" /> : <Check size={12} weight="bold" />}</span>
+                            </label>
+                        </span>
+                        <div className="line-horizontal" />
+                        <span className="input-group-add-edit">
+                            <label htmlFor="categorias" className="label-add-edit">Categorias</label>
+                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} />
+                        </span>
+                    </div>
+                    <div className="content-note-right">
+                        <span className="content-header-texto-note">
+                            <label htmlFor="texto" className="label-add-edit">Texto</label>
+                            <button type="button" className="btn-ia">IA</button>
+                        </span>
+                        <textarea name="texto" id="texto" value={texto} onChange={(event) => setTexto(event.target.value)} className={`${loading && `animate-pulse`} text-area`} placeholder={loading ? '' : 'Digite sua anotação aqui...'} />
+                        <span className="input-group-add-edit">
+                            <label htmlFor="categorias" className="label-add-edit">Arquivos</label>
+                            <UploadFile arquivos={arquivos} setArquivos={setArquivos} />
+                        </span>
+                    </div>
+                </div>
                 <div className="container-buttons-add-edit">
                     <Link to='/anotacoes' className="btn-cancel">Cancelar</Link>
                     <button type="submit" className="btn-save">Salvar</button>
