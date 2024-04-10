@@ -10,7 +10,7 @@ export default function ListCategorias(params) {
     };
 
     return (
-        <div className="flex gap-4">
+        <div className="flex gap-2 flex-wrap">
             {params.selectCategorias.map((categoria, i) => (
                 <span className="px-2 py-1 text-xs font-semibold flex gap-2 border-2 rounded-md" style={{backgroundColor: `${categoria.cor}`, color: darkenColor(categoria.cor, 40), borderColor: darkenColor(categoria.cor, 40)}}>
                     {categoria.nome}
