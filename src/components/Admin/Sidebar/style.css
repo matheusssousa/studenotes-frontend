@@ -29,7 +29,7 @@
 
 /* BOTÃO PARA ABRIR A SIDEBAR NO CELULAR */
 .btn-open-sidebar{
-    @apply md:hidden w-[30%] dark:text-neutro-100
+    @apply md:hidden w-[20%] dark:text-neutro-100
 }
 
 /* LISTA DE ICONS NO COMPUTADOR*/
