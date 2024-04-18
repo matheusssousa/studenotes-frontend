@@ -60,7 +60,9 @@ export default function AddOrEditAnotacaoUserPage() {
                     disciplina_id: disciplina,
                     comunidade: comunidade,
                     categorias: selectCategorias,
-                    arquivos: arquivos
+                    arquivo: arquivos
+                },{
+                    headers: { "Content-Type": "multipart/form-data" }
                 });
                 toast.success("Anotação atualizada.", {
                     theme: 'colored',
@@ -81,7 +83,9 @@ export default function AddOrEditAnotacaoUserPage() {
                     disciplina_id: disciplina,
                     comunidade: comunidade,
                     categorias: selectCategorias,
-                    arquivos: arquivos
+                    arquivo: arquivos
+                },{
+                    headers: { "Content-Type": "multipart/form-data" }
                 });
                 toast.success("Anotação cadastrada.", {
                     theme: 'colored',
@@ -127,8 +131,8 @@ export default function AddOrEditAnotacaoUserPage() {
                             <label htmlFor="disciplina" className="label-add-edit-note">Disciplina</label>
                             <select name="disciplina" id="disciplina" onChange={(event) => setDisciplina(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note`}>
                                 <option value='' selected>Selecione uma disciplina</option>
-                                {disciplinas.map((disciplina) => (
-                                    <option value={disciplina.id}>{disciplina.nome}</option>
+                                {disciplinas.map((disciplina, i) => (
+                                    <option value={disciplina.id} key={i}>{disciplina.nome}</option>
                                 ))}
                             </select>
                         </span>
@@ -163,47 +167,6 @@ export default function AddOrEditAnotacaoUserPage() {
                         <UploadFile arquivos={arquivos} setArquivos={setArquivos} />
                     </span>
                 </div>
-                {/* <span className="input-group-add-edit-note">
-                            <label htmlFor="data" className="label-add-edit">Definir lembrete</label>
-                            <input type="date" name="data" value={data} onChange={(event) => setData(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note uppercase`} />
-                        </span>
-                        <span className="input-group-add-edit-note">
-                            <label htmlFor="disciplina" className="label-add-edit">Disciplina</label>
-                            <select name="disciplina" id="disciplina" onChange={(event) => setDisciplina(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note`}>
-                                <option value='' disabled selected>Selecione uma disciplina</option>
-                                {disciplinas.map((disciplina) => (
-                                    <option value={disciplina.id}>{disciplina.nome}</option>
-                                ))}
-                            </select>
-                        </span>
-                        <span className="group-input-comunidade">
-                            <p className="label-add-edit">Compartilhar na comunidade?</p>
-                            <label className={`toogle-label ${comunidade === 1 ? 'bg-azul-200' : 'bg-neutro-300'}`}>
-                                <input
-                                    type="checkbox"
-                                    name="comunidade"
-                                    checked={comunidade === 1}
-                                    onChange={() => { setComunidade(comunidade === 1 ? 0 : 1) }}
-                                    className="hidden" />
-                                <span className={`toogle-button ${comunidade === 1 ? 'translate-x-6 text-azul-200' : 'text-neutro-300'}`}>{comunidade !== 1 ? <X size={12} weight="bold" /> : <Check size={12} weight="bold" />}</span>
-                            </label>
-                        </span> */}
-                {/* <div className="line-horizontal" />
-                        <span className="input-group-add-edit">
-                            <label htmlFor="categorias" className="label-add-edit">Categorias</label>
-                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} />
-                        </span> */}
-                {/* <div className="content-note-right">
-                        <span className="content-header-texto-note">
-                            <label htmlFor="texto" className="label-add-edit">Texto</label>
-                            <button type="button" className="btn-ia">IA</button>
-                        </span>
-                        <textarea name="texto" id="texto" value={texto} onChange={(event) => setTexto(event.target.value)} className={`${loading && `animate-pulse`} text-area`} placeholder={loading ? '' : 'Digite sua anotação aqui...'} />
-                        <span className="input-group-add-edit">
-                            <label htmlFor="categorias" className="label-add-edit">Arquivos</label>
-                            <UploadFile arquivos={arquivos} setArquivos={setArquivos} />
-                        </span>
-                    </div> */}
                 <div className="container-buttons-add-edit mt-5">
                     <Link to='/anotacoes' className="btn-cancel">Cancelar</Link>
                     <button type="submit" className="btn-save">Salvar</button>
