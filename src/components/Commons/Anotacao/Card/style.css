@@ -1,18 +1,19 @@
 .card-anotacao{
-    @apply w-full h-24 md:w-[33%] md:h-56 rounded-xl py-3 px-5
+    @apply w-full h-36 md:w-[33%] md:h-52 rounded-xl py-3 px-5
     flex flex-col justify-between
     border border-neutro-200 bg-neutro-150 
     dark:bg-neutro-500 dark:border-neutro-400
     text-neutro-600 dark:text-neutro-100
     text-sm
-
-    hover:scale-95 duration-200 ease-in
 }
 .content-header-card-anotacao{
-    @apply flex w-full justify-between items-center
+    @apply flex w-full justify-between items-center  
 }
 .content-texto-card-anotacao{
-    @apply text-xs 
+    @apply hidden md:flex text-xs text-justify
+}
+.content-texto-card-anotacao-mobile{
+    @apply flex md:hidden text-xs text-justify
 }
 .content-options-card-anotacao{
     @apply flex w-full justify-between items-center
