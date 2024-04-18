@@ -10,6 +10,7 @@ import Pagination from "../../../components/Commons/Pagination";
 import Table from "../../../components/Commons/Table";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
 import AnotacaoCard from "../../../components/Commons/Anotacao/Card";
+import AnotacaoTable from "../../../components/Commons/Anotacao/Table";
 
 export default function AnotacaoUserPage(params) {
     const [anotacoes, setAnotacoes] = useState([]);
@@ -38,6 +39,7 @@ export default function AnotacaoUserPage(params) {
                     status: searchStatus
                 }
             });
+            setPagination(response.data.anotacoes);
             setAnotacoes(response.data.anotacoes.data);
             setDisciplinas(response.data.disciplinas);
             setCategorias(response.data.categorias);
@@ -75,9 +77,7 @@ export default function AnotacaoUserPage(params) {
         try {
             await ApiUser.post(`/anotacao/restore/${anotacao}`)
             receiveAnotacoes();
-            toast.success("Anotação restaurada.", {
-                theme: 'colored',
-            });
+            toast.success("Anotação restaurada.", { theme: 'colored' });
         } catch (error) {
             console.log(error)
         }
@@ -139,7 +139,7 @@ export default function AnotacaoUserPage(params) {
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="anotacoes" items={anotacoes} delete={deleteAnotacoes} restore={restoreAnotacoes} />
+                                <AnotacaoTable items={anotacoes} delete={deleteAnotacoes} restore={restoreAnotacoes} />
                             )}
                         </>
                     )}
