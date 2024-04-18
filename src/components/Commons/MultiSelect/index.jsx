@@ -3,39 +3,34 @@ import ListCategorias from "../Categoria/List";
 
 import "./style.css";
 
-export default function MultiSelect(params) {
-    console.log(params)
-    const [selectedCategoria, setSelectedCategoria] = useState('');
+export default function MultiSelect({ categorias, selectCategorias, setSelectCategorias }) {
+    const [selectedCategoria, setSelectedCategoria] = useState([]);
 
-    const Add = (valueSelect) => {
-        const selectedCategoria = params.categorias.find((categoria) => categoria.id == valueSelect);
-        if (!selectedCategoria) {
+    const handleAdd = (valueSelect) => {
+        const selectedCategoria = categorias.find((categoria) => categoria.id === parseInt(valueSelect));
+        if (!selectedCategoria || selectCategorias.some((categoria) => categoria === valueSelect)) {
             return;
         }
-
-        if (!params.selectCategorias.some((categoria) => categoria.id === selectedCategoria.id)) {
-            const selecionados = [...params.selectCategorias];
-            selecionados.push(selectedCategoria);
-            params.setSelectCategorias(selecionados);
-        }
-        setSelectedCategoria('');
+        const selecionados = [...selectCategorias, parseInt(valueSelect)];
+        setSelectCategorias(selecionados);
+        setSelectedCategoria([]);
     }
 
-    const Remove = (index) => {
-        const selecionados = [...params.selectCategorias];
+    const handleRemove = (index) => {
+        const selecionados = [...selectCategorias];
         selecionados.splice(index, 1);
-        params.setSelectCategorias(selecionados);
+        setSelectCategorias(selecionados);
     };
 
     return (
         <div className="w-full flex gap-1 items-center">
-            <select name="categoria" id="select" onChange={(event) => Add(event.target.value)} value={selectedCategoria} className="input-add-edit-note w-[35%]">
-                <option value="" disabled selected>Selecione as categorias</option>
-                {params.categorias.map((categoria, i) => (
-                    <option value={categoria.id} key={i}>{categoria.nome}</option>
+            <select name="categoria" id="select" onChange={(event) => handleAdd(event.target.value)} value={selectedCategoria} className="input-add-edit-note w-[35%]">
+                <option value='' disabled selected>Selecione as categorias</option>
+                {categorias.map((categoria) => (
+                    <option value={categoria.id} key={categoria.id}>{categoria.nome}</option>
                 ))}
             </select>
-            <ListCategorias categorias={params.categorias} Remove={Remove} selectCategorias={params.selectCategorias} />
+            <ListCategorias categorias={categorias} Remove={handleRemove} selectCategorias={selectCategorias}/>
         </div>
     )
 }
