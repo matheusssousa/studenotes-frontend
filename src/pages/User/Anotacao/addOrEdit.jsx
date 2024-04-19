@@ -4,10 +4,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { X, Check } from "@phosphor-icons/react";
 import ApiUser from "../../../services/ApiUser";
-
-import "./style.css";
 import UploadFile from "../../../components/Commons/UploadFile";
 import MultiSelect from "../../../components/Commons/MultiSelect";
+import moment from "moment";    
+
+import "./style.css";
 
 export default function AddOrEditAnotacaoUserPage() {
     const params = useParams();
@@ -30,7 +31,13 @@ export default function AddOrEditAnotacaoUserPage() {
         setLoading(true);
         try {
             const response = await ApiUser.get(`/anotacao/${params.id}`);
-            console.log(response);
+            setNome(response.data.nome);
+            setData(moment(response.data.data_prazo).format('YYYY-MM-DD'));
+            setTexto(response.data.texto);
+            setComunidade(response.data.comunidade);
+            setArquivos(response.data.arquivos);
+            setSelectCategorias(response.data.categorias);
+            setDisciplina(response.data.disciplina);
         } catch (error) {
             console.log(error);
         }
@@ -102,6 +109,7 @@ export default function AddOrEditAnotacaoUserPage() {
 
     useEffect(() => {
         if (params.id) {
+            receiveDadosCreate();
             receiveDados();
         } else {
             receiveDadosCreate();
@@ -130,7 +138,7 @@ export default function AddOrEditAnotacaoUserPage() {
                         <span className="input-group-add-edit-note w-full md:w-[30%]">
                             <label htmlFor="disciplina" className="label-add-edit-note">Disciplina</label>
                             <select name="disciplina" id="disciplina" onChange={(event) => setDisciplina(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note`}>
-                                <option value='' selected>Selecione uma disciplina</option>
+                                {disciplina ? <option value={disciplina.id}>{disciplina.nome}</option> : <option value="">Selecione uma disciplina</option>}
                                 {disciplinas.map((disciplina, i) => (
                                     <option value={disciplina.id} key={i}>{disciplina.nome}</option>
                                 ))}
