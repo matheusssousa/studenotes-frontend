@@ -7,7 +7,6 @@ import Loading from "../../../components/Commons/Loading";
 import ErrorDenied from "../../../components/Commons/ErrorDenied";
 import Pagination from "../../../components/Commons/Pagination";
 
-import Table from "../../../components/Commons/Table";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
 import AnotacaoCard from "../../../components/Commons/Anotacao/Card";
 import AnotacaoTable from "../../../components/Commons/Anotacao/Table";

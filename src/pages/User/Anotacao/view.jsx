@@ -51,8 +51,6 @@ export default function ViewAnotacaoUserPage() {
         }
     }, [params.id])
 
-    console.log(anotacao);
-
     return (
         <div className="page-content">
             {loading ? (

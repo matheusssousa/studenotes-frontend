@@ -1,0 +1,14 @@
+.overlay-anotacao{
+    @apply absolute top-0 left-0 w-full h-full bg-neutro-250 dark:bg-black bg-opacity-50 backdrop-blur-sm
+    flex justify-center items-center z-10
+}
+.modal-anotacao{
+    @apply w-11/12 md:w-1/2 min-h-[75%] bg-neutro-150 dark:bg-neutro-500
+    rounded-xl
+    flex flex-col justify-between
+    p-5
+    z-10
+}
+.content-header-modal-anotacao{
+    @apply flex w-full justify-between items-center
+}
