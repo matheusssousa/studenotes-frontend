@@ -17,9 +17,9 @@ export default function ListCategorias({ categorias, selectCategorias, Remove })
     }, [selectCategorias]);
 
     return (
-        <div className="flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap w-full h-28">
             {categoriasSelecionadas.map((categoria, i) => (
-                <span key={i} className="px-2 py-1 text-xs font-semibold flex gap-2 border-2 rounded-md"
+                <span key={i} className="px-2 py-1 text-xs font-semibold flex items-center gap-2 border-2 rounded-md h-fit w-fit"
                     style={{
                         // backgroundColor: `${categoria.cor}`,
                         // color: darkenColor(categoria.cor, 40),

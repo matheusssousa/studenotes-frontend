@@ -10,7 +10,8 @@
 
 /* CONFIGURAÇÕES DE ESTILOS INICIAIS */
 * {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'Poppins', sans-serif;
 }
 
 /* FONTES */
@@ -60,6 +61,9 @@
 }
 .content-cards{
     @apply flex flex-wrap gap-2
+}
+.col-row{
+    @apply flex flex-col md:flex-row
 }
 
 /* ESTILOS BÁSICOS CONTEUDOS */

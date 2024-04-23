@@ -36,7 +36,7 @@ export default function AnotacaoCard(params) {
                     </span>
                 </motion.div>
                 <motion.div className="content-texto-card-anotacao break-all">
-                    {params.item.texto.length > 400 ? params.item.texto.substring(0, 400) + '...' : params.item.texto}
+                    {params.item.texto.length > 250 ? params.item.texto.substring(0, 250) + '...' : params.item.texto}
                 </motion.div>
                 <motion.div className="content-texto-card-anotacao-mobile">
                     {params.item.texto.length > 70 ? params.item.texto.substring(0, 70) + '...' : params.item.texto}
@@ -45,7 +45,7 @@ export default function AnotacaoCard(params) {
 
             <AnimatePresence>
                 {selectedAnotacao && (
-                    <ModalAnotacao id={selectedAnotacao} setSelectedAnotacao={setSelectedAnotacao} />
+                    <ModalAnotacao item={params.item} setSelectedAnotacao={setSelectedAnotacao} />
                 )}
             </AnimatePresence>
         </>

@@ -23,8 +23,8 @@ export default function MultiSelect({ categorias, selectCategorias, setSelectCat
     };
 
     return (
-        <div className="w-full flex gap-1 items-center">
-            <select name="categoria" id="select" onChange={(event) => handleAdd(event.target.value)} value={selectedCategoria} className="input-add-edit-note w-[35%]">
+        <div className="w-full flex flex-col gap-2 items-center">
+            <select name="categoria" id="select" onChange={(event) => handleAdd(event.target.value)} value={selectedCategoria} className="input-add-edit-note w-full">
                 <option value='' disabled selected>Selecione as categorias</option>
                 {categorias.map((categoria) => (
                     <option value={categoria.id} key={categoria.id}>{categoria.nome}</option>
