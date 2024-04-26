@@ -68,7 +68,7 @@ export default function ViewAnotacaoUserPage() {
                         delete={setDeleteAnotacao}
                         restore={anotacao.deleted_at && restoreAnotacao}
                     />
-                    <div className="w-full text-sm dark:text-neutro-100 text-justify break-all">
+                    <div className="w-full text-sm dark:text-neutro-100 text-justify break-all whitespace-pre-wrap">
                         <p>{anotacao.texto}</p>
                     </div>
 

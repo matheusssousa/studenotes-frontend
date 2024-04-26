@@ -2,14 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Eye, Files, Share, X } from "@phosphor-icons/react";
 import moment from "moment";
-import darkColor from "../../../../hooks/DarkColor";
+import adjustColor from "../../../../hooks/AdjustColor";
 
 import './style.css';
 import { Link } from "react-router-dom";
 
 export default function ModalAnotacao(params) {
     const darkenColor = (hex, percent) => {
-        const dark = darkColor(hex, percent);
+        const dark = adjustColor(hex, percent);
         return dark;
     };
     return (
@@ -31,9 +31,9 @@ export default function ModalAnotacao(params) {
                 transition={{ duration: 0.2 }}
             >
                 <div className="content-header-modal-anotacao">
-                    <div className="w-[5%]" />
+                    <div className="w-[10%] sm:w-[5%]" />
                     <div className="flex justify-center flex-col items-center">
-                        <p className="font-medium dark:text-neutro-100">{params.item.nome}</p>
+                        <p className="font-medium dark:text-neutro-100 text-center">{params.item.nome}</p>
                         <span className="flex gap-2">
                             {params.item.disciplina && <p className="text-xs text-neutro-300">{params.item.disciplina.nome}</p>}
                             {params.item.data_prazo && <p className="text-xs text-neutro-300">{moment(params.item.data_prazo).format('DD-MM-YYYY')}</p>}
@@ -53,12 +53,15 @@ export default function ModalAnotacao(params) {
                             </span>
                         }
                     </div>
-                    <div className="w-[5%] flex justify-end">
+                    <div className="w-[10%] sm:w-[5%] flex justify-end">
                         <button onClick={() => params.setSelectedAnotacao(null)} className="button-close-modal-anotacao"><X size={15} weight="bold" /></button>
                     </div>
                 </div>
-                <div className="content-conteudo-modal-anotacao">
-                    {params.item.texto.length > 1300 ? params.item.texto.substring(0, 1300) + '...' : params.item.texto}
+                <div className="content-conteudo-modal-anotacao whitespace-pre-wrap">
+                    {params.item.texto.length > 1000 ? params.item.texto.substring(0, 1000) + '...' : params.item.texto}
+                </div>
+                <div className="content-conteudo-modal-anotacao-mobile whitespace-pre-wrap">
+                    {params.item.texto.length > 500 ? params.item.texto.substring(0, 500) + '...' : params.item.texto}
                 </div>
                 <div className="line-horizontal" />
                 <div className="content-footer-modal-anotacao">
@@ -70,7 +73,7 @@ export default function ModalAnotacao(params) {
                     </span>
                     <span className="flex items-center gap-4">
                         <button className={`button-compartilhar-anotacao${params.item.comunidade === 0 ? '-false' : '-true'}`} title="Compartilhar">
-                            <Share size={20} weight="fill"/>
+                            <Share size={20} weight="fill" />
                         </button>
                         <Link to={`/anotacoes/view/${params.item.id}`} className="button-visualizar-anotacao">
                             Ver mais

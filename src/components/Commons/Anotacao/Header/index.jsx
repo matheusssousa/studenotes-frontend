@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { CaretLeft, ClockClockwise, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import moment from "moment";
-import darkColor from "../../../../hooks/DarkColor";
+import adjustColor from "../../../../hooks/AdjustColor";
 
 export default function HeaderAnotacao(params) {
+    console.log(params);
     const darkenColor = (hex, percent) => {
-        const dark = darkColor(hex, percent);
+        const dark = adjustColor(hex, percent);
         return dark;
     };
 

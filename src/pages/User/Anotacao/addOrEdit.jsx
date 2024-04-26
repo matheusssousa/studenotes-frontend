@@ -21,7 +21,7 @@ export default function AddOrEditAnotacaoUserPage() {
     const [data, setData] = useState();
     const [texto, setTexto] = useState();
     const [disciplina, setDisciplina] = useState();
-    const [comunidade, setComunidade] = useState();
+    const [comunidade, setComunidade] = useState(0);
     const [selectCategorias, setSelectCategorias] = useState([]);
     const [arquivos, setArquivos] = useState([]);
 
@@ -128,8 +128,8 @@ export default function AddOrEditAnotacaoUserPage() {
                     <span className="input-group-add-edit-note">
                         <input type="text" name="nome" value={nome} onChange={(event) => setNome(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note-title`} placeholder={loading ? '' : 'Digite o nome da anotação...'} required />
                     </span>
-                    <div className="flex items-center gap-2">
-                        <label className={`toogle-label ${comunidade === 1 ? 'bg-azul-200' : 'bg-neutro-250'}`}>
+                    <div className="hidden md:flex items-center gap-2">
+                        <label className={`toogle-label ${comunidade === 1 ? 'bg-azul-200' : 'bg-neutro-250'}`} title="Compartilhar">
                             <input
                                 type="checkbox"
                                 name="comunidade"
@@ -168,10 +168,22 @@ export default function AddOrEditAnotacaoUserPage() {
                     <div className="content-note-conteudo">
                         <span className="content-header-texto-note">
                             <label htmlFor="texto" className="label-add-edit-note">Texto</label>
-                            <button type="button" className="btn-ai">IA</button>
+                            {/* <button type="button" className="btn-ai">IA</button> */}
                         </span>
                         <textarea name="texto" id="texto" value={texto} onChange={(event) => setTexto(event.target.value)} className={`${loading && `animate-pulse`} text-area`} placeholder={loading ? '' : 'Digite sua anotação aqui...'} />
                     </div>
+                </div>
+                <div className="content-note-footer">
+                    <label className={`toogle-label ${comunidade === 1 ? 'bg-azul-200' : 'bg-neutro-250'}`} title="Compartilhar">
+                        <input
+                            type="checkbox"
+                            name="comunidade"
+                            checked={comunidade === 1}
+                            onChange={() => { setComunidade(comunidade === 1 ? 0 : 1) }}
+                            className="hidden" />
+                        <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={17} /></span>
+                    </label>
+                    <button type="submit" className="btn-save">Salvar</button>
                 </div>
             </form >
         </div >

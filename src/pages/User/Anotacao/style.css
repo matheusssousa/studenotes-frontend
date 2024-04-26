@@ -1,5 +1,5 @@
 .form-add-edit-note{
-    @apply w-full max-h-full bg-neutro-200 dark:bg-neutro-500 rounded-lg text-sm flex flex-col shadow-sm gap-8 p-4 relative
+    @apply w-full md:max-h-full bg-neutro-200 dark:bg-neutro-500 rounded-lg text-sm flex flex-col shadow-sm gap-8 p-4 relative
 }
 
 .content-note-header{
@@ -10,7 +10,7 @@
 }
 
 .content-note-options{
-    @apply w-[30%] flex flex-col gap-5
+    @apply w-full md:w-[30%] flex flex-col gap-5
 }
 .input-group-add-edit-note{
     @apply flex flex-col w-full
@@ -24,7 +24,7 @@
 
 
 .content-note-conteudo{
-    @apply w-[70%] flex flex-col
+    @apply w-full md:w-[70%] flex flex-col relative h-full max-h-full
 }
 
 .content-header-texto-note{
@@ -35,7 +35,10 @@
     hover:from-rosa-100 hover:to-azul-100 hover:text-neutro-100 hover:shadow-md
 }
 .text-area{
-    @apply bg-white dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 dark:text-neutro-100 placeholder:text-neutro-600 dark:placeholder:text-neutro-100 rounded-lg h-full p-2 text-sm border border-neutro-200 overflow-auto
+    @apply bg-white dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 
+    dark:text-neutro-100 placeholder:text-neutro-600 dark:placeholder:text-neutro-100 rounded-lg 
+    md:h-full p-2 text-sm border border-neutro-200 overflow-y-auto
+    h-[300px]
 }
 
 .group-input-comunidade{
@@ -46,4 +49,8 @@
 }
 .toogle-button{
     @apply absolute transform transition-transform duration-300 flex items-center justify-center
+}
+
+.content-note-footer{
+    @apply w-full flex md:hidden justify-end items-center gap-2
 }

@@ -18,7 +18,10 @@
     hover:bg-opacity-30 duration-200 ease-in-out
 }
 .content-conteudo-modal-anotacao{
-    @apply text-sm h-72 w-full break-all dark:text-neutro-250 flex items-center text-justify
+    @apply text-sm h-72 w-full break-all dark:text-neutro-250 sm:flex items-center text-justify hidden
+}
+.content-conteudo-modal-anotacao-mobile{
+    @apply text-sm h-72 w-full break-all dark:text-neutro-250 flex items-center text-justify sm:hidden
 }
 .content-footer-modal-anotacao{
     @apply h-[10%] flex justify-between items-center text-xs

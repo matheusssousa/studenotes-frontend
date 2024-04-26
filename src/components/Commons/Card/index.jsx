@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowClockwise, PencilSimple, SealCheck, SealWarning, TrashSimple } from "@phosphor-icons/react";
-import darkColor from "../../../hooks/DarkColor";
+import adjustColor from "../../../hooks/AdjustColor";
 
 import './style.css';
 
 export default function Card(params) {
-    const darkenColor = params.type === 'categorias' ? darkColor(params.item.cor, 40) : params.item.cor;
+    const darkenColor = params.type === 'categorias' ? adjustColor(params.item.cor, 40) : params.item.cor;
 
     return (
         <div className={params.type === 'categorias' ? 'card-categoria' : 'card'} style={params.type === 'categorias' ? { backgroundColor: params.item.cor, border: 2, borderColor: darkenColor, borderStyle: 'solid' } : {}}>

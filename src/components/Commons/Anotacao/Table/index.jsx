@@ -1,5 +1,5 @@
 import React from "react";
-import darkColor from "../../../../hooks/DarkColor";
+import adjustColor from "../../../../hooks/AdjustColor";
 import moment from "moment";
 import { ArrowClockwise, Eye, Files, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
@@ -8,7 +8,7 @@ import "./style.css";
 
 export default function AnotacaoTable(params) {
     const darkenColor = (hex, percent) => {
-        const dark = darkColor(hex, percent);
+        const dark = adjustColor(hex, percent);
         return dark;
     };
     return (
