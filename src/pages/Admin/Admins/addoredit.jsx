@@ -69,6 +69,7 @@ export default function AddOrEditAdminsAdminPage() {
     return (
         <div className="page-content">
             <MainHeader
+                voltar='/admin/admins'
                 page={params.id ? 'Editar Administrador' : 'Cadastrar Administrador'}
                 text={params.id ? 'Editar um administrador já cadastrado.' : 'Cadastrar um novo administrador.'}
             />

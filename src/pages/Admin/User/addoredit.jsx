@@ -68,6 +68,7 @@ export default function AddOrEditUserAdminPage() {
     return (
         <div className="page-content">
             <MainHeader
+                voltar='/admin/usuarios'
                 page={params.id ? 'Editar Usuário' : 'Cadastrar Usuário'}
                 text={params.id ? 'Editar um usuário já cadastrado.' : 'Cadastrar um novo usuário.'}
             />

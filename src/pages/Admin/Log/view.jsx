@@ -34,6 +34,7 @@ export default function ViewLogAdminPage() {
     return (
         <div className="page-content">
             <MainHeader
+                voltar='admin/logs'
                 page='Visualizar Log'
                 text='Visualização de um log do sistema.'
             />

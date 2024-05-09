@@ -67,6 +67,7 @@ export default function AddOrEditCategoriaUserPage() {
     return (
         <div className="page-content">
             <MainHeader
+                voltar='/categorias'
                 page={params.id ? 'Editar Categoria' : 'Cadastrar Categoria'}
                 text={params.id ? 'Editar uma categoria já cadastrada.' : 'Cadastrar uma nova categoria.'}
             />

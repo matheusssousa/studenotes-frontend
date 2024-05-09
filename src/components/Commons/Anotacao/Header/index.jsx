@@ -17,7 +17,7 @@ export default function HeaderAnotacao(params) {
                 {params.voltar &&
                     <Link
                         to={params.voltar}
-                        className="flex gap-1 rounded-lg bg-azul-200 px-2 py-1 text-sm items-center justify-center hover:bg-azul-300 hover:text-neutro-100 duration-200"
+                        className="sm:absolute sm:left-14 bg-azul-200 py-2 px-2 sm:px-0 rounded-md sm:rounded-l-none sm:rounded-r-md hover:drop-shadow-md duration-200 ease-in hover:text-neutro-100"
                         title="Voltar">
                         <CaretLeft size={15} />
                     </Link>
@@ -25,10 +25,12 @@ export default function HeaderAnotacao(params) {
             </div>
             <span className="flex justify-center flex-col items-center">
                 <p className="font-medium dark:text-neutro-100">{params.title}</p>
-                <span className="flex gap-2">
-                    {params.disciplina && <p className="text-xs text-neutro-300">{params.disciplina}</p>}
-                    {params.data && <p className="text-xs text-neutro-300">{moment(params.data).format('DD-MM-YYYY')}</p>}
-                </span>
+                {(params.disciplina || params.data_prazo) &&
+                    <span className="flex gap-2">
+                        {params.disciplina && <p className="text-xs text-neutro-300">{params.disciplina}</p>}
+                        {params.data && <p className="text-xs text-neutro-300">{moment(params.data).format('DD-MM-YYYY')}</p>}
+                    </span>
+                }
                 {params.categorias &&
                     <span className="flex gap-1 mt-2">
                         {params.categorias.map((categoria, i) => (

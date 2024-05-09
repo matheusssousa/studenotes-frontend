@@ -30,7 +30,7 @@ export default function AddOrEditAnotacaoUserPage() {
     const receiveDados = async () => {
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/anotacao/${params.id}`);
+            const response = await ApiUser.get(`/anotacao/edit/${params.id}`);
             setNome(response.data.nome);
             setData(moment(response.data.data_prazo).format('YYYY-MM-DD'));
             setTexto(response.data.texto);
