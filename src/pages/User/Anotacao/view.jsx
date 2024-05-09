@@ -5,6 +5,7 @@ import ApiUser from "../../../services/ApiUser";
 import HeaderAnotacao from "../../../components/Commons/Anotacao/Header";
 import Loading from "../../../components/Commons/Loading";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
+import { FileDoc, FileJpg, FilePdf, FilePng } from "@phosphor-icons/react";
 
 export default function ViewAnotacaoUserPage() {
     const params = useParams();
@@ -45,6 +46,21 @@ export default function ViewAnotacaoUserPage() {
         }
     }
 
+    const tipoArquivo = (type) => {
+        switch (type) {
+            case 'pdf':
+                return <FilePdf size={25}/>;
+            case 'doc' || 'docx':
+                return <FileDoc size={25}/>;
+            case 'jpg' || 'jpeg':
+                return <FileJpg size={25}/>;
+            case 'png':
+                return <FilePng size={25}/>;
+            default:
+                break;
+        }
+    }
+
     useEffect(() => {
         if (params.id) {
             receiveDados();
@@ -68,16 +84,17 @@ export default function ViewAnotacaoUserPage() {
                         delete={setDeleteAnotacao}
                         restore={anotacao.deleted_at && restoreAnotacao}
                     />
-                    <div className="w-full text-sm dark:text-neutro-100 text-justify break-all whitespace-pre-wrap">
+                    <div className="w-full text-sm rounded-lg min-h-[60%] bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 p-1 md:p-5 text-justify break-all whitespace-pre-wrap">
                         <p>{anotacao.texto}</p>
                     </div>
 
-                    {/* USAR O REACT FILE VIEWER  */}
-
                     {anotacao.arquivos &&
-                        <div className="flex flex-col gap-2">
+                        <div className="w-full text-sm rounded-lg bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 p-1 md:p-5 flex gap-2">
                             {anotacao.arquivos.map((arquivo, index) => (
-                                <a key={index} href={arquivo.arquivo} target="_blank" rel="noreferrer" className="text-sm dark:text-neutro-100 text-center underline">{arquivo.nome}</a>
+                                <a key={index} href={arquivo.arquivo} target="_blank" rel="noreferrer" className="rounded-md bg-neutro-100 dark:bg-neutro-600 dark:text-neutro-100 p-2 hover:bg-neutro-150 dark:hover:bg-neutro-400 duration-200 ease-in flex gap-1 items-center">
+                                    <span>{tipoArquivo(arquivo.tipo)}</span>
+                                    <p>{arquivo.nome}</p>
+                                </a>
                             ))}
                         </div>
                     }
