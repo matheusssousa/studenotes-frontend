@@ -31,16 +31,22 @@ export default function AddOrEditAnotacaoUserPage() {
         setLoading(true);
         try {
             const response = await ApiUser.get(`/anotacao/edit/${params.id}`);
-            setNome(response.data.nome);
-            setData(moment(response.data.data_prazo).format('YYYY-MM-DD'));
-            setTexto(response.data.texto);
-            setComunidade(response.data.comunidade);
-            setArquivos(response.data.arquivos);
-            setSelectCategorias(response.data.categorias);
-            setDisciplina(response.data.disciplina);
+            setNome(response.data.anotacao.nome);
+            setData(moment(response.data.anotacao.data_prazo).format('YYYY-MM-DD'));
+            setTexto(response.data.anotacao.texto);
+            setComunidade(response.data.anotacao.comunidade);
+            setArquivos(response.data.anotacao.arquivos);
+            if (response.data.anotacao.categorias.length > 0) {
+                setSelectCategorias(response.data.anotacao.categorias.map(categoria => categoria.id));
+            }
+            setDisciplina(response.data.anotacao.disciplina);
+
+            setCategorias(response.data.categorias);
+            setDisciplinas(response.data.disciplinas);
         } catch (error) {
             console.log(error);
         }
+
         setLoading(false);
     }
 
@@ -150,15 +156,15 @@ export default function AddOrEditAnotacaoUserPage() {
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="disciplina" className="label-add-edit-note">Disciplina</label>
                             <select name="disciplina" id="disciplina" onChange={(event) => setDisciplina(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note`}>
-                                {disciplina ? <option value={disciplina.id}>{disciplina.nome}</option> : <option value="">Selecione uma disciplina</option>}
-                                {disciplinas.map((disciplina, i) => (
-                                    <option value={disciplina.id} key={i}>{disciplina.nome}</option>
+                                <option value="">Selecione uma disciplina</option>
+                                {disciplinas.map((disciplinaOption, i) => (
+                                    <option value={disciplinaOption.id} key={i} selected={!loading && disciplina && disciplinaOption.id === disciplina.id}>{disciplinaOption.nome}</option>
                                 ))}
                             </select>
                         </span>
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="categorias" className="label-add-edit-note">Categorias</label>
-                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} />
+                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} loading={loading}/>
                         </span>
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="categorias" className="label-add-edit-note">Arquivos</label>

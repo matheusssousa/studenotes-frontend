@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ListCategorias from "../Categoria/List";
 
 import "./style.css";
 
-export default function MultiSelect({ categorias, selectCategorias, setSelectCategorias }) {
+export default function MultiSelect({ categorias, selectCategorias, setSelectCategorias, loading }) {
     const [selectedCategoria, setSelectedCategoria] = useState([]);
 
     const handleAdd = (valueSelect) => {
@@ -11,7 +11,7 @@ export default function MultiSelect({ categorias, selectCategorias, setSelectCat
         if (!selectedCategoria || selectCategorias.some((categoria) => categoria === valueSelect)) {
             return;
         }
-        const selecionados = [...selectCategorias, parseInt(valueSelect)];
+        const selecionados = [...selectCategorias, selectedCategoria];
         setSelectCategorias(selecionados);
         setSelectedCategoria([]);
     }
@@ -24,10 +24,10 @@ export default function MultiSelect({ categorias, selectCategorias, setSelectCat
 
     return (
         <div className="w-full flex flex-col gap-2 items-center">
-            <select name="categoria" id="select" onChange={(event) => handleAdd(event.target.value)} value={selectedCategoria} className="input-add-edit-note w-full">
+            <select name="categoria" id="select" onChange={(event) => handleAdd(event.target.value)} value={selectedCategoria} className={`${loading && `animate-pulse`} input-add-edit-note w-full`}>
                 <option value='' disabled selected>Selecione as categorias</option>
                 {categorias.map((categoria) => (
-                    <option value={categoria.id} key={categoria.id}>{categoria.nome}</option>
+                    <option value={categoria.id} key={categoria.id} disabled={selectCategorias.find(cat => cat === categoria.id)}>{categoria.nome}</option>
                 ))}
             </select>
             <ListCategorias categorias={categorias} Remove={handleRemove} selectCategorias={selectCategorias}/>

@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { CaretLeft, ClockClockwise, PencilSimple, TrashSimple } from "@phosphor-icons/react";
+import { CaretLeft, ClockClockwise, PencilSimple, ShareFat, TrashSimple } from "@phosphor-icons/react";
 import moment from "moment";
 import adjustColor from "../../../../hooks/AdjustColor";
 
 export default function HeaderAnotacao(params) {
-    console.log(params);
     const darkenColor = (hex, percent) => {
         const dark = adjustColor(hex, percent);
         return dark;
@@ -22,6 +21,13 @@ export default function HeaderAnotacao(params) {
                         <CaretLeft size={15} />
                     </Link>
                 }
+                <form onSubmit={params.setComunidade}>
+                    <button type="submit" className={`toogle-label ${params.comunidade === 1 ? 'bg-azul-200' : 'bg-neutro-250'}`}>
+                        <p className={`toogle-button ${params.comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}>
+                            <ShareFat size={16} />
+                        </p>
+                    </button>
+                </form>
             </div>
             <span className="flex justify-center flex-col items-center">
                 <p className="font-medium dark:text-neutro-100">{params.title}</p>
@@ -55,7 +61,7 @@ export default function HeaderAnotacao(params) {
                         <ClockClockwise size={15} />
                     </button>
                     :
-                    <div className="content-buttons-action flex-col md:flex-wrap">
+                    <div className="content-buttons-action flex-col md:flex-row">
                         {params.edit &&
                             <Link
                                 to={params.edit}

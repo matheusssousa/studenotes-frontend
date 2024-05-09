@@ -3,6 +3,7 @@ import { X } from "@phosphor-icons/react";
 import adjustColor from "../../../../hooks/AdjustColor";
 
 export default function ListCategorias({ categorias, selectCategorias, Remove }) {
+    console.log(selectCategorias)
     const [categoriasSelecionadas, setCategoriasSelecionadas] = useState([]);
 
     const darkenColor = (hex, percent) => {

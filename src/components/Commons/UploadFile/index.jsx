@@ -23,14 +23,15 @@ export default function UploadFile({ arquivos, setArquivos }) {
                 <div className="selectedFiles">
                     {arquivos.map((file, index) => (
                         <div key={index} className="selectedFile">
-                            {file.name ? (file.name.length > 40 ? `${file.name.substring(0, 40)}...` : file.name) : (file.nome_arquivo.length > 50 ? `${file.nome_arquivo.substring(0, 50)}...` : file.nome_arquivo)}
+                            {file.name ? (file.name.length > 40 ? `${file.name.substring(0, 40)}...` : file.name) : (file.arquivo.length > 50 ? `${file.arquivo.substring(0, 50)}...` : file.arquivo)}
                             <button
                                 onClick={() => {
                                     const newArquivos = [...arquivos];
                                     newArquivos.splice(index, 1);
                                     setArquivos(newArquivos);
                                 }}
-                                className="button-remove">
+                                className="button-remove"
+                                type="button">
                                 <X size={15} />
                             </button>
                         </div>
