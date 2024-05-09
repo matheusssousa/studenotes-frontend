@@ -36,7 +36,6 @@ export default function CategoriaUserPage() {
                     status: searchStatus
                 }
             });
-            console.log(response)
             setCategorias(response.data.data);
             setPagination(response.data);
         } catch (error) {

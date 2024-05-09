@@ -31,7 +31,6 @@ export default function LogsAdminPage(params) {
                     created_at_fim: searchDateFim,
                 }
             });
-            console.log(response)
             setLogs(response.data.data);
             setPagination(response.data);
         } catch (error) {

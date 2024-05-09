@@ -40,7 +40,6 @@ export default function AdminsAdminPage(params) {
                     delete: searchStatus
                 }
             });
-            console.log(response)
             setAdmins(response.data.data);
             setPagination(response.data);
         } catch (error) {

@@ -40,7 +40,6 @@ export default function ResetPasswordAdminPage() {
                 password: password,
                 password_confirmation: passwordConfirm,
             });
-            console.log(response);
             toast.success("Senha alterada com sucesso!", {
                 theme: "colored"
             });

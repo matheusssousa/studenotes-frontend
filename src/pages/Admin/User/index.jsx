@@ -40,7 +40,6 @@ export default function UserAdminPage(params) {
                     delete: searchStatus
                 }
             });
-            console.log(response)
             setUsuarios(response.data.data);
             setPagination(response.data);
         } catch (error) {

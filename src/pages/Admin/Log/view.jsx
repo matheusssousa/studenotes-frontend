@@ -16,7 +16,6 @@ export default function ViewLogAdminPage() {
         setLoading(true);
         try {
             const response = await ApiAdmin.get(`/log/${params.id}`);
-            console.log(response)
             setLog(response.data);
             setObjeto(JSON.stringify(response.data.properties.attributes));
         } catch (error) {

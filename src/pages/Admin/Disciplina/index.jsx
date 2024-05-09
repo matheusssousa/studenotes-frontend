@@ -36,7 +36,6 @@ export default function DisciplinaAdminPage(params) {
                     delete: searchStatus
                 }
             });
-            console.log(response)
             setDisciplinas(response.data.data);
             setPagination(response.data);
         } catch (error) {
@@ -47,7 +46,6 @@ export default function DisciplinaAdminPage(params) {
 
     const deleteDisciplinas = async (disciplina) => {
         setDeleteDisciplina(disciplina);
-        console.log(deleteDisciplina);
     };
 
     const renderModalDelete = () => {
