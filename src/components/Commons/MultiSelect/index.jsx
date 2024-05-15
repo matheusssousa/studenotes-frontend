@@ -11,7 +11,7 @@ export default function MultiSelect({ categorias, selectCategorias, setSelectCat
         if (!selectedCategoria || selectCategorias.some((categoria) => categoria === valueSelect)) {
             return;
         }
-        const selecionados = [...selectCategorias, selectedCategoria];
+        const selecionados = [...selectCategorias, selectedCategoria.id];
         setSelectCategorias(selecionados);
         setSelectedCategoria([]);
     }
