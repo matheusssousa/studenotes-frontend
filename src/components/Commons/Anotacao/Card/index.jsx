@@ -36,10 +36,10 @@ export default function AnotacaoCard(params) {
                     </span>
                 </motion.div>
                 <motion.div className="content-texto-card-anotacao break-all whitespace-pre-wrap">
-                    {params.item.texto.length > 250 ? params.item.texto.substring(0, 250) + '...' : params.item.texto}
+                    {params.item.texto && (params.item.texto.length > 250 ? params.item.texto.substring(0, 250) + '...' : params.item.texto)}
                 </motion.div>
                 <motion.div className="content-texto-card-anotacao-mobile whitespace-pre-wrap">
-                    {params.item.texto.length > 70 ? params.item.texto.substring(0, 70) + '...' : params.item.texto}
+                    {params.item.texto && (params.item.texto.length > 70 ? params.item.texto.substring(0, 70) + '...' : params.item.texto)}
                 </motion.div>
             </motion.div>
 

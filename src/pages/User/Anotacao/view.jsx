@@ -91,7 +91,7 @@ export default function ViewAnotacaoUserPage() {
                     {anotacao.arquivos &&
                         <div className="w-full text-sm rounded-lg bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 p-1 md:p-5 flex gap-2">
                             {anotacao.arquivos.map((arquivo, index) => (
-                                <a key={index} href={arquivo.arquivo} target="_blank" rel="noreferrer" className="rounded-md bg-neutro-100 dark:bg-neutro-600 dark:text-neutro-100 p-2 hover:bg-neutro-150 dark:hover:bg-neutro-400 duration-200 ease-in flex gap-1 items-center">
+                                <a key={index} href={`http://localhost:8000/storage/${arquivo.arquivo}`} target="_blank" rel="noreferrer" className="rounded-md bg-neutro-100 dark:bg-neutro-600 dark:text-neutro-100 p-2 hover:bg-neutro-150 dark:hover:bg-neutro-400 duration-200 ease-in flex gap-1 items-center">
                                     <span>{tipoArquivo(arquivo.tipo)}</span>
                                     <p>{arquivo.nome}</p>
                                 </a>

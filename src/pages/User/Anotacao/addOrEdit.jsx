@@ -66,17 +66,19 @@ export default function AddOrEditAnotacaoUserPage() {
         e.preventDefault();
         if (anotacao) {
             try {
-                await ApiUser.put(`/anotacao/${anotacao}`, {
+                const response = await ApiUser.post(`/anotacao/${anotacao}`, {
                     nome: nome,
                     texto: texto,
                     data_prazo: data,
-                    disciplina_id: disciplina,
+                    disciplina_id: disciplina.id,
                     comunidade: comunidade,
                     categorias: selectCategorias,
-                    arquivo: arquivos
+                    arquivo: arquivos,
+                    _method: "PUT",
                 }, {
                     headers: { "Content-Type": "multipart/form-data" }
                 });
+                console.log(response);
                 toast.success("Anotação atualizada.", {
                     theme: 'colored',
                 });

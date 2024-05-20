@@ -58,10 +58,10 @@ export default function ModalAnotacao(params) {
                     </div>
                 </div>
                 <div className="content-conteudo-modal-anotacao whitespace-pre-wrap">
-                    {params.item.texto.length > 1000 ? params.item.texto.substring(0, 1000) + '...' : params.item.texto}
+                    {params.item.texto && (params.item.texto.length > 1000 ? params.item.texto.substring(0, 1000) + '...' : params.item.texto)}
                 </div>
                 <div className="content-conteudo-modal-anotacao-mobile whitespace-pre-wrap">
-                    {params.item.texto.length > 500 ? params.item.texto.substring(0, 500) + '...' : params.item.texto}
+                    {params.item.texto && (params.item.texto.length > 500 ? params.item.texto.substring(0, 500) + '...' : params.item.texto)}
                 </div>
                 <div className="line-horizontal" />
                 <div className="content-footer-modal-anotacao">
