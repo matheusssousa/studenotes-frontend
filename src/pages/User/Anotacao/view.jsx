@@ -16,6 +16,7 @@ export default function ViewAnotacaoUserPage() {
     const [deleteAnotacao, setDeleteAnotacao] = useState(false);
 
     const receiveDados = async () => {
+        setLoading(true);
         try {
             const response = await ApiUser.get(`/anotacao/${params.id}`);
             setAnotacao(response.data);
@@ -24,17 +25,6 @@ export default function ViewAnotacaoUserPage() {
         }
         setLoading(false);
     }
-
-    const confirmDelete = async (anotacao) => {
-        try {
-            await ApiUser.delete(`/anotacao/${anotacao}`);
-            receiveAnotacoes();
-            setDeleteAnotacao();
-            toast.success("Anotação excluída.", { theme: 'colored' });
-        } catch (error) {
-            console.log(error);
-        }
-    };
 
     const restoreAnotacao = async (anotacao) => {
         try {
@@ -45,6 +35,16 @@ export default function ViewAnotacaoUserPage() {
             console.log(error)
         }
     }
+
+    const confirmDelete = async (anotacao) => {
+        try {
+            await ApiUser.delete(`/anotacao/${anotacao}`);
+            navigate('/anotacoes');
+            toast.success("Anotação excluída.", { theme: 'colored' });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const tipoArquivo = (type) => {
         switch (type) {
@@ -88,7 +88,7 @@ export default function ViewAnotacaoUserPage() {
                         <p>{anotacao.texto}</p>
                     </div>
 
-                    {anotacao.arquivos &&
+                    {anotacao.arquivos.length > 0 &&
                         <div className="w-full text-sm rounded-lg bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 p-1 md:p-5 flex gap-2">
                             {anotacao.arquivos.map((arquivo, index) => (
                                 <a key={index} href={`http://localhost:8000/storage/${arquivo.arquivo}`} target="_blank" rel="noreferrer" className="rounded-md bg-neutro-100 dark:bg-neutro-600 dark:text-neutro-100 p-2 hover:bg-neutro-150 dark:hover:bg-neutro-400 duration-200 ease-in flex gap-1 items-center">
