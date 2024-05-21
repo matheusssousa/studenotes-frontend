@@ -10,6 +10,7 @@ import Pagination from "../../../components/Commons/Pagination";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
 import AnotacaoCard from "../../../components/Commons/Anotacao/Card";
 import AnotacaoTable from "../../../components/Commons/Anotacao/Table";
+import useViewMode from "../../../hooks/ViewMode";
 
 export default function AnotacaoUserPage(params) {
     const [anotacoes, setAnotacoes] = useState([]);
@@ -20,9 +21,12 @@ export default function AnotacaoUserPage(params) {
     const [searchDateInicio, setSearchDateInicio] = useState("");
     const [searchDateFim, setSearchDateFim] = useState("");
     const [searchStatus, setSearchStatus] = useState("");
+    const [searchComunidade, setSearchComunidade] = useState("");
+    const [searchDisciplina, setSearchDisciplina] = useState("");
+    const [searchCategoria, setSearchCategoria] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [viewMode, setViewMode] = useState('card');
+    const [viewMode, setViewMode] = useViewMode();
 
     const [deleteAnotacao, setDeleteAnotacao] = useState(false);
 
@@ -35,7 +39,10 @@ export default function AnotacaoUserPage(params) {
                     nome: searchNome,
                     data_inicio: searchDateInicio,
                     data_fim: searchDateFim,
-                    status: searchStatus
+                    status: searchStatus,
+                    comunidade: searchComunidade,
+                    categoria: searchCategoria,
+                    disciplina: searchDisciplina
                 }
             });
             setPagination(response.data.anotacoes);
@@ -87,6 +94,9 @@ export default function AnotacaoUserPage(params) {
         setSearchDateFim("");
         setSearchDateInicio("");
         setSearchStatus("");
+        setSearchCategoria("");
+        setSearchDisciplina("");
+        setSearchComunidade("");
         receiveAnotacoes();
     };
 
@@ -115,10 +125,16 @@ export default function AnotacaoUserPage(params) {
                 setSearchDateFim={setSearchDateFim}
                 status={searchStatus}
                 setSearchStatus={setSearchStatus}
+                comunidade={searchComunidade}
+                setSearchComunidade={setSearchComunidade}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
+                disciplina={searchDisciplina}
                 disciplinas={disciplinas}
+                setSearchDisciplina={setSearchDisciplina}
+                categoria={searchCategoria}
                 categorias={categorias}
+                setSearchCategoria={setSearchCategoria}
                 limpar={limparSearch}
                 buscar={receiveAnotacoes}
             />

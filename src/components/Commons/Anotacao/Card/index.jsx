@@ -22,8 +22,11 @@ export default function AnotacaoCard(params) {
                 whileTap={{ scale: 0.95 }}
             >
                 <motion.div className="content-header-card-anotacao">
-                    <span className="flex items-start justify-center flex-col">
-                        <p className="text-base font-medium text-center">{params.item.nome}</p>
+                    <span className="flex items-start justify-center flex-col w-full">
+                        <div className="flex gap-2 items-end w-full justify-between">
+                            <p className="text-base font-medium text-center">{params.item.nome}</p>
+                            {params.item.deleted_at && <small className=" text-vermelho-300 text-xs">Excluído</small>}
+                        </div>
                         <div className="flex gap-3 -translate-y-1">
                             {params.item.disciplina && <small className="text-neutro-300">{params.item.disciplina.nome}</small>}
                             {params.item.data_prazo && <small className="text-neutro-300">{moment(params.item.data_prazo).format('DD-MM-YYYY')}</small>}

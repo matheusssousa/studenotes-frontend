@@ -30,6 +30,40 @@ export default function Search(search) {
             {modalFilters &&
                 <div className="subsearch-content">
                     <div className="row">
+                        {search.disciplinas &&
+                            <span className="input-group-search">
+                                <label htmlFor="disciplina" className="label-input">Disciplina</label>
+                                <select name="disciplina" id="disciplina" className="input-search-date" onChange={(event) => search.setSearchDisciplina(event.target.value)}>
+                                    <option defaultValue={''} selected={search.setSearchDisciplina === ""}>Todas</option>
+                                    {search.disciplinas.map((disciplina, i) => (
+                                        <option value={disciplina.id} key={i} selected={search.disciplina == disciplina.id}>{disciplina.nome}</option>
+                                    ))}
+                                </select>
+                            </span>
+                        }
+                        {search.categorias &&
+                            <span className="input-group-search">
+                                <label htmlFor="categoria" className="label-input">Categoria</label>
+                                <select name="categoria" id="categoria" className="input-search-date" onChange={(event) => search.setSearchCategoria(event.target.value)}>
+                                    <option defaultValue={''} selected={search.setSearchCategoria === ""}>Todas</option>
+                                    {search.categorias.map((categoria, i) => (
+                                        <option value={categoria.id} key={i} selected={search.categoria == categoria.id}>{categoria.nome}</option>
+                                    ))}
+                                </select>
+                            </span>
+                        }
+                        {search.setSearchComunidade &&
+                            <span className="input-group-search">
+                                <label htmlFor="comunidade" className="label-input">Compartilhado</label>
+                                <select name="comunidade" id="comunidade" className="input-search-date" onChange={(event) => search.setSearchComunidade(event.target.value)}>
+                                    <option value="" selected={search.comunidade === ""}>Tudo</option>                                    
+                                    <option value="1" selected={search.comunidade === "1"}>Compartilhados</option>                                    
+                                    <option value="0" selected={search.comunidade === "0"}>Não Compartilhados</option>                                    
+                                </select>
+                            </span>
+                        }
+                    </div>
+                    <div className="row">
                         {search.setSearchVerifyEmail &&
                             <span className="input-group-search">
                                 <label htmlFor="verifyemail" className="label-input">Email verificado</label>
