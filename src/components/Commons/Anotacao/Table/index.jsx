@@ -1,7 +1,7 @@
 import React from "react";
 import adjustColor from "../../../../hooks/AdjustColor";
 import moment from "moment";
-import { ArrowClockwise, Eye, Files, PencilSimple, TrashSimple } from "@phosphor-icons/react";
+import { ArrowClockwise, Eye, File, Files, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 
 import "./style.css";
@@ -12,7 +12,7 @@ export default function AnotacaoTable(params) {
         return dark;
     };
     return (
-        <>
+        <div className="flex flex-col gap-2">
             {params.items.map((item, i) => (
                 <div key={i} className="table-row-anotacao">
                     <div className="w-[20%] flex items-center">
@@ -63,6 +63,6 @@ export default function AnotacaoTable(params) {
                     </div>
                 </div>
             ))}
-        </>
+        </div>
     )
 }
