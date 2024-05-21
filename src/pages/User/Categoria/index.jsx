@@ -10,6 +10,7 @@ import Loading from "../../../components/Commons/Loading";
 import Card from "../../../components/Commons/Card";
 import Table from "../../../components/Commons/Table";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
+import useViewMode from "../../../hooks/ViewMode";
 
 export default function CategoriaUserPage() {
     const [categorias, setCategorias] = useState([]);
@@ -20,7 +21,7 @@ export default function CategoriaUserPage() {
     const [searchStatus, setSearchStatus] = useState("");
 
     const [loading, setLoading] = useState(false);
-    const [viewMode, setViewMode] = useState('card');
+    const [viewMode, setViewMode] = useViewMode();
 
     const [deleteCategoria, setDeleteCategoria] = useState(false);
 
