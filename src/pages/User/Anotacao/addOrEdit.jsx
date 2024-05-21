@@ -32,7 +32,7 @@ export default function AddOrEditAnotacaoUserPage() {
         try {
             const response = await ApiUser.get(`/anotacao/edit/${params.id}`);
             setNome(response.data.anotacao.nome);
-            setData(moment(response.data.anotacao.data_prazo).format('YYYY-MM-DD'));
+            setData(response.data.anotacao.data_prazo ? moment(response.data.anotacao.data_prazo).format("YYYY-MM-DD") : response.data.anotacao.data_prazo);
             setTexto(response.data.anotacao.texto);
             setComunidade(response.data.anotacao.comunidade);
             setArquivos(response.data.anotacao.arquivos);
@@ -65,12 +65,13 @@ export default function AddOrEditAnotacaoUserPage() {
     const enviarDados = async (e, anotacao) => {
         e.preventDefault();
         if (anotacao) {
+            console.log(data)
             try {
                 const response = await ApiUser.post(`/anotacao/${anotacao}`, {
                     nome: nome,
                     texto: texto,
                     data_prazo: data,
-                    disciplina_id: disciplina.id,
+                    disciplina_id: (disciplina ? disciplina.id : disciplina),
                     comunidade: comunidade,
                     categorias: selectCategorias,
                     arquivo: arquivos,

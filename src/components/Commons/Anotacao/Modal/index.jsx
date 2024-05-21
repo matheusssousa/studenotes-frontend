@@ -1,17 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Eye, Files, Share, X } from "@phosphor-icons/react";
+import { Files, Share, X } from "@phosphor-icons/react";
 import moment from "moment";
 import adjustColor from "../../../../hooks/AdjustColor";
+import { Link } from "react-router-dom";
 
 import './style.css';
-import { Link } from "react-router-dom";
 
 export default function ModalAnotacao(params) {
     const darkenColor = (hex, percent) => {
         const dark = adjustColor(hex, percent);
         return dark;
     };
+
     return (
         <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
             <motion.div
