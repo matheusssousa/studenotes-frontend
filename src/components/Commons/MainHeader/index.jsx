@@ -12,7 +12,7 @@ export default function MainHeader({ voltar, page, text, adicionar }) {
                     </Link>
                 )}
                 <span>
-                    <p className="font-medium dark:text-neutro-100">{page}</p>
+                    <p className="text-lg font-medium dark:text-neutro-100">{page}</p>
                     <p className="text-xs text-neutro-300">{text}</p>
                 </span>
                 {adicionar &&
