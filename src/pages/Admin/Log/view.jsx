@@ -17,7 +17,7 @@ export default function ViewLogAdminPage() {
         try {
             const response = await ApiAdmin.get(`/log/${params.id}`);
             setLog(response.data);
-            setObjeto(JSON.stringify(response.data.properties.attributes));
+            setObjeto(JSON.stringify(response.data.properties.attributes, null, 2));
         } catch (error) {
             console.log(error);
         }
@@ -33,7 +33,7 @@ export default function ViewLogAdminPage() {
     return (
         <div className="page-content">
             <MainHeader
-                voltar='admin/logs'
+                voltar='/admin/logs'
                 page='Visualizar Log'
                 text='Visualização de um log do sistema.'
             />
@@ -65,7 +65,7 @@ export default function ViewLogAdminPage() {
                     </span>
                     <div className="line-horizontal"/>
                     <label htmlFor="text" className="label-add-edit">Objeto</label>
-                    <textarea name="action" value={objeto} className={`${loading && `animate-pulse`} input-add-edit`} disabled />
+                    <textarea name="action" value={objeto} className={`${loading && `animate-pulse`} input-add-edit h-80`} disabled />
                 </div>
                 <div className="container-buttons-add-edit">
                     <Link to='/admin/logs' className="btn-cancel">Voltar</Link>
