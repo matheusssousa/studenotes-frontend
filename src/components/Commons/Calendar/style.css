@@ -1,0 +1,36 @@
+/* Adicione isso ao seu arquivo style.css */
+.calendario {
+    @apply w-full flex flex-col;
+}
+.calendario-header {
+    @apply flex items-center justify-between;
+}
+.button-date-atual{
+    @apply text-sm text-neutro-300 hover:text-verde-100 duration-150 ease-in-out
+}
+.week-navigation {
+    @apply flex items-center justify-between rounded-xl border border-azul-200 text-azul-200 p-1 gap-2;
+}
+/* Estilos para fazer o calendário em semana */
+.fc table {
+    @apply bg-transparent;
+}
+/* Removendo bordas */
+.fc-theme-standard .fc-scrollgrid {
+    @apply border-none;
+}
+.fc-theme-standard td, .fc-theme-standard th {
+    @apply border-none font-normal text-sm capitalize text-neutro-300;
+}
+/* Estilo para o dia atual no header */
+.today {
+    @apply bg-azul-200 text-neutro-100 rounded-full
+}
+/* Removendo os campos abaixo dos dias */
+.fc-scrollgrid tbody {
+    @apply hidden
+}
+/* Bolinha verde para eventos */
+.event-dot{
+    @apply w-2 h-2 bg-verde-100 rounded-full;
+}
