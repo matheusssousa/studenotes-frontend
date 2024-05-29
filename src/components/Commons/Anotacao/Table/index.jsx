@@ -30,10 +30,10 @@ export default function AnotacaoTable(params) {
                         </span>
                     </div>
                     <div className="content-texto-card-anotacao-table">
-                        {item.texto.length > 200 ? item.texto.substring(0, 200) + '...' : item.texto}
+                        {item.texto ? (item.texto.length > 200 ? item.texto.substring(0, 200) + '...' : item.texto) : null}
                     </div>
                     <div className="content-texto-card-anotacao-mobile-table">
-                        {item.texto.length > 70 ? item.texto.substring(0, 70) + '...' : item.texto}
+                        {item.texto ? (item.texto.length > 70 ? item.texto.substring(0, 70) + '...' : item.texto) : null}
                     </div>
                     <div className="w-[20%] flex items-center justify-center">
                         {item.arquivos.length > 0 ? (
