@@ -23,7 +23,7 @@ export default function CardAnotacaoRecent(params) {
                 onClick={() => setSelectedAnotacao(params.anotacao.id)}
                 className="card-anotacao-recent">
                 <div className="content-header-card-anotacao-recent">
-                    <p className="text-sm font-medium dark:text-neutro-100">{params.anotacao.nome}</p>
+                    <p className="text-sm font-medium dark:text-neutro-100 text-neutro-400">{params.anotacao.nome}</p>
                     <span className="flex gap-1 flex-wrap items-start justify-center">
                         {params.anotacao.categorias.map((categoria, i) => (
                             <div key={i} style={{ backgroundColor: `${categoria.cor}`, borderColor: darkenColor(categoria.cor, 40) }} className="w-6 h-2 rounded-full border" />

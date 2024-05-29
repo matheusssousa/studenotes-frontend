@@ -1,5 +1,5 @@
 .card-anotacao-recent{
-    @apply w-[28%] h-80 rounded-xl bg-white dark:bg-neutro-500 p-3 justify-between flex flex-col
+    @apply w-[32.7%] h-full rounded-xl bg-white dark:bg-neutro-500 p-3 justify-between flex flex-col
 }
 .content-texto-card-anotacao{
     @apply h-[60%] hidden md:flex text-xs text-justify dark:text-neutro-250
