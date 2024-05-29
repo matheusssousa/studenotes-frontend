@@ -3,11 +3,12 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { CalendarBlank, CaretLeft, CaretRight } from "@phosphor-icons/react";
+import ListAnotacao from "../ListAnotacao";
 import moment from "moment";
 
 import "./style.css";
 
-export default function Calendar({ anotacoes, setDataInicio, setDataFinal }) {
+export default function Calendar({ anotacoes, setDataInicio, setDataFinal, loading }) {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [calendarKey, setCalendarKey] = useState(Date.now()); // Chave única para o componente FullCalendar
 
@@ -32,7 +33,7 @@ export default function Calendar({ anotacoes, setDataInicio, setDataFinal }) {
         setDataFinal(moment(lastDayOfWeek).format('YYYY-MM-DD'));
     }, [currentDate]);
 
-    
+
 
     // Função para verificar se há eventos para o dia
     const hasEvents = (date) => {
@@ -40,7 +41,7 @@ export default function Calendar({ anotacoes, setDataInicio, setDataFinal }) {
             const filteredAnotacoes = anotacoes.filter(anotacao => moment(anotacao.data_prazo).isSame(date, "day"));
             return filteredAnotacoes.length > 0 ? filteredAnotacoes.slice(0, 3) : [];
         }
-        return [];  
+        return [];
     };
 
     // Função para remover o sufixo "-Feira"
@@ -92,32 +93,39 @@ export default function Calendar({ anotacoes, setDataInicio, setDataFinal }) {
                     </div>
                 </div>
             </div>
-            <FullCalendar
-                key={calendarKey}
-                plugins={[dayGridPlugin, interactionPlugin]}
-                initialView="dayGridWeek"
-                headerToolbar={false}
-                initialDate={currentDate}
-                dayHeaderFormat={{ weekday: "long" }}
-                dayHeaderContent={(args) => (
-                    <div className={`${isToday(args.date) ? 'today' : ''} px-2 py-3`}>
-                        <div className={`flex flex-col items-center gap-1`}>
-                            <span>{formatDayHeader(args.text)}</span>
-                            <span className="text-2xl">{args.date.getDate()}</span>
-                            <div className="flex gap-1">
-                                {hasEvents(args.date) && hasEvents(args.date).map((anotacao, index) => (
-                                    <div className="event-dot" key={index}></div>
-                                ))}
+            {loading ? (
+                <div className="w-full h-full flex flex-wrap gap-2 animate-pulse bg-white dark:bg-neutro-500 rounded-xl"/>
+            ) : (
+                <>
+                    <FullCalendar
+                        key={calendarKey}
+                        plugins={[dayGridPlugin, interactionPlugin]}
+                        initialView="dayGridWeek"
+                        headerToolbar={false}
+                        initialDate={currentDate}
+                        dayHeaderFormat={{ weekday: "long" }}
+                        dayHeaderContent={(args) => (
+                            <div className={`${isToday(args.date) ? 'today' : ''} px-2 py-3`}>
+                                <div className={`flex flex-col items-center gap-1`}>
+                                    <span>{formatDayHeader(args.text)}</span>
+                                    <span className="text-2xl">{args.date.getDate()}</span>
+                                    <div className="flex gap-1">
+                                        {hasEvents(args.date) && hasEvents(args.date).map((anotacao, index) => (
+                                            <div className="event-dot" key={index}></div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        )}
+                        contentHeight="auto"
+                        locale={"pt-br"}
+                    />
+                    <div className="calendario-footer">
+                        <ListAnotacao anotacao={anotacoes} />
                     </div>
-                )}
-                contentHeight="auto"
-                locale={"pt-br"}
-            />
-            <div className="calendario-footer">
-                
-            </div>
-        </div>
+                </>
+            )
+            }
+        </div >
     );
 }

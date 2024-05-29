@@ -1,12 +1,17 @@
 /* Adicione isso ao seu arquivo style.css */
 .calendario {
-    @apply w-full flex flex-col;
+    transition: ease 0.2s 100ms;
+    @apply w-full min-h-[40%] max-h-min flex flex-col;
 }
 .calendario-header {
     @apply flex items-center justify-between;
 }
+.calendario-footer{
+    @apply w-full h-full flex items-center justify-between;
+
+}
 .button-date-atual{
-    @apply text-sm text-neutro-300 hover:text-verde-100 duration-150 ease-in-out
+    @apply text-sm hover:text-neutro-300 text-verde-100 duration-150 ease-in-out
 }
 .week-navigation {
     @apply flex items-center justify-between rounded-xl border border-azul-200 text-azul-200 p-1 gap-2;
@@ -32,5 +37,5 @@
 }
 /* Bolinha verde para eventos */
 .event-dot{
-    @apply w-2 h-2 bg-verde-100 rounded-full;
+    @apply w-[6px] h-[6px] bg-verde-100 rounded-full;
 }
