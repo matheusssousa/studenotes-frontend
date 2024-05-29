@@ -32,12 +32,10 @@ export default function HomeUserPage(params) {
 
     useEffect(() => {
         getDadosHome();
-        console.log('RENDERIZAÇÃO 1')
     }, [])
 
-    useEffect(() => {
+        useEffect(() => {
         getDadosHome();
-        console.log('RENDERIZAÇÃO 2')
     }, [dataFinal, dataInicio])
 
     return (
@@ -48,8 +46,8 @@ export default function HomeUserPage(params) {
             />
             <div className="row h-full">
                 <div className="page-home-content-left">
-                    <Recents recentes={recentes} />
-                    <Calendar anotacoes={anotacoesDataProximas} setDataInicio={setDataInicio} setDataFinal={setDataFinal} />
+                    <Recents recentes={recentes} loading={loading} />
+                    <Calendar anotacoes={anotacoesDataProximas} setDataInicio={setDataInicio} setDataFinal={setDataFinal} loading={loading} />
                 </div>
                 <div className="page-home-content-right">
 
