@@ -1,16 +1,37 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Files, Share, X } from "@phosphor-icons/react";
+import { ClockClockwise, Files, PencilSimple, Share, TrashSimple, X } from "@phosphor-icons/react";
 import moment from "moment";
 import adjustColor from "../../../../hooks/AdjustColor";
 import { Link } from "react-router-dom";
 
 import './style.css';
+import ApiUser from "../../../../services/ApiUser";
 
 export default function ModalAnotacao(params) {
     const darkenColor = (hex, percent) => {
         const dark = adjustColor(hex, percent);
         return dark;
+    };
+
+    const restoreAnotacao = async (anotacao) => {
+        try {
+            await ApiUser.post(`/anotacao/restore/${anotacao}`)
+            receiveDados();
+            toast.success("Anotação restaurada.", { theme: 'colored' });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const confirmDelete = async (anotacao) => {
+        try {
+            await ApiUser.delete(`/anotacao/${anotacao}`);
+            navigate('/anotacoes');
+            toast.success("Anotação excluída.", { theme: 'colored' });
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -73,6 +94,31 @@ export default function ModalAnotacao(params) {
                         )}
                     </span>
                     <span className="flex items-center gap-4">
+                        <div className="flex gap-4">
+                            {params.item.deleted_at ? (
+                                <button
+                                    onClick={() => restoreAnotacao(params.anotacao)}
+                                    className="flex gap-1 rounded-lg bg-verde-100 px-2 py-1 text-sm items-center justify-center hover:bg-verde-200 hover:text-neutro-100 duration-200"
+                                    title="Restaurar">
+                                    <ClockClockwise size={20} />
+                                </button>
+                            ) : (
+                                <>
+                                    <Link
+                                        to={`/anotacoes/addedit/${params.item.id}`}
+                                        className="flex gap-1 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-azul-300 duration-200"
+                                        title="Editar">
+                                        <PencilSimple size={20} />
+                                    </Link>
+                                    <button
+                                        onClick={() => confirmDelete(true)}
+                                        className="flex gap-1 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-vermelho-300 duration-200"
+                                        title="Excluir">
+                                        <TrashSimple size={20} />
+                                    </button>
+                                </>
+                            )}
+                        </div>
                         <button className={`button-compartilhar-anotacao${params.item.comunidade === 0 ? '-false' : '-true'}`} title="Compartilhar">
                             <Share size={20} weight="fill" />
                         </button>
