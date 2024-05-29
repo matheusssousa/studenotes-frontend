@@ -102,6 +102,9 @@ table{
 .content-buttons-action{
     @apply flex items-center gap-1
 }
+.btn-default{
+    @apply flex gap-1 rounded-lg bg-azul-200 px-2 py-1 items-center justify-center hover:bg-azul-300 hover:text-neutro-100 duration-200
+}
 .edit-action-btn{
     @apply bg-azul-100 border border-azul-300 rounded-lg text-azul-300 px-2 w-fit hover:bg-azul-300 hover:border-azul-100 hover:text-azul-100 duration-150
 }
