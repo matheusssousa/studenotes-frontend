@@ -15,7 +15,7 @@
 }
 .open{
     transition: ease 0.2s 100ms;
-    @apply h-1/2
+    @apply h-fit
 }
 .close{
     transition: ease 0.2s 100ms;
@@ -29,7 +29,7 @@
 
 /* BOTÃO PARA ABRIR A SIDEBAR NO CELULAR */
 .btn-open-sidebar{
-    @apply md:hidden w-[30%] dark:text-neutro-100
+    @apply md:hidden w-[20%] dark:text-neutro-100
 }
 
 /* LISTA DE ICONS NO COMPUTADOR*/
@@ -71,6 +71,14 @@
     hidden items-center md:flex text-transparent
 }
 
+.letters-user{
+    @apply w-10 h-10 hover:bg-azul-300 hover:text-neutro-100 duration-300 bg-azul-200 rounded-full uppercase text-sm font-semibold text-neutro-600 select-none
+}
+.letters-user-active{
+    @apply w-10 h-10 bg-azul-300 rounded-full uppercase text-sm font-semibold text-neutro-100 select-none
+}
+
+
 /* LISTA DE ICONS NO CELULAR */
 .close .menu-cel{
     @apply hidden opacity-0
@@ -83,6 +91,9 @@
 }
 .menu-cel .link-text-cel{
     @apply font-semibold whitespace-pre drop-shadow-lg
+}
+.link-pending .link-text-cel{
+    @apply text-neutro-100
 }
 .link-active .link-text-cel {
     @apply text-azul-200
@@ -101,28 +112,24 @@
     @apply cursor-pointer hover:text-laranja-200 duration-500 dark:text-neutro-100 dark:hover:text-laranja-200
 }
 
-/* @keyframes opacity {
-    from {
-        opacity: 0%;
-    }
-    to {
-        opacity: 100%;
-    }
-}
-.animate-opacity {
-    animation: opacity 1s ease-in;
-    animation-delay: 200ms;
+/* MENU DE OPÇÕES DO USUÁRIO */
+.user-menu-options{
+    @apply absolute 
+    top-16 md:top-auto md:left-16 md:bottom-1
+    flex flex-col
+    w-full md:w-36 p-2
+    bg-neutro-100 dark:bg-neutro-600 border border-neutro-300 border-opacity-20 rounded-md
+    text-sm dark:text-neutro-100 animate-pull
 }
 
-@keyframes opacity-inverse {
-    to {
-        opacity: 100%;
-    }
+@keyframes pull {
     from {
-        opacity: 0%;
+        transform: scale(0.9);
+    }
+    to {
+        transform: scale(1);
     }
 }
-.animate-opacity-inverse {
-    animation: opacity-inverse 3s ease-in-out;
-    animation-delay: 200ms;
-} */
+.animate-pull {
+    animation: pull 0.3s ease-in-out;
+}

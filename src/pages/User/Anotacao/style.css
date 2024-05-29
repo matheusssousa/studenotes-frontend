@@ -1,0 +1,56 @@
+.form-add-edit-note{
+    @apply w-full md:max-h-full bg-neutro-200 dark:bg-neutro-500 rounded-lg text-sm flex flex-col shadow-sm gap-8 p-4 relative
+}
+
+.content-note-header{
+    @apply w-full flex justify-between
+}
+.input-add-edit-note-title{
+    @apply bg-transparent dark:border-opacity-20 dark:text-neutro-100 text-neutro-600 placeholder:text-neutro-600 dark:placeholder:text-neutro-100 rounded text-base font-medium outline-none w-full
+}
+
+.content-note-options{
+    @apply w-full md:w-[30%] flex flex-col gap-5
+}
+.input-group-add-edit-note{
+    @apply flex flex-col w-full
+}
+.label-add-edit-note{
+    @apply cursor-pointer text-sm font-medium text-neutro-600 dark:text-neutro-100
+}
+.input-add-edit-note{
+    @apply bg-white dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 dark:text-neutro-100 rounded-lg p-2 text-sm border border-neutro-200
+}
+
+
+.content-note-conteudo{
+    @apply w-full md:w-[70%] flex flex-col relative h-full max-h-full
+}
+
+.content-header-texto-note{
+    @apply w-full flex justify-between items-center
+}
+.btn-ai{
+    @apply font-semibold rounded bg-gradient-to-r from-azul-100 to-azul-200 px-2 italic duration-300 ease-in
+    hover:from-rosa-100 hover:to-azul-100 hover:text-neutro-100 hover:shadow-md
+}
+.text-area{
+    @apply bg-white dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 
+    dark:text-neutro-100 placeholder:text-neutro-600 dark:placeholder:text-neutro-100 rounded-lg 
+    md:h-full p-2 text-sm border border-neutro-200 overflow-y-auto
+    h-[300px]
+}
+
+.group-input-comunidade{
+    @apply flex flex-col w-[20%] gap-2
+}
+.toogle-label{
+    @apply relative w-7 h-7 rounded-md cursor-pointer items-center justify-center flex p-1 duration-200 ease-in
+}
+.toogle-button{
+    @apply absolute transform transition-transform duration-300 flex items-center justify-center
+}
+
+.content-note-footer{
+    @apply w-full flex md:hidden justify-end items-center gap-2
+}

@@ -25,9 +25,13 @@ function App() {
           <ToastContainer
             position="top-right"
             limit={3}
-            toastClassName={({ type }) => contextClass[type || "default"] + "relative flex p-1 rounded-md justify-between overflow-hidden cursor-pointer"}
+            toastClassName={({ type }) => contextClass[type || "default"] + "relative flex p-1 rounded-md justify-between overflow-hidden cursor-pointer select-none"}
             bodyClassName={() => "text-xs flex items-center p-3"}
-            autoClose={4000} />
+            autoClose={2000}
+            stacked
+            draggable
+            hideProgressBar
+            closeButton={false} />
           <MyRoute />
         </ThemeProvider>
       </AuthProvider>

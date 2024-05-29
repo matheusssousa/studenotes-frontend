@@ -1,0 +1,15 @@
+.table-row-anotacao{
+    @apply w-full min-h-14 rounded-lg px-5 py-2
+    flex items-center
+    border border-neutro-200 
+    dark:border-neutro-400
+    text-neutro-600 dark:text-neutro-100
+    bg-neutro-150 dark:bg-neutro-500
+}
+
+.content-texto-card-anotacao-table{
+    @apply w-[50%] hidden md:flex text-xs text-justify 
+}
+.content-texto-card-anotacao-mobile-table{
+    @apply w-[50%] flex md:hidden text-xs text-justify
+}

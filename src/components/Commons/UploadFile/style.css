@@ -1,0 +1,17 @@
+.uploadContent{
+    @apply w-full h-32 flex items-center justify-center gap-6
+    bg-white dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 dark:text-neutro-100 rounded-lg placeholder:text-neutro-300 p-2 text-sm border border-neutro-200
+}
+.inputFile{
+    @apply text-neutro-400 hover:text-neutro-600 dark:text-neutro-250 dark:hover:text-neutro-100 
+    flex items-center justify-center flex-col text-sm cursor-pointer
+}
+.selectedFiles{
+    @apply w-2/3 flex flex-col gap-1 overflow-auto
+}
+.selectedFile{
+    @apply w-full p-1 justify-between flex items-center rounded-md bg-neutro-100 text-xs font-medium text-neutro-300
+}
+.button-remove{
+    @apply hover:text-neutro-600 duration-200
+}

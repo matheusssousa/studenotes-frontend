@@ -1,0 +1,49 @@
+.card-categoria{
+    @apply w-full h-24 md:w-[19.63%] rounded-xl py-3 px-5
+    flex flex-row justify-evenly
+    text-neutro-600 dark:text-neutro-100
+    text-sm
+}
+.card-categoria .content-header-card{
+    @apply w-2/3 h-full flex flex-col items-center justify-center font-medium
+}
+.card-categoria .title-card{
+    @apply text-sm font-semibold
+}
+.card-categoria .content-footer-card{
+    @apply w-1/3 h-full flex flex-col gap-2 justify-center items-center
+}
+.card-categoria .content-buttons-action{
+    @apply h-full flex flex-row items-center justify-center
+}
+.delete-action-btn-categoria{
+    @apply rounded-lg text-neutro-200 px-2 w-fit duration-150 hover:drop-shadow-lg
+}
+.restore-action-btn-categoria{
+    @apply rounded-lg text-neutro-200 px-2 w-fit duration-150 hover:drop-shadow-lg
+}
+.edit-action-btn-categoria{
+    @apply rounded-lg text-neutro-200 px-2 w-fit duration-150 hover:drop-shadow-lg
+}
+
+
+.card{
+    @apply w-full h-24 md:w-[19.63%] md:h-32 rounded-xl py-3 px-5
+    flex flex-col justify-evenly
+    border border-neutro-200 bg-neutro-150 
+    dark:bg-neutro-500 dark:border-neutro-400
+    text-neutro-600 dark:text-neutro-100
+    text-sm
+}
+.content-header-card{
+    @apply w-full h-1/2 flex flex-col items-center justify-center font-medium
+}
+.title-name-card{
+    @apply flex 
+}
+.email-card{
+    @apply text-xs text-neutro-300
+}
+.content-footer-card{
+    @apply w-full flex flex-col gap-2 justify-between items-center
+}

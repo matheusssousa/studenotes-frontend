@@ -64,6 +64,7 @@ export default function AddOrEditDisciplinaAdminPage() {
     return (
         <div className="page-content">
             <MainHeader
+                voltar='/admin/disciplinas'
                 page={params.id ? 'Editar Disciplina' : 'Cadastrar Disciplina'}
                 text={params.id ? 'Editar uma disciplina já cadastrada.' : 'Cadastrar uma nova disciplina.'}
             />

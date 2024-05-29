@@ -10,7 +10,8 @@
 
 /* CONFIGURAÇÕES DE ESTILOS INICIAIS */
 * {
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
+    font-family: 'Poppins', sans-serif;
 }
 
 /* FONTES */
@@ -56,7 +57,13 @@
     @apply w-full h-full overflow-auto px-2 md:px-5 flex flex-col gap-3 py-1
 }
 .conteudo-content{
-    @apply w-full 
+    @apply w-full h-full flex flex-col gap-3 justify-between
+}
+.content-cards{
+    @apply flex flex-wrap gap-2 justify-center
+}
+.col-row{
+    @apply flex flex-col md:flex-row
 }
 
 /* ESTILOS BÁSICOS CONTEUDOS */
@@ -86,8 +93,17 @@ table{
 .inactive-card{
     @apply bg-vermelho-100 border border-vermelho-200 rounded-lg font-semibold text-vermelho-300 px-2 w-fit text-xs
 }
+.active-email-card{
+    @apply bg-azul-100 border border-azul-300 rounded-lg font-semibold text-azul-300 px-2 w-fit text-xs
+}
+.inactive-email-card{
+    @apply bg-neutro-100 border border-neutro-300 rounded-lg font-semibold text-neutro-300 px-2 w-fit text-xs
+}
 .content-buttons-action{
     @apply flex items-center gap-1
+}
+.btn-default{
+    @apply flex gap-1 rounded-lg bg-azul-200 px-2 py-1 items-center justify-center hover:bg-azul-300 hover:text-neutro-100 duration-200
 }
 .edit-action-btn{
     @apply bg-azul-100 border border-azul-300 rounded-lg text-azul-300 px-2 w-fit hover:bg-azul-300 hover:border-azul-100 hover:text-azul-100 duration-150
@@ -98,10 +114,16 @@ table{
 .restore-action-btn{
     @apply bg-verde-100 border border-verde-200 rounded-lg text-verde-200 px-2 w-fit hover:bg-verde-200 hover:border-verde-100 hover:text-verde-100 duration-150
 }
+.view-action-btn{
+    @apply bg-neutro-300 border border-neutro-400 rounded-lg text-neutro-200 px-2 w-fit hover:bg-neutro-200 hover:border-neutro-100 hover:text-neutro-300 duration-150
+}
 
 /* ESTILOS BÁSICOS TELAS ADD E EDIT */
 .form-add-edit{
     @apply w-full md:w-1/2 bg-white dark:bg-neutro-500 rounded-lg text-sm flex flex-col gap-5 shadow-sm 
+}
+.form-view{
+    @apply w-full bg-white dark:bg-neutro-500 rounded-lg text-sm flex flex-col gap-5 shadow-sm 
 }
 .content-inputs{
     @apply flex p-2 flex-col gap-2
@@ -115,6 +137,9 @@ table{
 .input-add-edit{
     @apply bg-neutro-100 dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 dark:text-neutro-100 rounded placeholder:text-neutro-300 p-2 text-sm border border-neutro-200
 }
+.input-add-edit-color{
+    @apply bg-neutro-100 dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 dark:text-neutro-100 rounded placeholder:text-neutro-300 text-sm border border-neutro-200 cursor-pointer
+}
 .container-buttons-add-edit{
     @apply w-full py-3 px-2 bg-neutro-200 dark:bg-neutro-400 rounded-b-lg flex justify-end gap-2 
 }
@@ -123,4 +148,9 @@ table{
 }
 .btn-cancel{
     @apply rounded bg-vermelho-200 px-2 py-1 font-semibold hover:shadow-md hover:bg-vermelho-300 hover:text-neutro-100 duration-200
+}
+
+/* ESTILOS BÁSICOS DE LINHAS */
+.line-horizontal {
+    @apply w-full h-px my-2 bg-neutro-100 dark:bg-neutro-300
 }

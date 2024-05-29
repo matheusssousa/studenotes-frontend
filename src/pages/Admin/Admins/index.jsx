@@ -4,10 +4,12 @@ import ApiAdmin from "../../../services/ApiAdmin";
 import { toast } from "react-toastify";
 import Search from "../../../components/Commons/Search";
 import Loading from "../../../components/Commons/Loading";
-import { Link } from "react-router-dom";
-import { ArrowClockwise, PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import ModalDelete from "../../../components/Commons/Modals/Delete";
 import Pagination from "../../../components/Commons/Pagination";
+import ErrorDenied from "../../../components/Commons/ErrorDenied";
+import useViewMode from "../../../hooks/ViewMode";
+import Card from "../../../components/Commons/Card";
+import Table from "../../../components/Commons/Table";
 
 export default function AdminsAdminPage(params) {
     const [admins, setAdmins] = useState([]);
@@ -17,11 +19,12 @@ export default function AdminsAdminPage(params) {
     const [searchDateFim, setSearchDateFim] = useState("");
     const [searchStatus, setSearchStatus] = useState("");
     const [searchEmail, setSearchEmail] = useState("");
-    const [searchId, setSearchId] = useState("");
+    const [searchVerifyEmail, setSearchVerifyEmail] = useState("");
 
     const [loading, setLoading] = useState(false);
+    const [viewMode, setViewMode] = useViewMode();
 
-    const [deleteAdmin, setDeleteAdmin] = useState(false);
+    const [deleteAdmin, setDeleteAdmin] = useState();
 
     const receiveAdmins = async (page = 1) => {
         setLoading(true);
@@ -30,14 +33,13 @@ export default function AdminsAdminPage(params) {
                 params: {
                     page: page,
                     name: searchNome,
-                    id: searchId,
+                    emailverify: searchVerifyEmail,
                     email: searchEmail,
                     created_at_inicio: searchDateInicio,
                     created_at_fim: searchDateFim,
                     delete: searchStatus
                 }
             });
-            console.log(response)
             setAdmins(response.data.data);
             setPagination(response.data);
         } catch (error) {
@@ -47,17 +49,28 @@ export default function AdminsAdminPage(params) {
     };
 
     const deleteAdmins = async (admin) => {
+        setDeleteAdmin(admin);
+    };
+
+    const renderModalDelete = () => {
+        const admin = admins.find(admin => admin.id === deleteAdmin);
+        if (!admin) return null;
+
+        return (
+            <ModalDelete item={admin} delete={() => confirmDelete(admin.id)} cancel={() => setDeleteAdmin()} />
+        );
+    };
+
+    const confirmDelete = async (admin) => {
         try {
-            await ApiAdmin.delete(`/admin/${admin}`)
-            setDeleteAdmin(false);
+            await ApiAdmin.delete(`/admin/${admin}`);
             receiveAdmins();
-            toast.success("Administrador excluído.", {
-                theme: 'colored',
-            });
+            setDeleteAdmin()
+            toast.success("Administrador excluído.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     const restoreAdmins = async (admin) => {
         try {
@@ -74,7 +87,7 @@ export default function AdminsAdminPage(params) {
     const limparSearch = () => {
         setSearchNome("");
         setSearchEmail("");
-        setSearchId("");
+        setSearchVerifyEmail("");
         setSearchDateFim("");
         setSearchDateInicio("");
         setSearchStatus("");
@@ -102,74 +115,50 @@ export default function AdminsAdminPage(params) {
                 setSearchNome={setSearchNome}
                 email={searchEmail}
                 setSearchEmail={setSearchEmail}
-                id={searchId}
-                setSearchId={setSearchId}
+                verifyemail={searchVerifyEmail}
+                setSearchVerifyEmail={setSearchVerifyEmail}
                 data_inicio={searchDateInicio}
                 setSearchDateInicio={setSearchDateInicio}
                 data_fim={searchDateFim}
                 setSearchDateFim={setSearchDateFim}
                 status={searchStatus}
                 setSearchStatus={setSearchStatus}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
                 limpar={limparSearch}
                 buscar={receiveAdmins}
             />
-            <div className="conteudo-content">
-                <table>
-                    <thead>
-                        <tr className="table-row-header">
-                            <th className="sticky w-[10%] rounded-tl-lg">ID</th>
-                            <th className="sticky w-[40%]">Nome</th>
-                            <th className="sticky w-[40%]">Email</th>
-                            <th className="sticky w-[20%]">Status</th>
-                            <th className="sticky w-[20%] rounded-tr-lg">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loading ? <Loading /> :
-                            (admins.map((admin, i) => (
-                                <tr key={i} className="table-row-body">
-                                    <td className="w-[10%] font-medium">{admin.id}</td>
-                                    <td className="w-[40%]">{admin.name}</td>
-                                    <td className="w-[40%]">{admin.email}</td>
-                                    {admin.deleted_at === null ?
-                                        <td className="w-[20%]">
-                                            <div className="active-card">
-                                                Ativo
-                                            </div>
-                                        </td>
-                                        :
-                                        <td className="w-[20%]">
-                                            <div className="inactive-card">
-                                                Inativo
-                                            </div>
-                                        </td>
-                                    }
-                                    <td className="w-[20%]">
-                                        {admin.deleted_at === null ?
-                                            <div className="content-buttons-action">
-                                                <Link to={`/admin/admins/addedit/${admin.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={20} /></Link>
-                                                <button type="button" className="delete-action-btn" title="Excluir" onClick={() => setDeleteAdmin(admin.id)}><TrashSimple size={20} /></button>
-                                            </div>
-                                            :
-                                            <div>
-                                                <button type="button" className="restore-action-btn" title="Restaurar" onClick={() => restoreAdmins(admin.id)} id="restore-button"><ArrowClockwise size={20} /></button>
-                                            </div>
-                                        }
-                                    </td>
-                                    {deleteAdmin === admin.id && <ModalDelete item={admin} delete={deleteAdmins} cancel={setDeleteAdmin} />}
-                                </tr>
-                            )))}
-                    </tbody>
-                </table>
-            </div>
-            <div>
-                {pagination && (
-                    <Pagination
-                        pagination={pagination}
-                        setPage={handlePaginationClick}
-                    />
-                )}
-            </div>
+            {loading ? (
+                <Loading />
+            ) : (
+                <div className="conteudo-content">
+                    {admins.length === 0 ? (
+                        <ErrorDenied />
+                    ) : (
+                        <>
+                            {viewMode === 'card' && (
+                                <div className="content-cards">
+                                    {admins.map((admin, i) => (
+                                        <Card key={i} type='admins' admin={true} item={admin} delete={deleteAdmins} restore={restoreAdmins}/>
+                                    ))}
+                                </div>
+                            )}
+                            {viewMode === 'list' && (
+                                <Table type="admins" admin={true} items={admins} delete={deleteAdmins} restore={restoreAdmins} />
+                            )}
+                        </>
+                    )}
+                    <div>
+                        {pagination && (
+                            <Pagination
+                                pagination={pagination}
+                                setPage={handlePaginationClick}
+                            />
+                        )}
+                    </div>
+                    {renderModalDelete()}
+                </div>
+            )}
         </div>
     )
 }

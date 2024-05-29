@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 import ApiAdmin from "../../services/ApiAdmin";
 import ApiUser from "../../services/ApiUser";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
@@ -59,10 +60,13 @@ export const AuthProvider = ({ children }) => {
     async function RefreshTokenUser() {
         if (authenticate) {
             await ApiUser.post('/refresh').then(function (response) {
+                console.log(response)
                 ApiUser.defaults.headers.Authorization = `Bearer ${response.data.access_token}`;
                 sessionStorage.setItem('@App:token', response.data.access_token);
             }).catch(function (error) {
                 console.log(error)
+                ApiUser.defaults.headers.Authorization = null;
+                sessionStorage.removeItem('@App:token');
                 setAuthenticate(false)
                 setUser(null);
             })
@@ -86,7 +90,9 @@ export const AuthProvider = ({ children }) => {
             setAuthenticate(true);
             setAdmin(admin);
         } catch (error) {
-            console.error(error);
+            toast.error("Email e/ou senha incorretos", {
+                theme: 'colored',
+            })
         }
     }
     

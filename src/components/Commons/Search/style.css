@@ -2,7 +2,7 @@
     @apply flex items-center justify-center gap-1 flex-col 
 }
 .input-search{
-    @apply w-full p-2 text-sm rounded-lg focus:outline-none placeholder:text-neutro-300 bg-transparent
+    @apply w-full p-2 text-sm rounded-lg focus:outline-none placeholder:text-neutro-300 bg-transparent dark:text-neutro-150
 }
 .btn-filter{
     @apply rounded-full p-2 hover:bg-azul-300 hover:text-neutro-100 duration-300 hover:drop-shadow text-neutro-300
@@ -21,7 +21,7 @@
     @apply flex justify-between items-center gap-2 flex-col md:flex-row
 }
 .input-group-search{
-    @apply flex flex-col w-full md:w-1/2
+    @apply flex flex-col w-full 
 }
 .label-input{
     @apply text-neutro-600 dark:text-neutro-100 font-semibold

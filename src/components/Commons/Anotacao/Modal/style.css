@@ -1,0 +1,37 @@
+.overlay-anotacao{
+    @apply absolute top-0 left-0 w-full h-full bg-neutro-300 dark:bg-neutro-600 bg-opacity-50 backdrop-blur
+    flex justify-center items-center z-10
+}
+.modal-anotacao{
+    @apply w-11/12 md:w-2/3 xl:w-1/2 min-h-[50%] bg-neutro-150 dark:bg-neutro-500
+    rounded-xl
+    flex flex-col justify-between
+    p-5
+    z-10
+}
+
+.content-header-modal-anotacao{
+    @apply flex w-full justify-between items-start
+}
+.button-close-modal-anotacao{
+    @apply w-8 h-8 rounded-full bg-azul-300 bg-opacity-20 flex items-center justify-center text-azul-300
+    hover:bg-opacity-30 duration-200 ease-in-out
+}
+.content-conteudo-modal-anotacao{
+    @apply text-sm h-72 w-full break-all dark:text-neutro-250 sm:flex items-center text-justify hidden
+}
+.content-conteudo-modal-anotacao-mobile{
+    @apply text-sm h-72 w-full break-all dark:text-neutro-250 flex items-center text-justify sm:hidden
+}
+.content-footer-modal-anotacao{
+    @apply h-[10%] flex justify-between items-center text-xs
+}
+.button-compartilhar-anotacao-false{
+    @apply flex items-center gap-1 text-neutro-300 hover:text-azul-200 duration-300 ease-in
+}
+.button-compartilhar-anotacao-true{
+    @apply flex items-center gap-1 text-azul-200 hover:text-azul-300 duration-300 ease-in
+}
+.button-visualizar-anotacao{
+    @apply bg-neutro-200 dark:bg-neutro-400 py-1 px-2 rounded-md text-neutro-300 hover:bg-neutro-250 duration-200 ease-in-out 
+}

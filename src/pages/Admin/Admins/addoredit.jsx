@@ -29,7 +29,7 @@ export default function AddOrEditAdminsAdminPage() {
         if (admin) {
             try {
                 await ApiAdmin.put(`/admin/${admin}`, {
-                    nome: nome,
+                    name: nome,
                     email: email,
                 });
                 toast.success("Administrador atualizada.", {
@@ -37,14 +37,15 @@ export default function AddOrEditAdminsAdminPage() {
                 });
                 navigate("/admin/admins");
             } catch (error) {
+                console.log(error)
                 return toast.error(error.response.data.message, {
                     theme: 'colored',
                 });
             }
         } else {
             try {
-                await ApiAdmin.post(`/admin`, {
-                    nome: nome,
+                await ApiAdmin.post(`/auth/register`, {
+                    name: nome,
                     email: email,
                 });
                 toast.success("Administrador cadastrado.", {
@@ -68,6 +69,7 @@ export default function AddOrEditAdminsAdminPage() {
     return (
         <div className="page-content">
             <MainHeader
+                voltar='/admin/admins'
                 page={params.id ? 'Editar Administrador' : 'Cadastrar Administrador'}
                 text={params.id ? 'Editar um administrador já cadastrado.' : 'Cadastrar um novo administrador.'}
             />

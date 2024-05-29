@@ -1,0 +1,21 @@
+.card-anotacao{
+    @apply w-full h-36 sm:w-[49%] md:w-[32.5%] md:h-40 rounded-xl py-3 px-5
+    flex flex-col justify-between
+    border border-neutro-200 bg-neutro-150 
+    dark:bg-neutro-500 dark:border-neutro-400
+    text-neutro-600 dark:text-neutro-100
+    text-sm
+    cursor-pointer
+}
+.content-header-card-anotacao{
+    @apply flex flex-col w-full items-start
+}
+.content-texto-card-anotacao{
+    @apply hidden md:flex text-xs text-justify
+}
+.content-texto-card-anotacao-mobile{
+    @apply flex md:hidden text-xs text-justify
+}
+.content-options-card-anotacao{
+    @apply flex w-full justify-between items-center
+}
