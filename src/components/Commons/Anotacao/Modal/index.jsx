@@ -1,23 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ClockClockwise, Files, PencilSimple, Share, TrashSimple, X } from "@phosphor-icons/react";
 import moment from "moment";
 import adjustColor from "../../../../hooks/AdjustColor";
 import { Link } from "react-router-dom";
+import ApiUser from "../../../../services/ApiUser";
+import { toast } from "react-toastify";
 
 import './style.css';
-import ApiUser from "../../../../services/ApiUser";
 
 export default function ModalAnotacao(params) {
+    const [comunidade, setComunidade] = useState(params.item.comunidade);
+
     const darkenColor = (hex, percent) => {
         const dark = adjustColor(hex, percent);
         return dark;
     };
 
+    const comunidadeAnotacao = async (anotacao) => {
+        try {
+            setComunidade(comunidade === 0 ? 1 : 0);
+            console.log(comunidade);
+            const response = await ApiUser.post(`/anotacao/comunidade/${anotacao}`, {
+                comunidade: comunidade
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    
     const restoreAnotacao = async (anotacao) => {
         try {
             await ApiUser.post(`/anotacao/restore/${anotacao}`)
-            receiveDados();
             toast.success("Anotação restaurada.", { theme: 'colored' });
         } catch (error) {
             console.log(error)
@@ -119,7 +134,10 @@ export default function ModalAnotacao(params) {
                                 </>
                             )}
                         </div>
-                        <button className={`button-compartilhar-anotacao${params.item.comunidade === 0 ? '-false' : '-true'}`} title="Compartilhar">
+                        <button
+                            onClick={() => comunidadeAnotacao(params.item.id)}
+                            className={`button-compartilhar-anotacao${comunidade === 1 ? '-false' : '-true'}`}
+                            title="Compartilhar">
                             <Share size={20} weight="fill" />
                         </button>
                         <Link to={`/anotacoes/view/${params.item.id}`} className="button-visualizar-anotacao">

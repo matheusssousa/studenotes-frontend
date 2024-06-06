@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useRef } from "react";
 import './style.css';
 import { CloudArrowUp, X } from "@phosphor-icons/react";
 
 export default function UploadFile({ arquivos, setArquivos }) {
+    const fileInputRef = useRef();
+
+    const handleDrop = (event) => {
+        event.preventDefault();
+        const newFiles = Array.from(event.dataTransfer.files);
+        setArquivos([...arquivos, ...newFiles]);
+    };
+
+    const handleDragOver = (event) => {
+        event.preventDefault();
+    };
+
     return (
-        <div className="uploadContent">
+        <div className="uploadContent"
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}>
             <label className="inputFile">
                 <input
+                    ref={fileInputRef}
                     type="file"
                     name="arquivos"
                     className="hidden"
@@ -18,6 +33,7 @@ export default function UploadFile({ arquivos, setArquivos }) {
                     }} />
                 <CloudArrowUp size={30} />
                 <p>Upload</p>
+                <small className="text-neutro-300 text-xs">Selecione ou arraste arquivos</small>
             </label>
             {arquivos.length > 0 && (
                 <div className="selectedFiles">
