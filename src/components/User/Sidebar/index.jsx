@@ -18,7 +18,7 @@ export default function SidebarUser(params) {
 
     const links = [
         { name: "Página Inicial", link: "/home", icon: House },
-        { name: "Anotacoes", link: "/anotacoes", icon: Note },
+        { name: "Anotações", link: "/anotacoes", icon: Note },
         { name: "Categorias", link: "/categorias", icon: BookmarksSimple },
         { name: "Comunidade", link: "/comunidade", icon: ChatsTeardrop },
     ];
