@@ -7,6 +7,7 @@ import ApiUser from "../../../services/ApiUser";
 import UploadFile from "../../../components/Commons/UploadFile";
 import MultiSelect from "../../../components/Commons/MultiSelect";
 import moment from "moment";
+import OptionsGPT from "../../../components/Commons/OptionsGPT/index.jsx";
 
 import "./style.css";
 
@@ -24,6 +25,9 @@ export default function AddOrEditAnotacaoUserPage() {
     const [comunidade, setComunidade] = useState(0);
     const [selectCategorias, setSelectCategorias] = useState([]);
     const [arquivos, setArquivos] = useState([]);
+
+    const [optionsIA, setOptionsIA] = useState(false);
+    console.log(optionsIA)
 
     const [loading, setLoading] = useState(false);
 
@@ -167,7 +171,7 @@ export default function AddOrEditAnotacaoUserPage() {
                         </span>
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="categorias" className="label-add-edit-note">Categorias</label>
-                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} loading={loading}/>
+                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} loading={loading} />
                         </span>
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="categorias" className="label-add-edit-note">Arquivos</label>
@@ -177,7 +181,8 @@ export default function AddOrEditAnotacaoUserPage() {
                     <div className="content-note-conteudo">
                         <span className="content-header-texto-note">
                             <label htmlFor="texto" className="label-add-edit-note">Texto</label>
-                            {/* <button type="button" className="btn-ai">IA</button> */}
+                            <button onClick={() =>setOptionsIA(!optionsIA)} type="button" className="font-bold rounded bg-gradient-to-r from-azul-100 to-azul-200 px-2 italic duration-300 ease-in-out hover:from-rosa-100 hover:to-vermelho-300 bg-clip-text text-transparent">IA</button>
+                            {optionsIA && <OptionsGPT options={optionsIA} setOptions={setOptionsIA} />}
                         </span>
                         <textarea name="texto" id="texto" value={texto} onChange={(event) => setTexto(event.target.value)} className={`${loading && `animate-pulse`} text-area`} placeholder={loading ? '' : 'Digite sua anotação aqui...'} />
                     </div>

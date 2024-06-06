@@ -28,11 +28,7 @@
 }
 
 .content-header-texto-note{
-    @apply w-full flex justify-between items-center
-}
-.btn-ai{
-    @apply font-semibold rounded bg-gradient-to-r from-azul-100 to-azul-200 px-2 italic duration-300 ease-in
-    hover:from-rosa-100 hover:to-azul-100 hover:text-neutro-100 hover:shadow-md
+    @apply w-full flex justify-between items-center relative
 }
 .text-area{
     @apply bg-white dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 
