@@ -1,0 +1,9 @@
+.card-comunidade{
+    @apply w-full h-28 border-b border-opacity-30 border-neutro-300 flex flex-col justify-between p-1 relative
+}
+.card-content-header{
+    @apply w-full flex items-center justify-between gap-10
+}
+.card-content-footer{
+    @apply w-full flex items-center justify-end gap-6 text-xs relative
+}
