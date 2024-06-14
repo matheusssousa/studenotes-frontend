@@ -10,6 +10,7 @@ import moment from "moment";
 import OptionsGPT from "../../../components/Commons/OptionsGPT/index.jsx";
 
 import "./style.css";
+import { AnimatePresence } from "framer-motion";
 
 export default function AddOrEditAnotacaoUserPage() {
     const params = useParams();
@@ -27,7 +28,7 @@ export default function AddOrEditAnotacaoUserPage() {
     const [arquivos, setArquivos] = useState([]);
 
     const [optionsIA, setOptionsIA] = useState(false);
-    console.log(optionsIA)
+    console.log(disciplina)
 
     const [loading, setLoading] = useState(false);
 
@@ -75,7 +76,7 @@ export default function AddOrEditAnotacaoUserPage() {
                     nome: nome,
                     texto: texto,
                     data_prazo: data,
-                    disciplina_id: (disciplina ? disciplina.id : disciplina),
+                    disciplina_id: (disciplina && typeof disciplina === 'object' ? disciplina.id : disciplina),
                     comunidade: comunidade,
                     categorias: selectCategorias,
                     arquivo: arquivos,
@@ -181,8 +182,10 @@ export default function AddOrEditAnotacaoUserPage() {
                     <div className="content-note-conteudo">
                         <span className="content-header-texto-note">
                             <label htmlFor="texto" className="label-add-edit-note">Texto</label>
-                            <button onClick={() =>setOptionsIA(!optionsIA)} type="button" className="font-bold rounded bg-gradient-to-r from-azul-100 to-azul-200 px-2 italic duration-300 ease-in-out hover:from-rosa-100 hover:to-vermelho-300 bg-clip-text text-transparent">IA</button>
-                            {optionsIA && <OptionsGPT options={optionsIA} setOptions={setOptionsIA} />}
+                            <button onClick={() => setOptionsIA(!optionsIA)} type="button" className={`font-bold rounded bg-gradient-to-r from-azul-100 to-azul-200 px-2 italic duration-300 ease-in-out hover:from-rosa-100 hover:to-vermelho-300 bg-clip-text text-transparent relative`} disabled={optionsIA}>IA</button>
+                            <AnimatePresence>
+                                {optionsIA && <OptionsGPT setOptions={setOptionsIA} />}
+                            </AnimatePresence>
                         </span>
                         <textarea name="texto" id="texto" value={texto} onChange={(event) => setTexto(event.target.value)} className={`${loading && `animate-pulse`} text-area`} placeholder={loading ? '' : 'Digite sua anotação aqui...'} />
                     </div>

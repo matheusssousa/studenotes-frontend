@@ -149,6 +149,9 @@ table{
 .btn-cancel{
     @apply rounded bg-vermelho-200 px-2 py-1 font-semibold hover:shadow-md hover:bg-vermelho-300 hover:text-neutro-100 duration-200
 }
+.btn-compartilhar{
+    @apply rounded-lg bg-azul-200 px-2 py-1 text-sm hover:shadow-md hover:bg-azul-300 hover:text-neutro-100 duration-200 flex items-center gap-2
+}
 
 /* ESTILOS BÁSICOS DE LINHAS */
 .line-horizontal {

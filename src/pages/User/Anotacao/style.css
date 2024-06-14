@@ -28,7 +28,7 @@
 }
 
 .content-header-texto-note{
-    @apply w-full flex justify-between items-center relative
+    @apply w-full flex justify-between items-center relative h-fit
 }
 .text-area{
     @apply bg-white dark:bg-neutro-400 dark:border-neutro-300 dark:border-opacity-20 

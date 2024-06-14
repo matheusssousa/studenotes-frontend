@@ -83,7 +83,7 @@ export default function Calendar({ anotacoes, setDataInicio, setDataFinal, loadi
     return (
         <div className="calendario">
             <div className="calendario-header">
-                <p className="font-medium dark:text-neutro-100">Calendário</p>
+                <p className="font-medium text-azul-200">Calendário</p>
                 <div className="flex items-center gap-2">
                     <button type="button" onClick={handleTodayClick} className="button-date-atual" title="Hoje"><CalendarBlank size={15} /></button>
                     <div className="week-navigation flex gap-2">
