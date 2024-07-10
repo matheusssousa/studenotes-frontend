@@ -1,0 +1,6 @@
+.content-comentarios{
+    @apply w-full text-sm rounded-lg bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 p-1 md:p-5 flex flex-col gap-2
+}
+.comentario{
+    @apply w-full flex flex-col
+}
