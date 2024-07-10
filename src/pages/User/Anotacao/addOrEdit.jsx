@@ -150,7 +150,7 @@ export default function AddOrEditAnotacaoUserPage() {
                                 checked={comunidade === 1}
                                 onChange={() => { setComunidade(comunidade === 1 ? 0 : 1) }}
                                 className="hidden" />
-                            <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={17} /></span>
+                            <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={16} /></span>
                         </label>
                         <button type="submit" className="btn-save">Salvar</button>
                     </div>
@@ -198,7 +198,7 @@ export default function AddOrEditAnotacaoUserPage() {
                             checked={comunidade === 1}
                             onChange={() => { setComunidade(comunidade === 1 ? 0 : 1) }}
                             className="hidden" />
-                        <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={17} /></span>
+                        <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={16} /></span>
                     </label>
                     <button type="submit" className="btn-save">Salvar</button>
                 </div>

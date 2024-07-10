@@ -48,7 +48,7 @@ export default function UploadFile({ arquivos, setArquivos }) {
                                 }}
                                 className="button-remove"
                                 type="button">
-                                <X size={15} />
+                                <X size={16} />
                             </button>
                         </div>
                     ))}

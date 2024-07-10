@@ -17,8 +17,8 @@ export default function Search(search) {
             <div className="flex w-full md:w-1/2 items-center justify-center gap-1">
                 <div className="flex w-full md:w-full items-center justify-center gap-1 bg-white dark:bg-neutro-500 rounded-lg">
                     <input type="text" className="input-search" placeholder={`Pesquisar ${search.type}`} value={search.nome} onChange={(event) => search.setSearchNome(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') { search.buscar(); } }} />
-                    <button type="button" className="btn-filter" onClick={() => setModalFilters(!modalFilters)} title="Filtros">{modalFilters ? <X size={17} /> : <Faders size={17} />}</button>
-                    <button type="button" className="btn-search" onClick={buscar} title="Pesquisar"><MagnifyingGlass size={17} /></button>
+                    <button type="button" className="btn-filter" onClick={() => setModalFilters(!modalFilters)} title="Filtros">{modalFilters ? <X size={16} /> : <Faders size={16} />}</button>
+                    <button type="button" className="btn-search" onClick={buscar} title="Pesquisar"><MagnifyingGlass size={16} /></button>
                 </div>
                 {search.viewMode &&
                     <ViewMode

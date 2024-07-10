@@ -39,11 +39,11 @@ export default function AnotacaoTable(params) {
                         {item.arquivos.length > 0 ? (
                             item.arquivos.length > 1 ? (
                                 <span className="flex gap-1 text-neutro-300 items-center font-semibold rounded-md">
-                                    <Files size={15} /> <small>Arquivos</small>
+                                    <Files size={16} /> <small>Arquivos</small>
                                 </span>
                             ) : (
                                 <span className="flex gap-1 text-neutro-300 items-center font-semibold rounded-md">
-                                    <File size={15} /> <small>Arquivo</small>
+                                    <File size={16} /> <small>Arquivo</small>
                                 </span>
                             )
                         ) : null}
@@ -52,8 +52,8 @@ export default function AnotacaoTable(params) {
                         {item.deleted_at === null ?
                             <div className="content-buttons-action">
                                 <Link to={`/anotacoes/view/${item.id}`} className="view-action-btn" title="Visualizar"><Eye size={20} /></Link>
-                                <Link to={`/anotacoes/addedit/${item.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={20} /></Link>
-                                <button type="button" className="delete-action-btn" title="Excluir" onClick={() => params.delete(item.id)}><TrashSimple size={20} /></button>
+                                <Link to={`/anotacoes/addedit/${item.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={16} /></Link>
+                                <button type="button" className="delete-action-btn" title="Excluir" onClick={() => params.delete(item.id)}><TrashSimple size={16} /></button>
                             </div>
                             :
                             <div>
