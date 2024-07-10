@@ -1,35 +1,42 @@
 import React from "react";
-import { ChatTeardrop, ExclamationMark, Heart } from "@phosphor-icons/react";
+import { ChatTeardrop, ExclamationMark } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../../context/Authenticate/AuthContext";
 
 import "./style.css";
+import LikeButton from "../../Buttons/Like";
 
-export default function CardComunidade({ anotacao }) {
+const CardComunidade = React.forwardRef(({ anotacao }, ref) => {
+    const { user, admin } = useAuth();
+
     return (
-        <div className="card-comunidade">
+        <div className="card-comunidade" ref={ref}>
             <div className="card-content-header">
-                <span className="text-xs font-semibold w-[20%] dark:text-neutro-100">
-                    {anotacao.user.name}
-                </span>
-                <div className="flex flex-col items-center justify-center">
+                <div className="flex flex-col items-start ">
                     <p className="text-sm font-semibold dark:text-neutro-100">{anotacao.nome}</p>
-                    {anotacao.disciplina && <span className="text-xs text-neutro-300">{anotacao.disciplina.nome}</span>}
+                    {anotacao.disciplina && <small className="text-xs text-neutro-300">{anotacao.disciplina.nome}</small>}
                 </div>
-                <div className="w-[20%]"/>
+                <small className="text-xs w-[20%] text-neutro-300">
+                    {anotacao.user.name}
+                </small>
             </div>
             <div className="content-texto-card-anotacao break-all whitespace-pre-wrap items-center">
-                {anotacao.texto && (anotacao.texto.length > 250 ? anotacao.texto.substring(0, 250) + '...' : anotacao.texto)}
+                {anotacao.texto && (anotacao.texto.length > 450 ? anotacao.texto.substring(0, 450) + '...' : anotacao.texto)}
             </div>
             <div className="card-content-footer">
                 <div className="flex gap-1 dark:text-neutro-100">
-                    <button type="button" className="like-btn"><Heart size={17} /></button>
-                    <button type="button" className="comment-btn"><ChatTeardrop size={17} /></button>
-                    <button type="button" className="exclamation-btn"><ExclamationMark size={17}/></button>
+                    {(user && user.id != anotacao.user_id) && (
+                        <LikeButton id={anotacao.id} liked={anotacao.curtida} />
+                    )}
+                    {/* <button type="button" className="comment-btn"><ChatTeardrop size={16} /></button> */}
+                    {/* <button type="button" className="exclamation-btn"><ExclamationMark size={16}/></button> */}
                 </div>
-                <Link to={`/comunidade/view/${anotacao.id}`} className="button-visualizar-anotacao">
+                <Link to={`view/${anotacao.id}`} className="button-visualizar-anotacao">
                     Ver mais
                 </Link>
             </div>
         </div>
     );
-}
+});
+
+export default CardComunidade;
