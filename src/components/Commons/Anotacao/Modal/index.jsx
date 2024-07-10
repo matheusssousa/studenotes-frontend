@@ -1,39 +1,25 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ClockClockwise, Files, PencilSimple, Share, TrashSimple, X } from "@phosphor-icons/react";
+import { ClockClockwise, Files, PencilSimple, Share, ShareFat, TrashSimple, X } from "@phosphor-icons/react";
 import moment from "moment";
-import adjustColor from "../../../../hooks/AdjustColor";
 import { Link } from "react-router-dom";
 import ApiUser from "../../../../services/ApiUser";
 import { toast } from "react-toastify";
 
 import './style.css';
+import ViewCategorias from "../../Categoria/ViewCategorias";
+import EditMinimalist from "../../Buttons/Edit/EditMinimalist";
+import ShareMinimalist from "../../Buttons/Share/ShareMinimalist";
 
 export default function ModalAnotacao(params) {
     const [comunidade, setComunidade] = useState(params.item.comunidade);
 
-    const darkenColor = (hex, percent) => {
-        const dark = adjustColor(hex, percent);
-        return dark;
-    };
-
     const comunidadeAnotacao = async (anotacao) => {
         try {
             setComunidade(comunidade === 0 ? 1 : 0);
-            console.log(comunidade);
-            const response = await ApiUser.post(`/anotacao/comunidade/${anotacao}`, {
+            await ApiUser.post(`/anotacao/comunidade/${anotacao}`, {
                 comunidade: comunidade
             });
-            console.log(response.data);
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    
-    const restoreAnotacao = async (anotacao) => {
-        try {
-            await ApiUser.post(`/anotacao/restore/${anotacao}`)
-            toast.success("Anotação restaurada.", { theme: 'colored' });
         } catch (error) {
             console.log(error)
         }
@@ -76,22 +62,11 @@ export default function ModalAnotacao(params) {
                             {params.item.data_prazo && <p className="text-xs text-neutro-300">{moment(params.item.data_prazo).format('DD-MM-YYYY')}</p>}
                         </span>
                         {params.item.categorias.length > 0 &&
-                            <span className="flex gap-1 mt-2">
-                                {params.item.categorias.map((categoria, i) => (
-                                    <span key={i} className="px-1 text-xs font-semibold flex gap-2 border-2 rounded-md"
-                                        style={{
-                                            backgroundColor: `${categoria.cor}`,
-                                            color: darkenColor(categoria.cor, 40),
-                                            borderColor: darkenColor(categoria.cor, 40)
-                                        }}>
-                                        {categoria.nome}
-                                    </span>
-                                ))}
-                            </span>
+                            <ViewCategorias categorias={params.item.categorias} />
                         }
                     </div>
                     <div className="w-[10%] sm:w-[5%] flex justify-end">
-                        <button onClick={() => params.setSelectedAnotacao(null)} className="button-close-modal-anotacao"><X size={15} weight="bold" /></button>
+                        <button onClick={() => params.setSelectedAnotacao(null)} className="button-close-modal-anotacao"><X size={16} weight="bold" /></button>
                     </div>
                 </div>
                 <div className="content-conteudo-modal-anotacao whitespace-pre-wrap">
@@ -104,42 +79,32 @@ export default function ModalAnotacao(params) {
                 <div className="content-footer-modal-anotacao">
                     <span className="flex gap-1 text-neutro-300 items-center">
                         {params.item.arquivos.length > 0 && (<>
-                            <Files size={20} /> Contém arquivos
+                            <Files size={16} /> Contém arquivos
                         </>
                         )}
                     </span>
-                    <span className="flex items-center gap-4">
-                        <div className="flex gap-4">
+                    <span className="flex items-center">
+                        <div className="flex">
                             {params.item.deleted_at ? (
                                 <button
                                     onClick={() => restoreAnotacao(params.anotacao)}
-                                    className="flex gap-1 rounded-lg bg-verde-100 px-2 py-1 text-sm items-center justify-center hover:bg-verde-200 hover:text-neutro-100 duration-200"
+                                    className="btn-restore-minimize"
                                     title="Restaurar">
-                                    <ClockClockwise size={20} />
+                                    <ClockClockwise size={16} />
                                 </button>
                             ) : (
                                 <>
-                                    <Link
-                                        to={`/anotacoes/addedit/${params.item.id}`}
-                                        className="flex gap-1 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-azul-300 duration-200"
-                                        title="Editar">
-                                        <PencilSimple size={20} />
-                                    </Link>
+                                    <EditMinimalist edit={`/anotacoes/addedit/${params.item.id}`} />
                                     <button
                                         onClick={() => confirmDelete(true)}
-                                        className="flex gap-1 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-vermelho-300 duration-200"
+                                        className="btn-delete-minimize"
                                         title="Excluir">
-                                        <TrashSimple size={20} />
+                                        <TrashSimple size={16} />
                                     </button>
                                 </>
                             )}
                         </div>
-                        <button
-                            onClick={() => comunidadeAnotacao(params.item.id)}
-                            className={`button-compartilhar-anotacao${comunidade === 1 ? '-false' : '-true'}`}
-                            title="Compartilhar">
-                            <Share size={20} weight="fill" />
-                        </button>
+                        <ShareMinimalist id={params.item.id} anotacao_comunidade={params.item.comunidade} />
                         <Link to={`/anotacoes/view/${params.item.id}`} className="button-visualizar-anotacao">
                             Ver mais
                         </Link>
