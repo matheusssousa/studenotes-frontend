@@ -5,6 +5,7 @@ import Recents from "../../../components/Commons/Recents";
 import Calendar from "../../../components/Commons/Calendar";
 
 import './style.css';
+import UserDashboard from "../../../components/User/Dashboard";
 
 export default function HomeUserPage(params) {
     const [recentes, setRecentes] = useState([]);
@@ -34,7 +35,7 @@ export default function HomeUserPage(params) {
         getDadosHome();
     }, [])
 
-        useEffect(() => {
+    useEffect(() => {
         getDadosHome();
     }, [dataFinal, dataInicio])
 
@@ -44,13 +45,13 @@ export default function HomeUserPage(params) {
                 page='Home'
                 text='A sua página inicial.'
             />
-            <div className="row h-full">
+            <div className="row h-full gap-5">
                 <div className="page-home-content-left">
                     <Recents recentes={recentes} loading={loading} />
                     <Calendar anotacoes={anotacoesDataProximas} setDataInicio={setDataInicio} setDataFinal={setDataFinal} loading={loading} />
                 </div>
                 <div className="page-home-content-right">
-
+                    <UserDashboard />
                 </div>
             </div>
         </div>
