@@ -7,6 +7,7 @@ import AnotacaoUserPage from "../../pages/User/Anotacao/index.jsx";
 import ComunidadeUserPage from "../../pages/User/Comunidade/index.jsx";
 import ViewAnotacaoUserPage from "../../pages/User/Anotacao/view.jsx";
 import AddOrEditAnotacaoUserPage from "../../pages/User/Anotacao/addOrEdit.jsx";
+import ViewComunidadeUserPage from "../../pages/User/Comunidade/view.jsx";
 
 export default function PrivateRoutesUser(params) {
     return (
@@ -19,6 +20,7 @@ export default function PrivateRoutesUser(params) {
             <Route path="/categorias" element={<CategoriaUserPage />} />
             <Route path="/categorias/addedit/:id?" element={<AddOrEditCategoriaUserPage />} />
             <Route path="/comunidade" element={<ComunidadeUserPage />} />
+            <Route path="/comunidade/view/:id?" element={<ViewComunidadeUserPage />} />
         </Routes>
     )
 }
