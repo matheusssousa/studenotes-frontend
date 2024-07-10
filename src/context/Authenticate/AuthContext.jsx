@@ -31,6 +31,9 @@ export const AuthProvider = ({ children }) => {
             setAuthenticate(true);
             setUser(user);
         } catch (error) {
+            toast.error("Email e/ou senha inválidos!", {
+                theme: "colored"
+            });
             console.error(error);
         }
     }
