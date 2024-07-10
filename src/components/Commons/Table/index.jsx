@@ -91,8 +91,8 @@ const Table = (params) => {
                         <td className="w-[20%]">
                             {item.deleted_at === null ?
                                 <div className="content-buttons-action">
-                                    <Link to={`${params.admin ? `/admin` : ``}/${params.type}/addedit/${item.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={20} /></Link>
-                                    <button type="button" className="delete-action-btn" title="Excluir" onClick={() => params.delete(item.id)}><TrashSimple size={20} /></button>
+                                    <Link to={`${params.admin ? `/admin` : ``}/${params.type}/addedit/${item.id}`} className="edit-action-btn" title="Editar"><PencilSimple size={16} /></Link>
+                                    <button type="button" className="delete-action-btn" title="Excluir" onClick={() => params.delete(item.id)}><TrashSimple size={16} /></button>
                                 </div>
                                 :
                                 <div>
