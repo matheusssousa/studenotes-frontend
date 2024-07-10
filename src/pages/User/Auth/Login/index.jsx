@@ -19,10 +19,6 @@ export default function LoginUserPage() {
                 password: password,
             });
         } catch (error) {
-            toast.error("Email e/ou senha inválidos!", {
-                position: toast.POSITION.TOP_RIGHT,
-                theme: "colored"
-            });
             setPassword('');
         }
     };
