@@ -30,10 +30,21 @@ export default function AnotacaoUserPage(params) {
 
     const [deleteAnotacao, setDeleteAnotacao] = useState(false);
 
+    const searchParams = {
+        searchNome, setSearchNome,
+        searchDateInicio, setSearchDateInicio,
+        searchDateFim, setSearchDateFim,
+        searchStatus, setSearchStatus,
+        searchComunidade, setSearchComunidade,
+        searchDisciplina, setSearchDisciplina,
+        searchCategoria, setSearchCategoria,
+        disciplinas, categorias,
+    };
+
     const receiveAnotacoes = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/anotacao`, {
+            const { data } = await ApiUser.get(`/anotacao`, {
                 params: {
                     page: page,
                     nome: searchNome,
@@ -45,34 +56,28 @@ export default function AnotacaoUserPage(params) {
                     disciplina: searchDisciplina
                 }
             });
-            setPagination(response.data.anotacoes);
-            setAnotacoes(response.data.anotacoes.data);
-            setDisciplinas(response.data.disciplinas);
-            setCategorias(response.data.categorias);
+            setPagination(data.anotacoes);
+            setAnotacoes(data.anotacoes.data);
+            setDisciplinas(data.disciplinas);
+            setCategorias(data.categorias);
         } catch (error) {
             console.error("Erro ao receber anotacões:", error);
         }
         setLoading(false);
     };
 
-    const deleteAnotacoes = async (anotacao) => {
-        setDeleteAnotacao(anotacao);
-    };
-
     const renderModalDelete = () => {
-        const anotacao = anotacoes.find(anotacao => anotacao.id === deleteAnotacao);
-        if (!anotacao) return null;
-
-        return (
-            <ModalDelete item={anotacao} delete={() => confirmDelete(anotacao.id)} cancel={() => setDeleteAnotacao()} />
-        );
+        const anotacao = anotacoes.find((anotacao) => anotacao.id === deleteAnotacao);
+        return anotacao ? (
+            <ModalDelete item={anotacao} delete={() => confirmDelete(anotacao.id)} cancel={() => setDeleteUser(null)} />
+        ) : null;
     };
 
     const confirmDelete = async (anotacao) => {
         try {
             await ApiUser.delete(`/anotacao/${anotacao}`);
             receiveAnotacoes();
-            setDeleteAnotacao();
+            setDeleteAnotacao(null);
             toast.success("Anotação excluída.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
@@ -88,17 +93,6 @@ export default function AnotacaoUserPage(params) {
             console.log(error)
         }
     }
-
-    const limparSearch = () => {
-        setSearchNome("");
-        setSearchDateFim("");
-        setSearchDateInicio("");
-        setSearchStatus("");
-        setSearchCategoria("");
-        setSearchDisciplina("");
-        setSearchComunidade("");
-        receiveAnotacoes();
-    };
 
     const handlePaginationClick = (newPage) => {
         receiveAnotacoes(newPage);
@@ -116,26 +110,9 @@ export default function AnotacaoUserPage(params) {
                 adicionar='/anotacoes/addedit/'
             />
             <Search
-                type="anotações"
-                nome={searchNome}
-                setSearchNome={setSearchNome}
-                data_inicio={searchDateInicio}
-                setSearchDateInicio={setSearchDateInicio}
-                data_fim={searchDateFim}
-                setSearchDateFim={setSearchDateFim}
-                status={searchStatus}
-                setSearchStatus={setSearchStatus}
-                comunidade={searchComunidade}
-                setSearchComunidade={setSearchComunidade}
+                searchParams={searchParams}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
-                disciplina={searchDisciplina}
-                disciplinas={disciplinas}
-                setSearchDisciplina={setSearchDisciplina}
-                categoria={searchCategoria}
-                categorias={categorias}
-                setSearchCategoria={setSearchCategoria}
-                limpar={limparSearch}
                 buscar={receiveAnotacoes}
             />
             {loading ? (
@@ -149,23 +126,21 @@ export default function AnotacaoUserPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {anotacoes.map((anotacao, i) => (
-                                        <AnotacaoCard key={i} type='anotacoes' item={anotacao} delete={deleteAnotacoes} restore={restoreAnotacoes} />
+                                        <AnotacaoCard key={i} type='anotacoes' item={anotacao} delete={setDeleteAnotacao} restore={restoreAnotacoes} />
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <AnotacaoTable items={anotacoes} delete={deleteAnotacoes} restore={restoreAnotacoes} />
+                                <AnotacaoTable items={anotacoes} delete={setDeleteAnotacao} restore={restoreAnotacoes} />
                             )}
                         </>
                     )}
-                    <div>
-                        {pagination && (
-                            <Pagination
-                                pagination={pagination}
-                                setPage={handlePaginationClick}
-                            />
-                        )}
-                    </div>
+                    {pagination && (
+                        <Pagination
+                            pagination={pagination}
+                            setPage={handlePaginationClick}
+                        />
+                    )}
                     {renderModalDelete()}
                 </div>
             )}

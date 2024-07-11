@@ -15,16 +15,22 @@ export default function ComunidadeUserPage() {
     const [disciplinas, setDisciplinas] = useState([]);
     const [page, setPage] = useState(1);
     const [searchNome, setSearchNome] = useState("");
-    const [searchDisciplina, setSearchDisciplina] = useState('');
+    const [searchDisciplina, setSearchDisciplina] = useState("");
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const observer = useRef();
 
+    const searchParams = {
+        searchNome, setSearchNome,
+        searchDisciplina, setSearchDisciplina,
+        disciplinas,
+    }
+
     const fetchAnotacoes = async (params) => {
         setLoading(true);
         try {
-            const response = await ApiUser.get('/comunidade/', { params });
-            return response.data;
+            const { data } = await ApiUser.get('/comunidade/', { params });
+            return data;
         } catch (error) {
             console.error(error);
             return null;
@@ -85,13 +91,13 @@ export default function ComunidadeUserPage() {
                 </button>
             </div>
             <Search
-                type="anotações"
+                searchParams={searchParams}
                 onSearch={handleSearch}
             />
             <div className="page-content-comunidade">
                 <div className="content-anotacoes-comunidade">
                     {anotacoes.length === 0 ? (
-                        !loading && <ErrorDenied/>
+                        !loading && <ErrorDenied />
                     ) : (
                         anotacoes.map((anotacao, index) => (
                             <CardComunidade

@@ -1,34 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import MainHeader from "../../../components/Commons/MainHeader";
 import ApiAdmin from "../../../services/ApiAdmin";
 import moment from 'moment';
+import { toast } from "react-toastify";
 
 export default function ViewLogAdminPage() {
-    const params = useParams();
-    const navigate = useNavigate();
+    const { id } = useParams();
     const [log, setLog] = useState([]);
     const [objeto, setObjeto] = useState();
-
     const [loading, setLoading] = useState(false);
 
-    const receiveDados = async () => {
+    const fetchLogData = async () => {
         setLoading(true);
         try {
-            const response = await ApiAdmin.get(`/log/${params.id}`);
-            setLog(response.data);
-            setObjeto(JSON.stringify(response.data.properties.attributes, null, 2));
+            const { data } = await ApiAdmin.get(`/log/${id}`);
+            setLog(data);
+            setObjeto(JSON.stringify(data.properties.attributes, null, 2));
         } catch (error) {
-            console.log(error);
+            toast.error("Erro ao carregar os dados do log.", { theme: 'colored' });
         }
         setLoading(false);
     }
 
     useEffect(() => {
-        if (params.id) {
-            receiveDados();
-        }
-    }, [params.id])
+        fetchLogData();
+    }, [id])
 
     return (
         <div className="page-content">
@@ -51,6 +48,16 @@ export default function ViewLogAdminPage() {
                     </div>
                     <div className="row">
                         <span className="input-group-add-edit">
+                            <label htmlFor="nome_autor" className="label-add-edit">Nome do Autor</label>
+                            <input type="text" name="nome_autor" value={log.user?.name} className={`${loading && `animate-pulse`} input-add-edit`} disabled />
+                        </span>
+                        <span className="input-group-add-edit">
+                            <label htmlFor="cargo_autor" className="label-add-edit">Cargo</label>
+                            <input type="text" name="cargo_autor" value={log.user?.role} className={`${loading && `animate-pulse`} input-add-edit capitalize`} disabled />
+                        </span>
+                    </div>
+                    <div className="row">
+                        <span className="input-group-add-edit">
                             <label htmlFor="nome" className="label-add-edit">Modelo</label>
                             <input type="text" name="nome" value={log.log_name} className={`${loading && `animate-pulse`} input-add-edit`} disabled />
                         </span>
@@ -63,7 +70,7 @@ export default function ViewLogAdminPage() {
                         <label htmlFor="data" className="label-add-edit">Feito em</label>
                         <input type="datetime" name="data" value={moment(log.created_at).format('DD-MM-YYYY HH:mm')} className={`${loading && `animate-pulse`} input-add-edit`} disabled />
                     </span>
-                    <div className="line-horizontal"/>
+                    <div className="line-horizontal" />
                     <label htmlFor="text" className="label-add-edit">Objeto</label>
                     <textarea name="action" value={objeto} className={`${loading && `animate-pulse`} input-add-edit h-80`} disabled />
                 </div>

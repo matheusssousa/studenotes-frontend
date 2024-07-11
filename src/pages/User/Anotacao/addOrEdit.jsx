@@ -13,7 +13,7 @@ import "./style.css";
 import { AnimatePresence } from "framer-motion";
 
 export default function AddOrEditAnotacaoUserPage() {
-    const params = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [categorias, setCategorias] = useState([]);
@@ -28,28 +28,28 @@ export default function AddOrEditAnotacaoUserPage() {
     const [arquivos, setArquivos] = useState([]);
 
     const [optionsIA, setOptionsIA] = useState(false);
-    console.log(disciplina)
 
     const [loading, setLoading] = useState(false);
 
     const receiveDados = async () => {
+        if (!id) return;
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/anotacao/edit/${params.id}`);
-            setNome(response.data.anotacao.nome);
-            setData(response.data.anotacao.data_prazo ? moment(response.data.anotacao.data_prazo).format("YYYY-MM-DD") : response.data.anotacao.data_prazo);
-            setTexto(response.data.anotacao.texto);
-            setComunidade(response.data.anotacao.comunidade);
-            setArquivos(response.data.anotacao.arquivos);
-            if (response.data.anotacao.categorias.length > 0) {
-                setSelectCategorias(response.data.anotacao.categorias.map(categoria => categoria.id));
+            const { data } = await ApiUser.get(`/anotacao/edit/${id}`);
+            setNome(data.anotacao.nome);
+            setData(data.anotacao.data_prazo ? moment(data.anotacao.data_prazo).format("YYYY-MM-DD") : data.anotacao.data_prazo);
+            setTexto(data.anotacao.texto);
+            setComunidade(data.anotacao.comunidade);
+            setArquivos(data.anotacao.arquivos);
+            if (data.anotacao.categorias.length > 0) {
+                setSelectCategorias(data.anotacao.categorias.map(categoria => categoria.id));
             }
-            setDisciplina(response.data.anotacao.disciplina);
-
-            setCategorias(response.data.categorias);
-            setDisciplinas(response.data.disciplinas);
+            setDisciplina(data.anotacao.disciplina);
+            setCategorias(data.categorias);
+            setDisciplinas(data.disciplinas);
         } catch (error) {
             console.log(error);
+            toast.error("Erro ao carregar os dados da anotação.", { theme: 'colored' });
         }
 
         setLoading(false);
@@ -58,9 +58,9 @@ export default function AddOrEditAnotacaoUserPage() {
     const receiveDadosCreate = async () => {
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/anotacao/create`);
-            setCategorias(response.data.categorias);
-            setDisciplinas(response.data.disciplinas);
+            const { data } = await ApiUser.get(`/anotacao/create`);
+            setCategorias(data.categorias);
+            setDisciplinas(data.disciplinas);
         } catch (error) {
             console.log(error);
         }
@@ -69,75 +69,57 @@ export default function AddOrEditAnotacaoUserPage() {
 
     const enviarDados = async (e, anotacao) => {
         e.preventDefault();
-        if (anotacao) {
-            console.log(data)
-            try {
-                const response = await ApiUser.post(`/anotacao/${anotacao}`, {
-                    nome: nome,
-                    texto: texto,
-                    data_prazo: data,
-                    disciplina_id: (disciplina && typeof disciplina === 'object' ? disciplina.id : disciplina),
-                    comunidade: comunidade,
-                    categorias: selectCategorias,
-                    arquivo: arquivos,
-                    _method: "PUT",
-                }, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                });
-                console.log(response);
-                toast.success("Anotação atualizada.", {
-                    theme: 'colored',
-                });
-                navigate("/anotacoes");
-            } catch (error) {
-                console.log(error)
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
+        setLoading(true);
+    
+        const dataToSend = {
+            nome: nome,
+            texto: texto,
+            data_prazo: data,
+            disciplina_id: (disciplina && typeof disciplina === 'object' ? disciplina.id : disciplina),
+            comunidade: comunidade,
+            categorias: selectCategorias,
+            arquivo: arquivos,
+        };
+    
+        const config = {
+            headers: { "Content-Type": "multipart/form-data" }
+        };
+    
+        try {
+            if (anotacao) {
+                dataToSend._method = "PUT";
+                const response = await ApiUser.post(`/anotacao/${anotacao}`, dataToSend, config);
+                toast.success("Anotação atualizada.", { theme: 'colored' });
+            } else {
+                const response = await ApiUser.post(`/anotacao`, dataToSend, config);
+                toast.success("Anotação cadastrada.", { theme: 'colored' });
             }
-        } else {
-            try {
-                await ApiUser.post(`/anotacao`, {
-                    nome: nome,
-                    texto: texto,
-                    data_prazo: data,
-                    disciplina_id: disciplina,
-                    comunidade: comunidade,
-                    categorias: selectCategorias,
-                    arquivo: arquivos
-                }, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                });
-                toast.success("Anotação cadastrada.", {
-                    theme: 'colored',
-                });
-                navigate("/anotacoes");
-            } catch (error) {
-                console.log(error)
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
-            }
+            navigate("/anotacoes");
+        } catch (error) {
+            console.error("Erro ao enviar dados:", error);
+            toast.error(error.response?.data?.message || "Erro ao salvar os dados.", { theme: 'colored' });
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
-        if (params.id) {
+        if (id) {
             receiveDadosCreate();
             receiveDados();
         } else {
             receiveDadosCreate();
         }
-    }, [params.id])
+    }, [id])
 
     return (
         <div className="page-content">
             <MainHeader
                 voltar="/anotacoes"
-                page={params.id ? 'Editar Anotação' : 'Cadastrar Anotação'}
-                text={params.id ? 'Editar uma anotação já cadastrada.' : 'Cadastrar uma nova anotação.'}
+                page={id ? 'Editar Anotação' : 'Cadastrar Anotação'}
+                text={id ? 'Editar uma anotação já cadastrada.' : 'Cadastrar uma nova anotação.'}
             />
-            <form onSubmit={(e) => enviarDados(e, params.id)} className="form-add-edit-note" encType="multipart/form-data">
+            <form onSubmit={(e) => enviarDados(e, id)} className="form-add-edit-note" encType="multipart/form-data">
                 <div className="content-note-header">
                     <span className="input-group-add-edit-note">
                         <input type="text" name="nome" value={nome} onChange={(event) => setNome(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note-title`} placeholder={loading ? '' : 'Digite o nome da anotação...'} required />

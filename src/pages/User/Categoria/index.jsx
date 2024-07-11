@@ -25,10 +25,17 @@ export default function CategoriaUserPage() {
 
     const [deleteCategoria, setDeleteCategoria] = useState(false);
 
+    const searchParams = {
+        searchNome, setSearchNome,
+        searchDateInicio, setSearchDateInicio,
+        searchDateFim, setSearchDateFim,
+        searchStatus, setSearchStatus,
+    };
+
     const receiveCategorias = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/categoria`, {
+            const { data } = await ApiUser.get(`/categoria`, {
                 params: {
                     page: page,
                     nome: searchNome,
@@ -37,32 +44,26 @@ export default function CategoriaUserPage() {
                     status: searchStatus
                 }
             });
-            setCategorias(response.data.data);
-            setPagination(response.data);
+            setCategorias(data.data);
+            setPagination(data);
         } catch (error) {
             console.error("Erro ao receber categorias:", error);
         }
         setLoading(false);
     };
 
-    const deleteCategorias = async (categoria) => {
-        setDeleteCategoria(categoria);
-    };
-
     const renderModalDelete = () => {
-        const categoria = categorias.find(categoria => categoria.id === deleteCategoria);
-        if (!categoria) return null;
-
-        return (
-            <ModalDelete item={categoria} delete={() => confirmDelete(categoria.id)} cancel={() => setDeleteCategoria()} />
-        );
+        const categoria = categorias.find((categoria) => categoria.id === deleteCategoria);
+        return categoria ? (
+            <ModalDelete item={categoria} delete={() => confirmDelete(categoria.id)} cancel={() => setDeleteUser(null)} />
+        ) : null;
     };
 
     const confirmDelete = async (categoria) => {
         try {
             await ApiUser.delete(`/categoria/${categoria}`);
             receiveCategorias();
-            setDeleteCategoria();
+            setDeleteCategoria(null);
             toast.success("Categoria excluída.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
@@ -73,21 +74,11 @@ export default function CategoriaUserPage() {
         try {
             await ApiUser.post(`/categoria/restore/${categoria}`)
             receiveCategorias();
-            toast.success("Categoria restaurada.", {
-                theme: 'colored',
-            });
+            toast.success("Categoria restaurada.", { theme: 'colored', });
         } catch (error) {
             console.log(error)
         }
     }
-
-    const limparSearch = () => {
-        setSearchNome("");
-        setSearchDateFim("");
-        setSearchDateInicio("");
-        setSearchStatus("");
-        receiveCategorias();
-    };
 
     const handlePaginationClick = (newPage) => {
         receiveCategorias(newPage);
@@ -105,18 +96,9 @@ export default function CategoriaUserPage() {
                 adicionar='/categorias/addedit/'
             />
             <Search
-                type="categorias"
-                nome={searchNome}
-                setSearchNome={setSearchNome}
-                data_inicio={searchDateInicio}
-                setSearchDateInicio={setSearchDateInicio}
-                data_fim={searchDateFim}
-                setSearchDateFim={setSearchDateFim}
-                status={searchStatus}
-                setSearchStatus={setSearchStatus}
+                searchParams={searchParams}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
-                limpar={limparSearch}
                 buscar={receiveCategorias}
             />
             {loading ? (
@@ -130,23 +112,21 @@ export default function CategoriaUserPage() {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {categorias.map((categoria, i) => (
-                                        <Card key={i} type='categorias' item={categoria} delete={deleteCategorias} restore={restoreCategorias}/>
+                                        <Card key={i} type='categorias' item={categoria} delete={setDeleteCategoria} restore={restoreCategorias} />
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="categorias" items={categorias} delete={deleteCategorias} restore={restoreCategorias} />
+                                <Table type="categorias" items={categorias} delete={setDeleteCategoria} restore={restoreCategorias} />
                             )}
                         </>
                     )}
-                    <div>
-                        {pagination && (
-                            <Pagination
-                                pagination={pagination}
-                                setPage={handlePaginationClick}
-                            />
-                        )}
-                    </div>
+                    {pagination && (
+                        <Pagination
+                            pagination={pagination}
+                            setPage={handlePaginationClick}
+                        />
+                    )}
                     {renderModalDelete()}
                 </div>
             )}

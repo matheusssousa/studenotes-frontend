@@ -19,6 +19,12 @@ export default function ComunidadeAdminPage() {
     const [loading, setLoading] = useState(false);
     const observer = useRef();
 
+    const searchParams = {
+        searchNome, setSearchNome,
+        searchDisciplina, setSearchDisciplina,
+        disciplinas,
+    }
+
     const fetchAnotacoes = async (params) => {
         setLoading(true);
         try {
@@ -80,7 +86,7 @@ export default function ComunidadeAdminPage() {
                 />
             </div>
             <Search
-                type="anotações"
+                searchParams={searchParams}
                 onSearch={handleSearch}
             />
             <div className="page-content-comunidade">

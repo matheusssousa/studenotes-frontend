@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function AddOrEditAdminsAdminPage() {
-    const params = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [nome, setNome] = useState();
     const [email, setEmail] = useState();
@@ -13,67 +13,50 @@ export default function AddOrEditAdminsAdminPage() {
     const [loading, setLoading] = useState(false);
 
     const receiveDados = async () => {
+        if (!id) return;
         setLoading(true);
         try {
-            const response = await ApiAdmin.get(`/admin/${params.id}`);
-            setNome(response.data.name);
-            setEmail(response.data.email);
+            const { data } = await ApiAdmin.get(`/admin/${id}`);
+            setNome(data.name);
+            setEmail(data.email);
         } catch (error) {
-            console.log(error);
+            console.error("Erro ao receber dados do admin:", error);
+            toast.error("Erro ao carregar os dados do admin.", { theme: 'colored' });
         }
         setLoading(false);
     }
 
     const enviarDados = async (e, admin) => {
         e.preventDefault();
-        if (admin) {
-            try {
-                await ApiAdmin.put(`/admin/${admin}`, {
-                    name: nome,
-                    email: email,
-                });
-                toast.success("Administrador atualizada.", {
-                    theme: 'colored',
-                });
-                navigate("/admin/admins");
-            } catch (error) {
-                console.log(error)
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
+        setLoading(true);
+        try {
+            if (id) {
+                await ApiAdmin.put(`/admin/${admin}`, { name: nome, email: email });
+                toast.success("Usuário atualizado com sucesso.", { theme: 'colored' });
+            } else {
+                await ApiAdmin.post(`/auth/register`, { name: nome, email: email });
+                toast.success("Usuário cadastrado com sucesso.", { theme: 'colored' });
             }
-        } else {
-            try {
-                await ApiAdmin.post(`/auth/register`, {
-                    name: nome,
-                    email: email,
-                });
-                toast.success("Administrador cadastrado.", {
-                    theme: 'colored',
-                });
-                navigate("/admin/admins");
-            } catch (error) {
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
-            }
+            navigate("/admin/admins");
+        } catch (error) {
+            console.error("Erro ao enviar dados:", error);
+            toast.error(error.response?.data?.message || "Erro ao salvar os dados.", { theme: 'colored' });
         }
+        setLoading(false);
     }
 
     useEffect(() => {
-        if (params.id) {
-            receiveDados();
-        }
-    }, [params.id])
+        receiveDados();
+    }, [id])
 
     return (
         <div className="page-content">
             <MainHeader
                 voltar='/admin/admins'
-                page={params.id ? 'Editar Administrador' : 'Cadastrar Administrador'}
-                text={params.id ? 'Editar um administrador já cadastrado.' : 'Cadastrar um novo administrador.'}
+                page={id ? 'Editar Administrador' : 'Cadastrar Administrador'}
+                text={id ? 'Editar um administrador já cadastrado.' : 'Cadastrar um novo administrador.'}
             />
-            <form onSubmit={(e) => enviarDados(e, params.id)} className="form-add-edit">
+            <form onSubmit={(e) => enviarDados(e, id)} className="form-add-edit">
                 <div className="content-inputs">
                     <span className="input-group-add-edit">
                         <label htmlFor="nome" className="label-add-edit">Nome</label>

@@ -1,110 +1,263 @@
 import React, { useState } from "react";
 import { Faders, MagnifyingGlass, X } from "@phosphor-icons/react";
-
 import "./style.css";
 import ViewMode from "../ViewMode";
 
-export default function Search(search) {
+export default function Search({ searchParams, viewMode, setViewMode, buscar }) {
     const [modalFilters, setModalFilters] = useState(false);
 
-    const buscar = () => {
+    const handleBuscar = () => {
         setModalFilters(false);
-        search.buscar();
+        buscar();
     }
+
+    const limparSearch = () => {
+        const searchFunctions = [
+            'setSearchNome',
+            'setSearchEmail',
+            'setSearchVerifyEmail',
+            'setSearchDateFim',
+            'setSearchDateInicio',
+            'setSearchStatus',
+            'setSearchModelo',
+            'setSearchAcao',
+            'setSearchComunidade',
+            'setSearchDisciplina',
+            'setSearchCategoria'
+        ];
+    
+        if (searchParams) {
+            searchFunctions.forEach(func => {
+                if (typeof searchParams[func] === 'function') {
+                    searchParams[func]("");
+                }
+            });
+            buscar();
+        }
+    };
+    
+
+    const {
+        searchNome, setSearchNome,
+        searchDateInicio, setSearchDateInicio,
+        searchDateFim, setSearchDateFim,
+        searchStatus, setSearchStatus,
+        searchEmail, setSearchEmail,
+        searchVerifyEmail, setSearchVerifyEmail,
+        searchModelo, setSearchModelo,
+        searchAcao, setSearchAcao,
+        searchComunidade, setSearchComunidade,
+        searchDisciplina, setSearchDisciplina,
+        searchCategoria, setSearchCategoria,
+        disciplinas, categorias,
+    } = searchParams;
 
     return (
         <div className="search-content">
             <div className="flex w-full md:w-1/2 items-center justify-center gap-1">
                 <div className="flex w-full md:w-full items-center justify-center gap-1 bg-white dark:bg-neutro-500 rounded-lg">
-                    <input type="text" className="input-search" placeholder={`Pesquisar ${search.type}`} value={search.nome} onChange={(event) => search.setSearchNome(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') { search.buscar(); } }} />
-                    <button type="button" className="btn-filter" onClick={() => setModalFilters(!modalFilters)} title="Filtros">{modalFilters ? <X size={16} /> : <Faders size={16} />}</button>
-                    <button type="button" className="btn-search" onClick={buscar} title="Pesquisar"><MagnifyingGlass size={16} /></button>
+                    <input
+                        type="text"
+                        className="input-search"
+                        placeholder={`Pesquisar`}
+                        value={searchNome}
+                        onChange={(event) => setSearchNome(event.target.value)}
+                        onKeyDown={(event) => { if (event.key === 'Enter') { handleBuscar(); } }}/>
+                    <button
+                        type="button"
+                        className="btn-filter"
+                        onClick={() => setModalFilters(!modalFilters)}
+                        title="Filtros">
+                        {modalFilters ? <X size={16} /> : <Faders size={16} />}
+                    </button>
+                    <button
+                        type="button"
+                        className="btn-search"
+                        onClick={handleBuscar}
+                        title="Pesquisar">
+                        <MagnifyingGlass size={16} />
+                    </button>
                 </div>
-                {search.viewMode &&
+                {viewMode &&
                     <ViewMode
-                        viewMode={search.viewMode}
-                        setViewMode={search.setViewMode}
+                        viewMode={viewMode}
+                        setViewMode={setViewMode}
                     />
                 }
             </div>
             {modalFilters &&
                 <div className="subsearch-content">
                     <div className="row">
-                        {search.disciplinas &&
+                        {setSearchEmail && 
                             <span className="input-group-search">
-                                <label htmlFor="disciplina" className="label-input">Disciplina</label>
-                                <select name="disciplina" id="disciplina" className="input-search-date" onChange={(event) => search.setSearchDisciplina(event.target.value)}>
-                                    <option defaultValue={''} selected={search.setSearchDisciplina === ""}>Todas</option>
-                                    {search.disciplinas.map((disciplina, i) => (
-                                        <option value={disciplina.id} key={i} selected={search.disciplina == disciplina.id}>{disciplina.nome}</option>
-                                    ))}
-                                </select>
+                                <label htmlFor="email" className="label-input">Email</label>
+                                <input
+                                    type="text"
+                                    name="email"
+                                    id="email"
+                                    value={searchEmail}
+                                    onChange={(event) => setSearchEmail(event.target.value)}
+                                    className="input-search-date"/>
                             </span>
                         }
-                        {search.categorias &&
-                            <span className="input-group-search">
-                                <label htmlFor="categoria" className="label-input">Categoria</label>
-                                <select name="categoria" id="categoria" className="input-search-date" onChange={(event) => search.setSearchCategoria(event.target.value)}>
-                                    <option defaultValue={''} selected={search.setSearchCategoria === ""}>Todas</option>
-                                    {search.categorias.map((categoria, i) => (
-                                        <option value={categoria.id} key={i} selected={search.categoria == categoria.id}>{categoria.nome}</option>
-                                    ))}
-                                </select>
-                            </span>
-                        }
-                        {search.setSearchComunidade &&
-                            <span className="input-group-search">
-                                <label htmlFor="comunidade" className="label-input">Compartilhado</label>
-                                <select name="comunidade" id="comunidade" className="input-search-date" onChange={(event) => search.setSearchComunidade(event.target.value)}>
-                                    <option value="" selected={search.comunidade === ""}>Tudo</option>                                    
-                                    <option value="1" selected={search.comunidade === "1"}>Compartilhados</option>                                    
-                                    <option value="0" selected={search.comunidade === "0"}>Não Compartilhados</option>                                    
-                                </select>
-                            </span>
-                        }
-                    </div>
-                    <div className="row">
-                        {search.setSearchVerifyEmail &&
+                        {setSearchVerifyEmail &&
                             <span className="input-group-search">
                                 <label htmlFor="verifyemail" className="label-input">Email verificado</label>
-                                <select name="verifyemail" id="verifyemail" className="input-search-date" onChange={(event) => search.setSearchVerifyEmail(event.target.value)}>
-                                    <option defaultValue selected={search.verifyemail === ""}>Ambos</option>
-                                    <option value="verificados" selected={search.verifyemail === "verificados"}>Verificado</option>
-                                    <option value="nao_verificados" selected={search.verifyemail === "nao_verificados"}>Não Verifificado</option>
+                                <select
+                                    name="verifyemail"
+                                    id="verifyemail"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchVerifyEmail(event.target.value)}>
+                                    <option value="" selected={searchVerifyEmail === ""}>Ambos</option>
+                                    <option value="verificados" selected={searchVerifyEmail === "verificados"}>Verificado</option>
+                                    <option value="nao_verificados" selected={searchVerifyEmail === "nao_verificados"}>Não Verificado</option>
                                 </select>
                             </span>
                         }
                     </div>
                     <div className="row">
-                        {search.setSearchDateInicio &&
+                        {setSearchModelo && 
                             <span className="input-group-search">
-                                <label htmlFor="data_inicio" className="label-input">Criado a partir de</label>
-                                <input type="date" name="data_inicio" id="data_inicio" value={search.data_inicio} onChange={(event) => search.setSearchDateInicio(event.target.value)} className="input-search-date" />
+                                <label htmlFor="modelo" className="label-input">Modelo</label>
+                                <select
+                                    name="modelo"
+                                    id="modelo"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchModelo(event.target.value)}>
+                                    <option value="" selected={searchModelo === ""}>Todos</option>
+                                    <option value="Usuario" selected={searchModelo === "Usuario"}>Usuário</option>
+                                    <option value="Administrador" selected={searchModelo === "Administrador"}>Administrador</option>
+                                    <option value="Disciplina" selected={searchModelo === "Disciplina"}>Disciplina</option>
+                                    <option value="Categoria" selected={searchModelo === "Categoria"}>Categoria</option>
+                                    <option value="Anotacao" selected={searchModelo === "Anotacao"}>Anotação</option>
+                                    <option value="Comentario" selected={searchModelo === "Comentario"}>Comentário</option>
+                                </select>
                             </span>
                         }
-                        {search.setSearchDateFim &&
+                        {setSearchAcao &&
                             <span className="input-group-search">
-                                <label htmlFor="data_fim" className="label-input">Criado até</label>
-                                <input type="date" name="data_fim" id="data_fim" value={search.data_fim} onChange={(event) => search.setSearchDateFim(event.target.value)} min={search.data_inicio} className="input-search-date" />
-                            </span>
-                        }
-                        {search.setSearchStatus &&
-                            <span className="input-group-search">
-                                <label htmlFor="status" className="label-input">Status</label>
-                                <select name="status" id="status" className="input-search-date" onChange={(event) => search.setSearchStatus(event.target.value)}>
-                                    <option defaultValue selected={search.status === ""}>Ativos</option>
-                                    <option value="deletados" selected={search.status === "deletados"}>Excluídos</option>
-                                    <option value="ambos" selected={search.status === "ambos"}>Ambos</option>
+                                <label htmlFor="acao" className="label-input">Ação</label>
+                                <select
+                                    name="acao"
+                                    id="acao"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchAcao(event.target.value)}>
+                                    <option value="" selected={searchAcao === ""}>Todos</option>
+                                    <option value="created" selected={searchAcao === "created"}>Criar</option>
+                                    <option value="updated" selected={searchAcao === "updated"}>Atualizar</option>
+                                    <option value="deleted" selected={searchAcao === "deleted"}>Deletar</option>
+                                    <option value="restored" selected={searchAcao === "restored"}>Restaurar</option>
                                 </select>
                             </span>
                         }
                     </div>
-                    <div className="row flex justify-end">
-                        <button type="button" onClick={(event) => search.limpar(event)} className="btn-clear">Limpar</button>
-                        <button type="submit" onClick={buscar} className="btn-clear">Filtrar</button>
+                    <div className="row">
+                        {setSearchComunidade && 
+                            <span className="input-group-search">
+                                <label htmlFor="comunidade" className="label-input">Comunidade</label>
+                                <select
+                                    name="comunidade"
+                                    id="comunidade"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchComunidade(event.target.value)}>
+                                    <option value="" selected={searchComunidade === ""}>Todas</option>
+                                    <option value="1" selected={searchComunidade === "1"}>Compartilhadas</option>
+                                    <option value="0" selected={searchComunidade === "0"}>Não Compartilhadas</option>
+                                </select>
+                            </span>
+                        }
+                        {setSearchDisciplina &&
+                            <span className="input-group-search">
+                                <label htmlFor="disciplina" className="label-input">Disciplina</label>
+                                <select
+                                    name="disciplina"
+                                    id="disciplina"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchDisciplina(event.target.value)}>
+                                    <option value="" selected={searchDisciplina === ""}>Todas</option>
+                                    {disciplinas.map((disciplina) => (
+                                        <option value={disciplina.id} selected={searchDisciplina === disciplina.id}>{disciplina.nome}</option>
+                                    ))}
+                                </select>
+                            </span>
+                        }
+                        {setSearchCategoria &&
+                            <span className="input-group-search">
+                                <label htmlFor="categoria" className="label-input">Categoria</label>
+                                <select
+                                    name="categoria"
+                                    id="categoria"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchCategoria(event.target.value)}>
+                                    <option value="" selected={searchCategoria === ""}>Todas</option>
+                                    {categorias.map((categoria) => (
+                                        <option value={categoria.id} selected={searchCategoria === categoria.id}>{categoria.nome}</option>
+                                    ))}
+                                </select>
+                            </span>
+                        }
+                    </div>
+                    <div className="row">
+                        {setSearchDateInicio &&
+                            <span className="input-group-search">
+                                <label htmlFor="data_inicio" className="label-input">Criado a partir de</label>
+                                <input
+                                    type="date"
+                                    name="data_inicio"
+                                    id="data_inicio"
+                                    value={searchDateInicio}
+                                    onChange={(event) => setSearchDateInicio(event.target.value)}
+                                    className="input-search-date"/>
+                            </span>
+                        }
+                        {setSearchDateFim &&
+                            <span className="input-group-search">
+                                <label htmlFor="data_fim" className="label-input">Criado até</label>
+                                <input
+                                    type="date"
+                                    name="data_fim"
+                                    id="data_fim"
+                                    value={searchDateFim}
+                                    onChange={(event) => setSearchDateFim(event.target.value)}
+                                    min={searchDateInicio}
+                                    className="input-search-date"/>
+                            </span>
+                        }
+                        {setSearchStatus &&
+                            <span className="input-group-search">
+                                <label
+                                    htmlFor="status"
+                                    className="label-input">
+                                    Status
+                                </label>
+                                <select
+                                    name="status"
+                                    id="status"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchStatus(event.target.value)}>
+                                    <option value="" selected={searchStatus === ""}>Ativos</option>
+                                    <option value="deletados" selected={searchStatus === "deletados"}>Deletados</option>
+                                    <option value="ambos" selected={searchStatus === "ambos"}>Ambos</option>
+                                </select>
+                            </span>
+                        }
+                    </div>
+                    <div className="row justify-end">
+                        <button
+                            type="button"
+                            className="btn-clear"
+                            onClick={limparSearch}>
+                            Limpar Filtros
+                        </button>
+                        <button
+                            type="button"
+                            className="btn-clear"
+                            onClick={buscar}>
+                            Filtrar
+                        </button>
                     </div>
                 </div>
             }
         </div>
-    )
+    );
 }
