@@ -10,6 +10,7 @@ import ShareMinimalist from "../../Buttons/Share/ShareMinimalist";
 import LikeButton from "../../Buttons/Like";
 import RestoreMinimalist from "../../Buttons/Restore/RestoreMinimalist";
 import DenunciaButton from "../../Buttons/Denuncia";
+import { Sparkle } from "@phosphor-icons/react";
 
 const ActionButtons = ({ onDelete, id, user }) => (
     <>
@@ -22,7 +23,7 @@ const ActionButtons = ({ onDelete, id, user }) => (
 
 export default function HeaderAnotacao({ params, voltar, restore, onDelete }) {
     const { user, admin } = useAuth();
-    const { id, nome, disciplina, data_prazo, categorias, username } = params;
+    const { id, nome, disciplina, data_prazo, categorias, username, use_gpt } = params;
     const adminUser = !!((username && username?.id === user?.id) || admin);
 
     return (
@@ -40,7 +41,7 @@ export default function HeaderAnotacao({ params, voltar, restore, onDelete }) {
                 }
             </div>
             <span className="flex justify-center flex-col items-center">
-                <p className="font-medium dark:text-neutro-100">{nome}</p>
+                <p className="font-medium dark:text-neutro-100 flex gap-1">{nome} {use_gpt && <Sparkle size={16} className="text-azul-200" weight="fill"/>}</p>
                 {(disciplina || data_prazo || username) && (
                     <span className="flex gap-2">
                         {disciplina && <p className="text-xs text-neutro-300">{disciplina.nome}</p>}

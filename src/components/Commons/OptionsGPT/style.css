@@ -1,4 +1,13 @@
 .options-gpt-container{
-    @apply w-[60%] max-h-52 h-52 overflow-y-auto p-5
-    absolute bg-neutro-200 dark:bg-neutro-600 rounded-lg shadow flex flex-col right-0 top-5 bg-opacity-50 backdrop-blur border border-neutro-250 dark:border-neutro-500
+    @apply w-full max-h-52 h-52 overflow-y-auto p-5
+    absolute bg-neutro-200 dark:bg-neutro-600 dark:bg-opacity-70 
+    rounded-lg shadow flex flex-col right-0 top-5 bg-opacity-70 backdrop-blur 
+    border border-neutro-250 dark:border-neutro-500 gap-2 justify-center
+}
+
+.btn-default.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none; /* Garante que o botão desativado não seja clicável */
+    @apply bg-azul-300
 }

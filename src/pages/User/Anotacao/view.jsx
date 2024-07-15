@@ -16,6 +16,7 @@ const AnotacaoContent = ({ anotacao, setDeleteAnotacao, restoreAnotacao }) => {
         categorias: anotacao?.categorias,
         comunidade: anotacao?.comunidade,
         username: anotacao?.user,
+        use_gpt: anotacao?.use_gpt,
     }), [anotacao]);
 
     return (

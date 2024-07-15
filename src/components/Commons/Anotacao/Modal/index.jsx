@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { ClockClockwise, Files, PencilSimple, Share, ShareFat, TrashSimple, X } from "@phosphor-icons/react";
+import { ClockClockwise, Files, PencilSimple, Share, ShareFat, Sparkle, TrashSimple, X } from "@phosphor-icons/react";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 import ApiUser from "../../../../services/ApiUser";
@@ -48,7 +48,7 @@ export default function ModalAnotacao({ item, setSelectedAnotacao }) {
                 <div className="content-header-modal-anotacao">
                     <div className="w-[10%] sm:w-[5%]" />
                     <div className="flex justify-center flex-col items-center">
-                        <p className="font-medium dark:text-neutro-100 text-center">{item.nome}</p>
+                        <p className="font-medium dark:text-neutro-100 text-center flex">{item.nome}{item.use_gpt && <Sparkle size={16} className="text-azul-200" weight="fill"/>}</p>
                         <span className="flex gap-2">
                             {item.disciplina && <p className="text-xs text-neutro-300">{item.disciplina.nome}</p>}
                             {item.data_prazo && <p className="text-xs text-neutro-300">{moment(item.data_prazo).format('DD-MM-YYYY')}</p>}
@@ -62,7 +62,7 @@ export default function ModalAnotacao({ item, setSelectedAnotacao }) {
                     </div>
                 </div>
                 <div className="content-conteudo-modal-anotacao whitespace-pre-wrap">
-                    {renderAnotacaoText(item.texto, 1000)}
+                    {renderAnotacaoText(item.texto, 950)}
                 </div>
                 <div className="content-conteudo-modal-anotacao-mobile whitespace-pre-wrap">
                     {renderAnotacaoText(item.texto, 500)}

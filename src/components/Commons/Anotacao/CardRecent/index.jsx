@@ -5,6 +5,7 @@ import ModalAnotacao from "../Modal";
 
 import './style.css';
 import moment from "moment";
+import { Sparkle } from "@phosphor-icons/react";
 
 export default function CardAnotacaoRecent(params) {
     const [selectedAnotacao, setSelectedAnotacao] = useState(null);
@@ -23,16 +24,16 @@ export default function CardAnotacaoRecent(params) {
                 onClick={() => setSelectedAnotacao(params.anotacao.id)}
                 className="card-anotacao-recent">
                 <div className="content-header-card-anotacao-recent">
-                    <p className="text-sm font-medium dark:text-neutro-100 text-neutro-400">{params.anotacao.nome}</p>
-                    <span className="flex gap-1 flex-wrap items-start justify-center">
-                        {params.anotacao.categorias.map((categoria, i) => (
-                            <div key={i} style={{ backgroundColor: `${categoria.cor}`, borderColor: darkenColor(categoria.cor, 40) }} className="w-6 h-2 rounded-full border" />
-                        ))}
-                    </span>
+                    <p className="text-sm font-medium dark:text-neutro-100 text-neutro-400 flex gap-1">{params.anotacao.nome} {params.anotacao.use_gpt && <Sparkle size={16} className="text-azul-200" weight="fill"/>}</p>
                     <div className="flex gap-3 -translate-y-1">
                         {params.anotacao.disciplina && <small className="text-neutro-300 text-xs">{params.anotacao.disciplina.nome}</small>}
                         {params.anotacao.data_prazo && <small className="text-neutro-300 text-xs">{moment(params.anotacao.data_prazo).format('DD-MM-YYYY')}</small>}
                     </div>
+                    <span className="flex gap-1 flex-wrap items-start">
+                        {params.anotacao.categorias.map((categoria, i) => (
+                            <div key={i} style={{ backgroundColor: `${categoria.cor}`, borderColor: darkenColor(categoria.cor, 40) }} className="w-6 h-2 rounded-full border" />
+                        ))}
+                    </span>
                 </div>
                 <motion.div className="content-texto-card-anotacao break-all whitespace-pre-wrap">
                     {params.anotacao.texto && (params.anotacao.texto.length > 400 ? params.anotacao.texto.substring(0, 400) + '...' : params.anotacao.texto)}

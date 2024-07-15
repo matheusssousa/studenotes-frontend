@@ -32,6 +32,7 @@ export default function ViewComunidadeUserPage() {
         comunidade: anotacao?.comunidade,
         username: anotacao?.user,
         curtida: anotacao?.curtida,
+        use_gpt: anotacao?.use_gpt,
     }), [anotacao]);
 
     useEffect(() => {

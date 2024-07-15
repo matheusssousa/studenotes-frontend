@@ -1,5 +1,5 @@
 import React from "react";
-import { ChatTeardrop, ExclamationMark } from "@phosphor-icons/react";
+import { ChatTeardrop, ExclamationMark, Sparkle } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../../context/Authenticate/AuthContext";
 
@@ -13,7 +13,7 @@ const CardComunidade = React.forwardRef(({ anotacao }, ref) => {
         <div className="card-comunidade" ref={ref}>
             <div className="card-content-header">
                 <div className="flex flex-col items-start ">
-                    <p className="text-sm font-semibold dark:text-neutro-100">{anotacao.nome}</p>
+                    <p className="text-sm font-semibold dark:text-neutro-100 flex gap-1">{anotacao.nome} {anotacao.use_gpt && <Sparkle size={16} className="text-azul-200" weight="fill"/>}</p>
                     {anotacao.disciplina && <small className="text-xs text-neutro-300">{anotacao.disciplina.nome}</small>}
                 </div>
                 <small className="text-xs w-[20%] text-neutro-300">
