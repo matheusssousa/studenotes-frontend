@@ -84,7 +84,7 @@ export default function TopsComunity({ setSearchDisciplina, searchDisciplina }) 
                         className="flex flex-col justify-between h-full gap-1"
                     >
                         {maisCurtidos.anotacoes.map((anotacao, index) => (
-                            <Link to={`${user.role === 'user' ? '' : 'admin'}/comunidade/view/${anotacao.id}`} className="btn-disciplina-top" key={index}>
+                            <Link to={`${user ? '' : '/admin'}/comunidade/view/${anotacao.id}`} className="btn-disciplina-top" key={index}>
                                 <div className="flex flex-col items-start ">
                                     <p className="font-medium dark:text-neutro-100">{anotacao.nome}</p>
                                     {anotacao.disciplina && <small className="text-xs text-neutro-300">{anotacao.disciplina.nome}</small>}
@@ -104,7 +104,7 @@ export default function TopsComunity({ setSearchDisciplina, searchDisciplina }) 
                         className="flex flex-col justify-between h-full gap-1"
                     >
                         {maisComentados.anotacoes.map((anotacao, index) => (
-                            <Link to={`${user.role === 'user' ? '' : 'admin'}/comunidade/view/${anotacao.id}`} className="btn-disciplina-top" key={index}>
+                            <Link to={`${user ? '' : '/admin'}/comunidade/view/${anotacao.id}`} className="btn-disciplina-top" key={index}>
                                 <div className="flex flex-col items-start ">
                                     <p className="font-medium dark:text-neutro-100">{anotacao.nome}</p>
                                     {anotacao.disciplina && <small className="text-xs text-neutro-300">{anotacao.disciplina.nome}</small>}
