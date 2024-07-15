@@ -24,6 +24,15 @@ export default function ViewComunidadeAdminPage() {
         setLoading(false);
     };
 
+    const deleteAnotacao = async (id) => {
+        try {
+            await ApiAdmin.delete(`comunidade/${id}`);
+            navigate("/admin/comunidade");
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const anotacaoInfo = useMemo(() => ({
         id: anotacao?.id,
         nome: anotacao?.nome,
@@ -50,6 +59,7 @@ export default function ViewComunidadeAdminPage() {
                     <HeaderAnotacao
                         params={anotacaoInfo}
                         voltar="/admin/comunidade"
+                        onDelete={deleteAnotacao}
                     />
                     <div className="w-full text-sm rounded-lg min-h-[60%] bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 p-1 md:p-5 text-justify break-all whitespace-pre-wrap">
                         <p>{anotacao.texto}</p>
