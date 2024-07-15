@@ -15,6 +15,7 @@ export default function ComunidadeAdminPage() {
     const [page, setPage] = useState(1);
     const [searchNome, setSearchNome] = useState("");
     const [searchDisciplina, setSearchDisciplina] = useState('');
+    const [searchStatus, setSearchStatus] = useState('');
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const observer = useRef();
@@ -22,6 +23,7 @@ export default function ComunidadeAdminPage() {
     const searchParams = {
         searchNome, setSearchNome,
         searchDisciplina, setSearchDisciplina,
+        searchStatus, setSearchStatus,
         disciplinas,
     }
 
