@@ -9,10 +9,11 @@ import EditMinimalist from "../../Buttons/Edit/EditMinimalist";
 import ShareMinimalist from "../../Buttons/Share/ShareMinimalist";
 import LikeButton from "../../Buttons/Like";
 import RestoreMinimalist from "../../Buttons/Restore/RestoreMinimalist";
+import DenunciaButton from "../../Buttons/Denuncia";
 
-const ActionButtons = ({ onDelete, id }) => (
+const ActionButtons = ({ onDelete, id, user }) => (
     <>
-        <EditMinimalist edit={`/anotacoes/addedit/${id}`} />
+        {user && <EditMinimalist edit={`/anotacoes/addedit/${id}`} />}
         {onDelete && (
             <DeleteMinimalist onClick={() => onDelete(id)} />
         )}
@@ -22,16 +23,21 @@ const ActionButtons = ({ onDelete, id }) => (
 export default function HeaderAnotacao({ params, voltar, restore, onDelete }) {
     const { user, admin } = useAuth();
     const { id, nome, disciplina, data_prazo, categorias, username } = params;
+    const adminUser = !!((username && username?.id === user?.id) || admin);
 
     return (
         <div className="content-header-anotacao">
             <div className="w-[5%] flex justify-start">
                 {voltar && <BackButton voltar={voltar} />}
-                {username && username.id === user?.id && (
+                {adminUser ?
                     <div className="py-2">
                         <ShareMinimalist id={id} anotacao_comunidade={params.comunidade} />
                     </div>
-                )}
+                    :
+                    <div className="py-2">
+                        <DenunciaButton denunciado_id={id} denunciado_type="Anotacao" />
+                    </div>
+                }
             </div>
             <span className="flex justify-center flex-col items-center">
                 <p className="font-medium dark:text-neutro-100">{nome}</p>
@@ -47,12 +53,12 @@ export default function HeaderAnotacao({ params, voltar, restore, onDelete }) {
                 )}
             </span>
             <div className="w-[5%] flex justify-end py-2">
-                {username && username.id == user?.id ? (
+                {adminUser ? (
                     <div className="content-buttons-action flex-col md:flex-row">
                         {restore ? (
                             <RestoreMinimalist onClick={() => restore(id)} />
                         ) : (
-                            <ActionButtons onDelete={onDelete} id={id} />
+                            <ActionButtons onDelete={onDelete} id={id} user={user} />
                         )}
                     </div>
                 ) : (

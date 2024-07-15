@@ -51,10 +51,6 @@ export default function Comentarios({ comentarios, anotacao }) {
         }));
     };
 
-    const handleDenunciar = (id) => {
-        toast.info("Denúncia enviada.", { theme: 'colored' });
-    };
-
     const handleDelete = async (id) => {
         try {
             await api.delete(`/comentario/${id}`);
@@ -76,7 +72,6 @@ export default function Comentarios({ comentarios, anotacao }) {
                     toggleRespostas={toggleRespostas}
                     toggleEditComentario={toggleEditComentario}
                     toggleResponderComentario={toggleResponderComentario}
-                    handleDenunciar={handleDenunciar}
                     handleDelete={handleDelete}
                     viewRespostas={viewRespostas}
                     editComentario={editComentario}

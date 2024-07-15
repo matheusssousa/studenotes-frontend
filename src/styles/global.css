@@ -88,6 +88,9 @@
 .btn-share-minimize{
     @apply flex gap-1 px-2 rounded-lg text-sm items-center justify-center duration-200
 }
+.btn-denuncia{
+    @apply flex gap-1 px-2 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-laranja-100 duration-200
+}
 
 /* TABELAS */
 table{

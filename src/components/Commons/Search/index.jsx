@@ -23,7 +23,10 @@ export default function Search({ searchParams, viewMode, setViewMode, buscar }) 
             'setSearchAcao',
             'setSearchComunidade',
             'setSearchDisciplina',
-            'setSearchCategoria'
+            'setSearchCategoria',
+            'setSearchStatusDenuncia',
+            'setSearchType',
+            'setSearchUser',
         ];
     
         if (searchParams) {
@@ -49,6 +52,9 @@ export default function Search({ searchParams, viewMode, setViewMode, buscar }) 
         searchComunidade, setSearchComunidade,
         searchDisciplina, setSearchDisciplina,
         searchCategoria, setSearchCategoria,
+        searchStatusDenuncia, setSearchStatusDenuncia,
+        searchType, setSearchType,
+        searchUser, setSearchUser,
         disciplinas, categorias,
     } = searchParams;
 
@@ -115,6 +121,7 @@ export default function Search({ searchParams, viewMode, setViewMode, buscar }) 
                             </span>
                         }
                     </div>
+                    
                     <div className="row">
                         {setSearchModelo && 
                             <span className="input-group-search">
@@ -151,6 +158,7 @@ export default function Search({ searchParams, viewMode, setViewMode, buscar }) 
                             </span>
                         }
                     </div>
+
                     <div className="row">
                         {setSearchComunidade && 
                             <span className="input-group-search">
@@ -197,6 +205,28 @@ export default function Search({ searchParams, viewMode, setViewMode, buscar }) 
                             </span>
                         }
                     </div>
+
+                    <div className="row">
+                        {setSearchType && 
+                            <span className="input-group-search">
+                                <label htmlFor="type" className="label-input">Tipo</label>
+                                <select
+                                    name="type"
+                                    id="type"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchType(event.target.value)}>
+                                    <option value="" selected={searchType === ""}>Todos</option>
+                                    {/* <option value="Usuario" selected={searchType === "Usuario"}>Usuário</option> */}
+                                    {/* <option value="Administrador" selected={searchType === "Administrador"}>Administrador</option> */}
+                                    {/* <option value="Disciplina" selected={searchType === "Disciplina"}>Disciplina</option> */}
+                                    {/* <option value="Categoria" selected={searchType === "Categoria"}>Categoria</option> */}
+                                    <option value="Anotacao" selected={searchType === "Anotacao"}>Anotação</option>
+                                    <option value="Comentario" selected={searchType === "Comentario"}>Comentário</option>
+                                </select>
+                            </span>
+                        }
+                    </div>
+
                     <div className="row">
                         {setSearchDateInicio &&
                             <span className="input-group-search">
@@ -238,6 +268,24 @@ export default function Search({ searchParams, viewMode, setViewMode, buscar }) 
                                     <option value="" selected={searchStatus === ""}>Ativos</option>
                                     <option value="deletados" selected={searchStatus === "deletados"}>Deletados</option>
                                     <option value="ambos" selected={searchStatus === "ambos"}>Ambos</option>
+                                </select>
+                            </span>
+                        }
+                        {setSearchStatusDenuncia &&
+                            <span className="input-group-search">
+                                <label
+                                    htmlFor="statusDenuncia"
+                                    className="label-input">
+                                    Status
+                                </label>
+                                <select
+                                    name="statusDenuncia"
+                                    id="status"
+                                    className="input-search-date"
+                                    onChange={(event) => setSearchStatusDenuncia(event.target.value)}>
+                                    <option value="pendente" selected={searchStatusDenuncia === "pendente"}>Pendentes</option>
+                                    <option value="resolvido" selected={searchStatusDenuncia === "resolvido"}>Resolvidos</option>
+                                    <option value="rejeitado" selected={searchStatusDenuncia === "rejeitado"}>Rejeitados</option>
                                 </select>
                             </span>
                         }

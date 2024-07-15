@@ -2,6 +2,7 @@ import React from "react";
 import NewComentario from "../AddEdit/index";
 import { CaretDown, PencilSimple, SealCheck, TrashSimple } from "@phosphor-icons/react";
 import moment from "moment";
+import DenunciaButton from "../../Buttons/Denuncia";
 
 const Comentario = ({
     comentario,
@@ -9,7 +10,6 @@ const Comentario = ({
     toggleRespostas,
     toggleEditComentario,
     toggleResponderComentario,
-    handleDenunciar,
     handleDelete,
     viewRespostas,
     editComentario,
@@ -17,7 +17,7 @@ const Comentario = ({
     respostas,
     anotacao,
     loading,
-    isResposta = false  // Nova propriedade para distinguir se é uma resposta
+    isResposta = false 
 }) => (
     <div className="comentario">
         <div className="flex gap-2 items-baseline">
@@ -48,7 +48,7 @@ const Comentario = ({
                             </button>
                         )}
                         {(comentario.user_id !== user.id || user.role === 'admin') && (
-                            <button type="button" className="button-visualizar-anotacao text-xs" onClick={() => handleDenunciar(comentario.id)}>Denunciar</button>
+                            <DenunciaButton denunciado_id={comentario.id} denunciado_type="Comentario" />
                         )}
                         {(comentario.user.id === user.id || user.role === 'admin') && (
                             <div className="flex">
@@ -72,7 +72,6 @@ const Comentario = ({
                 <Comentario
                     comentario={resposta}
                     user={user}
-                    handleDenunciar={handleDenunciar}
                     handleDelete={handleDelete}
                     toggleEditComentario={toggleEditComentario}
                     editComentario={editComentario}
