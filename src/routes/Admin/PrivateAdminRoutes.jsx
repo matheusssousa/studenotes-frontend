@@ -11,6 +11,9 @@ import LogsAdminPage from "../../pages/Admin/Log";
 import ViewLogAdminPage from "../../pages/Admin/Log/view";
 import DashboardAdminPage from "../../pages/Admin/Dashboard";
 import ComunidadeAdminPage from "../../pages/Admin/Comunidade";
+import ViewComunidadeAdminPage from "../../pages/Admin/Comunidade/view";
+import DenunciaAdminPage from "../../pages/Admin/Denuncia";
+import ViewDenunciaAdminPage from "../../pages/Admin/Denuncia/view";
 
 export default function PrivateRoutesAdmin(params) {
     return (
@@ -19,12 +22,15 @@ export default function PrivateRoutesAdmin(params) {
             <Route path="/admin/home" element={<HomeAdminPage />} />
             <Route path="/admin/dashboard" element={<DashboardAdminPage />} />
             <Route path="/admin/comunidade" element={<ComunidadeAdminPage />} />
+            <Route path="/admin/comunidade/view/:id?" element={<ViewComunidadeAdminPage />} />
             <Route path="/admin/disciplinas" element={<DisciplinaAdminPage />} />
             <Route path="/admin/disciplinas/addedit/:id?" element={<AddOrEditDisciplinaAdminPage />} />
             <Route path="/admin/usuarios" element={<UserAdminPage />} />
             <Route path="/admin/usuarios/addedit/:id?" element={<AddOrEditUserAdminPage />} />
             <Route path="/admin/admins" element={<AdminsAdminPage />} />
             <Route path="/admin/admins/addedit/:id?" element={<AddOrEditAdminsAdminPage />} />
+            <Route path="/admin/denuncias" element={<DenunciaAdminPage />} />
+            <Route path="/admin/denuncias/view/:id?" element={<ViewDenunciaAdminPage />} />
             <Route path="/admin/logs" element={<LogsAdminPage />} />
             <Route path="/admin/logs/view/:id?" element={<ViewLogAdminPage />} />
         </Routes>

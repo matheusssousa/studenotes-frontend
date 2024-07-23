@@ -70,8 +70,26 @@
 .header-content{
     @apply text-sm flex items-center justify-between
 }
+.btn-back{
+    @apply sm:absolute sm:left-14 bg-azul-200 py-2 px-2 sm:px-0 rounded-md sm:rounded-l-none sm:rounded-r-md hover:drop-shadow-md duration-200 ease-in hover:text-neutro-100
+}
 .btn-add{
     @apply bg-azul-200 p-2 rounded
+}
+.btn-edit-minimize{
+    @apply flex gap-1 px-2 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-azul-300 duration-200
+}
+.btn-delete-minimize{
+    @apply flex gap-1 px-2 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-vermelho-300 duration-200
+}
+.btn-restore-minimize{
+    @apply flex gap-1 px-2 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-verde-200 duration-200
+}
+.btn-share-minimize{
+    @apply flex gap-1 px-2 rounded-lg text-sm items-center justify-center duration-200
+}
+.btn-denuncia{
+    @apply flex gap-1 px-2 rounded-lg text-sm items-center justify-center text-neutro-300 hover:text-laranja-100 duration-200
 }
 
 /* TABELAS */
@@ -148,6 +166,9 @@ table{
 }
 .btn-cancel{
     @apply rounded bg-vermelho-200 px-2 py-1 font-semibold hover:shadow-md hover:bg-vermelho-300 hover:text-neutro-100 duration-200
+}
+.btn-compartilhar{
+    @apply rounded-lg bg-azul-200 px-2 py-1 text-sm hover:shadow-md hover:bg-azul-300 hover:text-neutro-100 duration-200 flex items-center gap-2
 }
 
 /* ESTILOS BÁSICOS DE LINHAS */

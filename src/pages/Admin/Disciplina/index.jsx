@@ -24,6 +24,13 @@ export default function DisciplinaAdminPage(params) {
 
     const [deleteDisciplina, setDeleteDisciplina] = useState();
 
+    const searchParams = {
+        searchNome, setSearchNome,
+        searchDateInicio, setSearchDateInicio,
+        searchDateFim, setSearchDateFim,
+        searchStatus, setSearchStatus,
+    };
+
     const receiveDisciplinas = async (page = 1) => {
         setLoading(true);
         try {
@@ -44,25 +51,19 @@ export default function DisciplinaAdminPage(params) {
         setLoading(false);
     };
 
-    const deleteDisciplinas = async (disciplina) => {
-        setDeleteDisciplina(disciplina);
-    };
-
     const renderModalDelete = () => {
         const disciplina = disciplinas.find(disciplina => disciplina.id === deleteDisciplina);
-        if (!disciplina) return null;
-
-        return (
-            <ModalDelete item={disciplina} delete={() => confirmDelete(disciplina.id)} cancel={() => setDeleteDisciplina()} />
-        );
+        return disciplina ? (
+            <ModalDelete item={disciplina} delete={() => confirmDelete(disciplina.id)} cancel={() => setDeleteDisciplina(null)} />
+        ) : null;
     };
 
     const confirmDelete = async (disciplinaId) => {
         try {
             await ApiAdmin.delete(`/disciplina/${disciplinaId}`);
             receiveDisciplinas();
-            setDeleteDisciplina();
-            toast.success("Disciplina excluída.", { theme: 'colored' });
+            setDeleteDisciplina(null);
+            toast.success("Disciplina excluída com sucesso.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
         }
@@ -72,21 +73,11 @@ export default function DisciplinaAdminPage(params) {
         try {
             await ApiAdmin.post(`/disciplina/restore/${disciplina}`)
             receiveDisciplinas();
-            toast.success("Disciplina restaurada.", {
-                theme: 'colored',
-            });
+            toast.success("Disciplina restaurada.", { theme: 'colored', });
         } catch (error) {
             console.log(error)
         }
     }
-
-    const limparSearch = () => {
-        setSearchNome("");
-        setSearchDateFim("");
-        setSearchDateInicio("");
-        setSearchStatus("");
-        receiveDisciplinas();
-    };
 
     const handlePaginationClick = (newPage) => {
         receiveDisciplinas(newPage);
@@ -105,18 +96,9 @@ export default function DisciplinaAdminPage(params) {
                 adicionar='/admin/disciplinas/addedit/'
             />
             <Search
-                type="disciplinas"
-                nome={searchNome}
-                setSearchNome={setSearchNome}
-                data_inicio={searchDateInicio}
-                setSearchDateInicio={setSearchDateInicio}
-                data_fim={searchDateFim}
-                setSearchDateFim={setSearchDateFim}
-                status={searchStatus}
-                setSearchStatus={setSearchStatus}
+                searchParams={searchParams}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
-                limpar={limparSearch}
                 buscar={receiveDisciplinas}
             />
             {loading ? (
@@ -130,23 +112,21 @@ export default function DisciplinaAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {disciplinas.map((disciplina, i) => (
-                                        <Card key={i} type='disciplinas' admin={true} item={disciplina} delete={deleteDisciplinas} restore={restoreDisciplinas}/>
+                                        <Card key={i} type='disciplinas' admin={true} item={disciplina} delete={setDeleteDisciplina} restore={restoreDisciplinas} />
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="disciplinas" admin={true} items={disciplinas} delete={deleteDisciplinas} restore={restoreDisciplinas} />
+                                <Table type="disciplinas" admin={true} items={disciplinas} delete={setDeleteDisciplina} restore={restoreDisciplinas} />
                             )}
                         </>
                     )}
-                    <div>
-                        {pagination && (
-                            <Pagination
-                                pagination={pagination}
-                                setPage={handlePaginationClick}
-                            />
-                        )}
-                    </div>
+                    {pagination && (
+                        <Pagination
+                            pagination={pagination}
+                            setPage={handlePaginationClick}
+                        />
+                    )}
                     {renderModalDelete()}
                 </div>
             )}

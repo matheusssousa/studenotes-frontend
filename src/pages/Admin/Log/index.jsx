@@ -12,12 +12,20 @@ import moment from "moment";
 export default function LogsAdminPage(params) {
     const [logs, setLogs] = useState([]);
     const [pagination, setPagination] = useState(null);
+    const [searchModelo, setSearchModelo] = useState("");
+    const [searchAcao, setSearchAcao] = useState("");
     const [searchNome, setSearchNome] = useState("");
     const [searchDateInicio, setSearchDateInicio] = useState("");
     const [searchDateFim, setSearchDateFim] = useState("");
-    const [searchStatus, setSearchStatus] = useState("");
-
     const [loading, setLoading] = useState(false);
+
+    const searchParams = {
+        searchModelo, setSearchModelo,
+        searchAcao, setSearchAcao,
+        searchNome, setSearchNome,
+        searchDateInicio, setSearchDateInicio,
+        searchDateFim, setSearchDateFim,
+    };
 
     const receiveLogs = async (page = 1) => {
         setLoading(true);
@@ -25,8 +33,9 @@ export default function LogsAdminPage(params) {
             const response = await ApiAdmin.get(`/log`, {
                 params: {
                     page: page,
+                    log_name: searchModelo,
+                    event: searchAcao,
                     nome: searchNome,
-                    status: searchStatus,
                     created_at_inicio: searchDateInicio,
                     created_at_fim: searchDateFim,
                 }
@@ -37,14 +46,6 @@ export default function LogsAdminPage(params) {
             console.error("Erro ao receber logs:", error);
         }
         setLoading(false);
-    };
-
-    const limparSearch = () => {
-        setSearchNome("");
-        setSearchDateFim("");
-        setSearchDateInicio("");
-        setSearchStatus("");
-        receiveLogs();
     };
 
     const handlePaginationClick = (newPage) => {
@@ -62,16 +63,7 @@ export default function LogsAdminPage(params) {
                 text='Uma lista dos logs do sistema.'
             />
             <Search
-                type="logs"
-                nome={searchNome}
-                setSearchNome={setSearchNome}
-                data_inicio={searchDateInicio}
-                setSearchDateInicio={setSearchDateInicio}
-                data_fim={searchDateFim}
-                setSearchDateFim={setSearchDateFim}
-                status={searchStatus}
-                setSearchStatus={setSearchStatus}
-                limpar={limparSearch}
+                searchParams={searchParams}
                 buscar={receiveLogs}
             />
             {loading ? (

@@ -8,7 +8,7 @@ import './style.css';
 export default function Recents(params) {
     return (
         <div className="content-recentes">
-            <p className="font-medium dark:text-neutro-100">Recentes</p>
+            <p className="font-medium text-azul-200">Recentes</p>
             {!params.loading ? (
                 <div className="w-full h-full flex flex-wrap gap-2 rounded-xl">
                     {params.recentes.length > 0 ?
@@ -20,7 +20,7 @@ export default function Recents(params) {
                             <img src={ArtHome} alt="Sem anotações" className="w-1/4 h-1/2 flex items-center justify-center" />
                             <div className="flex flex-col items-center justify-center gap-2">
                                 <p className="dark:text-neutro-100">Parece que você ainda não possui anotações, que tal fazermos uma nova?</p>
-                                <Link to="/anotacoes" className="btn-default text-xs">Criar nova anotação</Link>
+                                <Link to="/anotacoes/addedit" className="btn-default text-xs">Criar nova anotação</Link>
                             </div>
                         </div>
                     }

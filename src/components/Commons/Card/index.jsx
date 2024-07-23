@@ -43,8 +43,8 @@ export default function Card(params) {
                 }
                 {params.item.deleted_at === null ?
                     <div className="content-buttons-action">
-                        <Link to={`${params.admin ? `/admin` : ``}/${params.type}/addedit/${params.item.id}`} className={params.type === 'categorias' ? "edit-action-btn-categoria" : "edit-action-btn"} style={params.type === 'categorias' ? { color: darkenColor } : {}} title="Editar"><PencilSimple size={20} /></Link>
-                        <button type="button" className={params.type === 'categorias' ? "delete-action-btn-categoria" : "delete-action-btn"} style={params.type === 'categorias' ? { color: darkenColor } : {}} title="Excluir" onClick={() => params.delete(params.item.id)}><TrashSimple size={20} /></button>
+                        <Link to={`${params.admin ? `/admin` : ``}/${params.type}/addedit/${params.item.id}`} className={params.type === 'categorias' ? "edit-action-btn-categoria" : "edit-action-btn"} style={params.type === 'categorias' ? { color: darkenColor } : {}} title="Editar"><PencilSimple size={16} /></Link>
+                        <button type="button" className={params.type === 'categorias' ? "delete-action-btn-categoria" : "delete-action-btn"} style={params.type === 'categorias' ? { color: darkenColor } : {}} title="Excluir" onClick={() => params.delete(params.item.id)}><TrashSimple size={16} /></button>
                     </div>
                     :
                     <div>

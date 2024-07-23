@@ -7,11 +7,13 @@ import ApiUser from "../../../services/ApiUser";
 import UploadFile from "../../../components/Commons/UploadFile";
 import MultiSelect from "../../../components/Commons/MultiSelect";
 import moment from "moment";
+import OptionsGPT from "../../../components/Commons/OptionsGPT/index.jsx";
 
 import "./style.css";
+import { AnimatePresence } from "framer-motion";
 
 export default function AddOrEditAnotacaoUserPage() {
-    const params = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [categorias, setCategorias] = useState([]);
@@ -24,27 +26,32 @@ export default function AddOrEditAnotacaoUserPage() {
     const [comunidade, setComunidade] = useState(0);
     const [selectCategorias, setSelectCategorias] = useState([]);
     const [arquivos, setArquivos] = useState([]);
+    const [useGPT, setUseGPT] = useState(false);
+
+    const [optionsIA, setOptionsIA] = useState(false);
 
     const [loading, setLoading] = useState(false);
 
     const receiveDados = async () => {
+        if (!id) return;
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/anotacao/edit/${params.id}`);
-            setNome(response.data.anotacao.nome);
-            setData(response.data.anotacao.data_prazo ? moment(response.data.anotacao.data_prazo).format("YYYY-MM-DD") : response.data.anotacao.data_prazo);
-            setTexto(response.data.anotacao.texto);
-            setComunidade(response.data.anotacao.comunidade);
-            setArquivos(response.data.anotacao.arquivos);
-            if (response.data.anotacao.categorias.length > 0) {
-                setSelectCategorias(response.data.anotacao.categorias.map(categoria => categoria.id));
+            const { data } = await ApiUser.get(`/anotacao/edit/${id}`);
+            setNome(data.anotacao.nome);
+            setData(data.anotacao.data_prazo ? moment(data.anotacao.data_prazo).format("YYYY-MM-DD") : data.anotacao.data_prazo);
+            setTexto(data.anotacao.texto);
+            setComunidade(data.anotacao.comunidade);
+            setArquivos(data.anotacao.arquivos);
+            if (data.anotacao.categorias.length > 0) {
+                setSelectCategorias(data.anotacao.categorias.map(categoria => categoria.id));
             }
-            setDisciplina(response.data.anotacao.disciplina);
-
-            setCategorias(response.data.categorias);
-            setDisciplinas(response.data.disciplinas);
+            setDisciplina(data.anotacao.disciplina);
+            setCategorias(data.categorias);
+            setDisciplinas(data.disciplinas);
+            setUseGPT(data.anotacao.use_gpt);
         } catch (error) {
             console.log(error);
+            toast.error("Erro ao carregar os dados da anotação.", { theme: 'colored' });
         }
 
         setLoading(false);
@@ -53,9 +60,9 @@ export default function AddOrEditAnotacaoUserPage() {
     const receiveDadosCreate = async () => {
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/anotacao/create`);
-            setCategorias(response.data.categorias);
-            setDisciplinas(response.data.disciplinas);
+            const { data } = await ApiUser.get(`/anotacao/create`);
+            setCategorias(data.categorias);
+            setDisciplinas(data.disciplinas);
         } catch (error) {
             console.log(error);
         }
@@ -64,75 +71,58 @@ export default function AddOrEditAnotacaoUserPage() {
 
     const enviarDados = async (e, anotacao) => {
         e.preventDefault();
-        if (anotacao) {
-            console.log(data)
-            try {
-                const response = await ApiUser.post(`/anotacao/${anotacao}`, {
-                    nome: nome,
-                    texto: texto,
-                    data_prazo: data,
-                    disciplina_id: (disciplina ? disciplina.id : disciplina),
-                    comunidade: comunidade,
-                    categorias: selectCategorias,
-                    arquivo: arquivos,
-                    _method: "PUT",
-                }, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                });
-                console.log(response);
-                toast.success("Anotação atualizada.", {
-                    theme: 'colored',
-                });
-                navigate("/anotacoes");
-            } catch (error) {
-                console.log(error)
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
+        setLoading(true);
+    
+        const dataToSend = {
+            nome: nome,
+            texto: texto,
+            data_prazo: data,
+            disciplina_id: (disciplina && typeof disciplina === 'object' ? disciplina.id : disciplina),
+            comunidade: comunidade,
+            categorias: selectCategorias,
+            arquivo: arquivos,
+            use_gpt: useGPT,
+        };
+    
+        const config = {
+            headers: { "Content-Type": "multipart/form-data" }
+        };
+    
+        try {
+            if (anotacao) {
+                dataToSend._method = "PUT";
+                const response = await ApiUser.post(`/anotacao/${anotacao}`, dataToSend, config);
+                toast.success("Anotação atualizada.", { theme: 'colored' });
+            } else {
+                const response = await ApiUser.post(`/anotacao`, dataToSend, config);
+                toast.success("Anotação cadastrada.", { theme: 'colored' });
             }
-        } else {
-            try {
-                await ApiUser.post(`/anotacao`, {
-                    nome: nome,
-                    texto: texto,
-                    data_prazo: data,
-                    disciplina_id: disciplina,
-                    comunidade: comunidade,
-                    categorias: selectCategorias,
-                    arquivo: arquivos
-                }, {
-                    headers: { "Content-Type": "multipart/form-data" }
-                });
-                toast.success("Anotação cadastrada.", {
-                    theme: 'colored',
-                });
-                navigate("/anotacoes");
-            } catch (error) {
-                console.log(error)
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
-            }
+            navigate("/anotacoes");
+        } catch (error) {
+            console.error("Erro ao enviar dados:", error);
+            toast.error(error.response?.data?.message || "Erro ao salvar os dados.", { theme: 'colored' });
+        } finally {
+            setLoading(false);
         }
-    }
+    };
 
     useEffect(() => {
-        if (params.id) {
+        if (id) {
             receiveDadosCreate();
             receiveDados();
         } else {
             receiveDadosCreate();
         }
-    }, [params.id])
+    }, [id])
 
     return (
         <div className="page-content">
             <MainHeader
                 voltar="/anotacoes"
-                page={params.id ? 'Editar Anotação' : 'Cadastrar Anotação'}
-                text={params.id ? 'Editar uma anotação já cadastrada.' : 'Cadastrar uma nova anotação.'}
+                page={id ? 'Editar Anotação' : 'Cadastrar Anotação'}
+                text={id ? 'Editar uma anotação já cadastrada.' : 'Cadastrar uma nova anotação.'}
             />
-            <form onSubmit={(e) => enviarDados(e, params.id)} className="form-add-edit-note" encType="multipart/form-data">
+            <form onSubmit={(e) => enviarDados(e, id)} className="form-add-edit-note" encType="multipart/form-data">
                 <div className="content-note-header">
                     <span className="input-group-add-edit-note">
                         <input type="text" name="nome" value={nome} onChange={(event) => setNome(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note-title`} placeholder={loading ? '' : 'Digite o nome da anotação...'} required />
@@ -145,7 +135,7 @@ export default function AddOrEditAnotacaoUserPage() {
                                 checked={comunidade === 1}
                                 onChange={() => { setComunidade(comunidade === 1 ? 0 : 1) }}
                                 className="hidden" />
-                            <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={17} /></span>
+                            <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={16} /></span>
                         </label>
                         <button type="submit" className="btn-save">Salvar</button>
                     </div>
@@ -167,7 +157,7 @@ export default function AddOrEditAnotacaoUserPage() {
                         </span>
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="categorias" className="label-add-edit-note">Categorias</label>
-                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} loading={loading}/>
+                            <MultiSelect categorias={categorias} selectCategorias={selectCategorias} setSelectCategorias={setSelectCategorias} loading={loading} />
                         </span>
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="categorias" className="label-add-edit-note">Arquivos</label>
@@ -177,7 +167,10 @@ export default function AddOrEditAnotacaoUserPage() {
                     <div className="content-note-conteudo">
                         <span className="content-header-texto-note">
                             <label htmlFor="texto" className="label-add-edit-note">Texto</label>
-                            {/* <button type="button" className="btn-ai">IA</button> */}
+                            <button onClick={() => setOptionsIA(!optionsIA)} type="button" className={`font-bold rounded bg-gradient-to-r from-azul-100 to-azul-200 px-2 italic duration-300 ease-in-out hover:from-rosa-100 hover:to-vermelho-300 bg-clip-text text-transparent relative`} disabled={optionsIA}>IA</button>
+                            <AnimatePresence>
+                                {optionsIA && <OptionsGPT setOptions={setOptionsIA} titulo={nome} disciplina={disciplina} anotacao={texto} setAnotacao={setTexto} setGPT={setUseGPT}/>}
+                            </AnimatePresence>
                         </span>
                         <textarea name="texto" id="texto" value={texto} onChange={(event) => setTexto(event.target.value)} className={`${loading && `animate-pulse`} text-area`} placeholder={loading ? '' : 'Digite sua anotação aqui...'} />
                     </div>
@@ -190,7 +183,7 @@ export default function AddOrEditAnotacaoUserPage() {
                             checked={comunidade === 1}
                             onChange={() => { setComunidade(comunidade === 1 ? 0 : 1) }}
                             className="hidden" />
-                        <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={17} /></span>
+                        <span className={`toogle-button ${comunidade === 1 ? 'text-neutro-400' : 'text-neutro-300'}`}><Share size={16} /></span>
                     </label>
                     <button type="submit" className="btn-save">Salvar</button>
                 </div>

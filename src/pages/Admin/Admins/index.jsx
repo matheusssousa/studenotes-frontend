@@ -26,10 +26,19 @@ export default function AdminsAdminPage(params) {
 
     const [deleteAdmin, setDeleteAdmin] = useState();
 
+    const searchParams = {
+        searchNome, setSearchNome,
+        searchDateInicio, setSearchDateInicio,
+        searchDateFim, setSearchDateFim,
+        searchStatus, setSearchStatus,
+        searchEmail, setSearchEmail,
+        searchVerifyEmail, setSearchVerifyEmail
+    };
+
     const receiveAdmins = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await ApiAdmin.get(`/admin`, {
+            const { data } = await ApiAdmin.get(`/admin`, {
                 params: {
                     page: page,
                     name: searchNome,
@@ -40,32 +49,26 @@ export default function AdminsAdminPage(params) {
                     delete: searchStatus
                 }
             });
-            setAdmins(response.data.data);
-            setPagination(response.data);
+            setAdmins(data.data);
+            setPagination(data);
         } catch (error) {
             console.error("Erro ao receber administradores:", error);
         }
         setLoading(false);
     };
 
-    const deleteAdmins = async (admin) => {
-        setDeleteAdmin(admin);
-    };
-
     const renderModalDelete = () => {
-        const admin = admins.find(admin => admin.id === deleteAdmin);
-        if (!admin) return null;
-
-        return (
-            <ModalDelete item={admin} delete={() => confirmDelete(admin.id)} cancel={() => setDeleteAdmin()} />
-        );
+        const admin = admins.find((admin) => admin.id === deleteAdmin);
+        return admin ? (
+            <ModalDelete item={admin} delete={() => confirmDelete(admin.id)} cancel={() => setDeleteUser(null)} />
+        ) : null;
     };
 
     const confirmDelete = async (admin) => {
         try {
             await ApiAdmin.delete(`/admin/${admin}`);
             receiveAdmins();
-            setDeleteAdmin()
+            setDeleteAdmin(null)
             toast.success("Administrador excluído.", { theme: 'colored' });
         } catch (error) {
             console.log(error);
@@ -76,23 +79,11 @@ export default function AdminsAdminPage(params) {
         try {
             await ApiAdmin.post(`/admin/restore/${admin}`)
             receiveAdmins();
-            toast.success("Administrador restaurado.", {
-                theme: 'colored',
-            });
+            toast.success("Administrador restaurado.", { theme: 'colored', });
         } catch (error) {
             console.log(error)
         }
     }
-
-    const limparSearch = () => {
-        setSearchNome("");
-        setSearchEmail("");
-        setSearchVerifyEmail("");
-        setSearchDateFim("");
-        setSearchDateInicio("");
-        setSearchStatus("");
-        receiveAdmins();
-    };
 
     const handlePaginationClick = (newPage) => {
         receiveAdmins(newPage);
@@ -110,22 +101,9 @@ export default function AdminsAdminPage(params) {
                 adicionar='/admin/admins/addedit/'
             />
             <Search
-                type="administradores"
-                nome={searchNome}
-                setSearchNome={setSearchNome}
-                email={searchEmail}
-                setSearchEmail={setSearchEmail}
-                verifyemail={searchVerifyEmail}
-                setSearchVerifyEmail={setSearchVerifyEmail}
-                data_inicio={searchDateInicio}
-                setSearchDateInicio={setSearchDateInicio}
-                data_fim={searchDateFim}
-                setSearchDateFim={setSearchDateFim}
-                status={searchStatus}
-                setSearchStatus={setSearchStatus}
+                searchParams={searchParams}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
-                limpar={limparSearch}
                 buscar={receiveAdmins}
             />
             {loading ? (
@@ -139,23 +117,21 @@ export default function AdminsAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {admins.map((admin, i) => (
-                                        <Card key={i} type='admins' admin={true} item={admin} delete={deleteAdmins} restore={restoreAdmins}/>
+                                        <Card key={i} type='admins' admin={true} item={admin} delete={setDeleteAdmin} restore={restoreAdmins} />
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="admins" admin={true} items={admins} delete={deleteAdmins} restore={restoreAdmins} />
+                                <Table type="admins" admin={true} items={admins} delete={setDeleteAdmin} restore={restoreAdmins} />
                             )}
                         </>
                     )}
-                    <div>
-                        {pagination && (
-                            <Pagination
-                                pagination={pagination}
-                                setPage={handlePaginationClick}
-                            />
-                        )}
-                    </div>
+                    {pagination && (
+                        <Pagination
+                            pagination={pagination}
+                            setPage={handlePaginationClick}
+                        />
+                    )}
                     {renderModalDelete()}
                 </div>
             )}

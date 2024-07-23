@@ -26,10 +26,19 @@ export default function UserAdminPage(params) {
 
     const [deleteUser, setDeleteUser] = useState();
 
+    const searchParams = {
+        searchNome, setSearchNome,
+        searchDateInicio, setSearchDateInicio,
+        searchDateFim, setSearchDateFim,
+        searchStatus, setSearchStatus,
+        searchEmail, setSearchEmail,
+        searchVerifyEmail, setSearchVerifyEmail
+    };
+
     const receiveUsers = async (page = 1) => {
         setLoading(true);
         try {
-            const response = await ApiAdmin.get(`/user`, {
+            const { data } = await ApiAdmin.get(`/user`, {
                 params: {
                     page: page,
                     name: searchNome,
@@ -40,35 +49,29 @@ export default function UserAdminPage(params) {
                     delete: searchStatus
                 }
             });
-            setUsuarios(response.data.data);
-            setPagination(response.data);
+            setUsuarios(data.data);
+            setPagination(data);
         } catch (error) {
             console.error("Erro ao receber usuários:", error);
         }
         setLoading(false);
     };
 
-    const deleteUsers = async (usuario) => {
-        setDeleteUser(usuario);
-    };
-
     const renderModalDelete = () => {
-        const usuario = usuarios.find(usuario => usuario.id === deleteUser);
-        if (!usuario) return null;
-
-        return (
-            <ModalDelete item={usuario} delete={() => confirmDelete(usuario.id)} cancel={() => setDeleteUser()} />
-        );
+        const usuario = usuarios.find((usuario) => usuario.id === deleteUser);
+        return usuario ? (
+            <ModalDelete item={usuario} delete={() => confirmDelete(usuario.id)} cancel={() => setDeleteUser(null)} />
+        ) : null;
     };
 
     const confirmDelete = async (usuario) => {
         try {
             await ApiAdmin.delete(`/user/${usuario}`);
             receiveUsers();
-            setDeleteUser();
-            toast.success("Usuário excluído.", { theme: 'colored' });
+            setDeleteUser(null);
+            toast.success("Usuário excluído com sucesso.", { theme: 'colored' });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -76,23 +79,11 @@ export default function UserAdminPage(params) {
         try {
             await ApiAdmin.post(`/user/restore/${user}`)
             receiveUsers();
-            toast.success("Usuário restaurada.", {
-                theme: 'colored',
-            });
+            toast.success("Usuário restaurado.", { theme: 'colored' });
         } catch (error) {
             console.log(error)
         }
     }
-
-    const limparSearch = () => {
-        setSearchNome("");
-        setSearchEmail("");
-        setSearchVerifyEmail("");
-        setSearchDateFim("");
-        setSearchDateInicio("");
-        setSearchStatus("");
-        receiveUsers();  
-    };
 
     const handlePaginationClick = (newPage) => {
         receiveUsers(newPage);
@@ -106,25 +97,12 @@ export default function UserAdminPage(params) {
         <div className="page-content">
             <MainHeader
                 page='Usuários'
-                text='Uma lista das usuários cadastrados incluindo id, nome, email e status.'
+                text='Uma lista dos usuários cadastrados incluindo id, nome, email e status.'
             />
             <Search
-                type="usuários"
-                nome={searchNome}
-                setSearchNome={setSearchNome}
-                email={searchEmail}
-                setSearchEmail={setSearchEmail}
-                verifyemail={searchVerifyEmail}
-                setSearchVerifyEmail={setSearchVerifyEmail}
-                data_inicio={searchDateInicio}
-                setSearchDateInicio={setSearchDateInicio}
-                data_fim={searchDateFim}
-                setSearchDateFim={setSearchDateFim}
-                status={searchStatus}
-                setSearchStatus={setSearchStatus}
+                searchParams={searchParams}
                 viewMode={viewMode}
                 setViewMode={setViewMode}
-                limpar={limparSearch}
                 buscar={receiveUsers}
             />
             {loading ? (
@@ -138,23 +116,21 @@ export default function UserAdminPage(params) {
                             {viewMode === 'card' && (
                                 <div className="content-cards">
                                     {usuarios.map((usuario, i) => (
-                                        <Card key={i} type='usuarios' admin={true} item={usuario} delete={deleteUsers} restore={restoreUsers}/>
+                                        <Card key={i} type='usuarios' admin={true} item={usuario} delete={setDeleteUser} restore={restoreUsers} />
                                     ))}
                                 </div>
                             )}
                             {viewMode === 'list' && (
-                                <Table type="usuarios" admin={true} items={usuarios} delete={deleteUsers} restore={restoreUsers} />
+                                <Table type="usuarios" admin={true} items={usuarios} delete={setDeleteUser} restore={restoreUsers} />
                             )}
                         </>
                     )}
-                    <div>
-                        {pagination && (
-                            <Pagination
-                                pagination={pagination}
-                                setPage={handlePaginationClick}
-                            />
-                        )}
-                    </div>
+                    {pagination && (
+                        <Pagination
+                            pagination={pagination}
+                            setPage={handlePaginationClick}
+                        />
+                    )}
                     {renderModalDelete()}
                 </div>
             )}

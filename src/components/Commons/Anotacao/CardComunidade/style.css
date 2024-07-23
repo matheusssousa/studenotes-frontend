@@ -1,0 +1,17 @@
+.card-comunidade{
+    @apply w-full md:w-[49.3%] min-h-56 max-h-min flex flex-col justify-between
+    rounded-xl bg-white dark:bg-neutro-500 p-2
+}
+.card-content-header{
+    @apply w-full flex justify-between
+}
+.card-content-footer{
+    @apply w-full flex items-center text-xs justify-between
+}
+
+.like-btn-curtido{
+    @apply text-vermelho-300 hover:text-vermelho-100 duration-150 ease-in
+}
+.like-btn-descurtido{
+    @apply hover:text-vermelho-300 duration-150 ease-in
+}

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import MainHeader from "../../../components/Commons/MainHeader";
 
 export default function AddOrEditCategoriaUserPage() {
-    const params = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
     const [nome, setNome] = useState();
     const [cor, setCor] = useState();
@@ -13,65 +13,50 @@ export default function AddOrEditCategoriaUserPage() {
     const [loading, setLoading] = useState(false);
 
     const receiveDados = async () => {
+        if (!id) return;
         setLoading(true);
         try {
-            const response = await ApiUser.get(`/categoria/${params.id}`);
-            setNome(response.data.nome);
-            setCor(response.data.cor)
+            const { data } = await ApiUser.get(`/categoria/${id}`);
+            setNome(data.nome);
+            setCor(data.cor)
         } catch (error) {
-            console.log(error);
+            console.error("Erro ao receber dados da categoria:", error);
+            toast.error("Erro ao carregar os dados da categoria.", { theme: 'colored' });
         }
         setLoading(false);
     }
 
     const enviarDados = async (e, categoria) => {
         e.preventDefault();
-        if (categoria) {
-            try {
-                await ApiUser.put(`/categoria/${categoria}`, {
-                    nome: nome,
-                    cor: cor
-                });
-                toast.success("Categoria atualizada.", {
-                    theme: 'colored',
-                });
-                navigate("/categorias");
-            } catch (error) {
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
+        setLoading(true);
+        try {
+            if (id) {
+                await ApiUser.put(`/categoria/${categoria}`, { nome: nome, cor: cor });
+                toast.success("Categoria atualizada com sucesso.", { theme: 'colored' });
+            } else {
+                await ApiUser.post(`/categoria`, { nome: nome, cor: cor });
+                toast.success("Categoria cadastrada com sucesso.", { theme: 'colored' });
             }
-        } else {
-            try {
-                await ApiUser.post(`/categoria`, {
-                    nome: nome,
-                    cor: cor
-                });
-                toast.success("Categoria cadastrada.", {
-                    theme: 'colored',
-                });
-                navigate("/categorias");
-            } catch (error) {
-                return toast.error(error.response.data.message, {
-                    theme: 'colored',
-                });
-            }
+            navigate("/categorias");
+        } catch (error) {
+            console.error("Erro ao enviar dados:", error);
+            toast.error(error.response?.data?.message || "Erro ao salvar os dados.", { theme: 'colored' });
         }
+        setLoading(false);
     }
 
     useEffect(() => {
-        if (params.id) {
-            receiveDados();
-        }
-    }, [params.id])
+        receiveDados();
+    }, [id])
+
     return (
         <div className="page-content">
             <MainHeader
                 voltar='/categorias'
-                page={params.id ? 'Editar Categoria' : 'Cadastrar Categoria'}
-                text={params.id ? 'Editar uma categoria já cadastrada.' : 'Cadastrar uma nova categoria.'}
+                page={id ? 'Editar Categoria' : 'Cadastrar Categoria'}
+                text={id ? 'Editar uma categoria já cadastrada.' : 'Cadastrar uma nova categoria.'}
             />
-            <form onSubmit={(e) => enviarDados(e, params.id)} className="form-add-edit">
+            <form onSubmit={(e) => enviarDados(e, id)} className="form-add-edit">
                 <div className="content-inputs">
                     <span className="input-group-add-edit">
                         <label htmlFor="nome" className="label-add-edit">Nome</label>

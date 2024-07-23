@@ -1,5 +1,5 @@
 .overlay-anotacao{
-    @apply absolute top-0 left-0 w-full h-full bg-neutro-300 dark:bg-neutro-600 bg-opacity-50 backdrop-blur
+    @apply absolute top-0 left-0 w-full h-full bg-neutro-300 dark:bg-neutro-600 dark:bg-opacity-50 bg-opacity-50 backdrop-blur
     flex justify-center items-center z-10
 }
 .modal-anotacao{

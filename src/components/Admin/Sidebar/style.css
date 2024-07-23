@@ -12,6 +12,7 @@
     md:w-14 md:py-2 md:gap-0
     md:flex-col md:relative md:justify-between
     md:border-r md:border-b-0
+    text-sm
 }
 .open{
     transition: ease 0.2s 100ms;
@@ -34,13 +35,13 @@
 
 /* LISTA DE ICONS NO COMPUTADOR*/
 .menu {
-    @apply w-14 hidden md:flex flex-col gap-4 justify-center
+    @apply w-14 hidden md:flex flex-col gap-4 justify-center items-center
 }
 .link-active {
     @apply flex items-center justify-center
 }
 .link-pending {
-    @apply text-sm flex items-center justify-center
+    @apply flex items-center justify-center
 }
 .link-pending:hover .link-bar {
     transition: ease 0.2s 100ms;
@@ -61,13 +62,13 @@
     @apply w-8 h-8 flex items-center justify-center rounded-md flex-col text-neutro-600 dark:text-neutro-100
 }
 .link-pending:hover .link-text {
-    @apply px-2 h-8 left-14 duration-300 w-fit text-neutro-600 dark:text-neutro-100
+    @apply px-2 h-8 left-14 duration-300 w-fit text-neutro-100 dark:text-neutro-100 bg-neutro-600 dark:bg-neutro-500
 }
 .link-active:hover .link-text {
-    @apply px-2 h-8 left-14 duration-300 w-fit text-azul-200
+    @apply px-2 h-8 left-14 duration-300 w-fit text-neutro-100 bg-azul-200
 }
 .link-text{
-    @apply absolute left-48 bg-transparent font-semibold whitespace-pre w-0 overflow-hidden rounded-md drop-shadow-lg px-0 py-0
+    @apply absolute left-48 whitespace-pre overflow-hidden rounded-md px-2 w-0 h-0
     hidden items-center md:flex text-transparent
 }
 

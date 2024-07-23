@@ -1,0 +1,23 @@
+.tops-comunity{
+    @apply w-full h-full flex flex-col gap-2
+}
+
+.header-top-comunity{
+    @apply w-full flex items-center justify-between gap-3
+}
+.btn-content-top{
+    @apply w-fit flex flex-col gap-1 items-center text-sm duration-200 ease-in dark:text-neutro-100
+}
+.btn-bar{
+    @apply w-full h-1 rounded bg-verde-100 duration-200 ease-in
+}
+.ativo{
+    @apply text-verde-100 duration-200 ease-in dark:text-verde-100
+}
+
+.btn-disciplina-top{
+    @apply w-full justify-start flex flex-col text-sm rounded px-1
+}
+.active-top-disciplina{
+    @apply bg-verde-100 text-neutro-600 py-1
+}
