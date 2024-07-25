@@ -2,7 +2,7 @@
     @apply w-2/3 h-full flex flex-col gap-5
 }
 .page-home-content-right{
-    @apply w-1/3 h-full flex flex-col gap-2 bg-white dark:bg-neutro-500 px-4 py-2 rounded-xl
+    @apply w-1/3 h-full flex flex-col gap-2 bg-white dark:bg-neutro-500 p-4 rounded-xl
 }
 .btn-option-info{
     @apply text-sm border-b-4 rounded border-transparent duration-200 ease-in hover:text-azul-200 hover:border-azul-200
