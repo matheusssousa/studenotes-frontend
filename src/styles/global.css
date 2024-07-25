@@ -175,3 +175,41 @@ table{
 .line-horizontal {
     @apply w-full h-px my-2 bg-neutro-100 dark:bg-neutro-300
 }
+
+/* DASHBOARD TIPS */
+.dashboard-tip-title{
+    @apply font-medium text-sm dark:text-neutro-100 text-neutro-600
+}
+.line-horizontal-dashboad{
+    @apply w-full h-px my-1 bg-neutro-600 dark:bg-neutro-100
+
+}
+.dashboard-tip-card-high{
+    @apply flex flex-col gap-2 p-2 rounded-lg 
+}
+
+.dashboard-tip-content{
+    @apply flex gap-2 items-baseline
+}
+.dashboard-tip-content-high{
+    @apply flex gap-2 items-baseline bg-neutro-100 dark:bg-neutro-600 p-2 rounded-lg
+}
+.dashboard-tip-content-high .title{
+    @apply text-xs font-medium dark:text-neutro-100 text-neutro-600
+}
+
+.dashboard-tip-number{
+    @apply text-4xl font-semibold dark:text-neutro-100 text-neutro-600
+}
+.dashboard-tip-text{
+    @apply text-xs dark:text-neutro-100 text-neutro-600
+}
+.dashboard-tip-text-name{
+    @apply text-xs dark:text-neutro-100 text-neutro-600 font-medium
+}
+.dashboard-tip-text-email{
+    @apply text-xs dark:text-neutro-300 text-neutro-300 flex
+}
+.dashboard-tip-text-horario{
+    @apply text-xs dark:text-neutro-300 text-neutro-300 flex
+}
