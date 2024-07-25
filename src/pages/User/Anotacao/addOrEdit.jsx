@@ -169,7 +169,7 @@ export default function AddOrEditAnotacaoUserPage() {
                             <label htmlFor="texto" className="label-add-edit-note">Texto</label>
                             <button onClick={() => setOptionsIA(!optionsIA)} type="button" className={`font-bold rounded bg-gradient-to-r from-azul-100 to-azul-200 px-2 italic duration-300 ease-in-out hover:from-rosa-100 hover:to-vermelho-300 bg-clip-text text-transparent relative`} disabled={optionsIA}>IA</button>
                             <AnimatePresence>
-                                {optionsIA && <OptionsGPT setOptions={setOptionsIA} titulo={nome} disciplina={disciplina} anotacao={texto} setAnotacao={setTexto} setGPT={setUseGPT}/>}
+                                {optionsIA && <OptionsGPT setOptions={setOptionsIA} titulo={nome} disciplina={() => disciplinas.find(d => d.id === disciplina).nome} anotacao={texto} setAnotacao={setTexto} setGPT={setUseGPT}/>}
                             </AnimatePresence>
                         </span>
                         <textarea name="texto" id="texto" value={texto} onChange={(event) => setTexto(event.target.value)} className={`${loading && `animate-pulse`} text-area`} placeholder={loading ? '' : 'Digite sua anotação aqui...'} />
