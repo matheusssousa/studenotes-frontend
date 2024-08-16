@@ -18,6 +18,7 @@ export default function ComunidadeUserPage() {
     const [searchDisciplina, setSearchDisciplina] = useState("");
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [frameOption, setFrameOption] = useState(window.innerWidth <= 768 ? 'anotacoes' : '');
     const observer = useRef();
 
     const searchParams = {
@@ -78,6 +79,60 @@ export default function ComunidadeUserPage() {
         if (node) observer.current.observe(node);
     }, [loading, hasMore]);
 
+    const handleOptionFrame = (frame) => {
+        setFrameOption(frame);
+    }
+
+    const OptionFrame = (frame) => {
+        switch (frame) {
+            case 'anotacoes':
+                return (
+                    <div className="content-anotacoes-comunidade">
+                        {anotacoes.length === 0 ? (
+                            !loading && <ErrorDenied />
+                        ) : (
+                            anotacoes.map((anotacao, index) => (
+                                <CardComunidade
+                                    ref={index === anotacoes.length - 1 ? lastAnotacaoRef : null}
+                                    key={anotacao.id}
+                                    anotacao={anotacao}
+                                />
+                            ))
+                        )}
+                        {loading && <LoadingMini />}
+                    </div>
+                )
+            case 'tops':
+                return (
+                    <div className="content-tops-comunidade">
+                        <TopsComunity setSearchDisciplina={handleDisciplinaSearch} searchDisciplina={searchDisciplina} />
+                    </div>
+                )
+            default:
+                return (
+                    <>
+                        <div className="content-anotacoes-comunidade">
+                            {anotacoes.length === 0 ? (
+                                !loading && <ErrorDenied />
+                            ) : (
+                                anotacoes.map((anotacao, index) => (
+                                    <CardComunidade
+                                        ref={index === anotacoes.length - 1 ? lastAnotacaoRef : null}
+                                        key={anotacao.id}
+                                        anotacao={anotacao}
+                                    />
+                                ))
+                            )}
+                            {loading && <LoadingMini />}
+                        </div>
+                        <div className="content-tops-comunidade">
+                            <TopsComunity setSearchDisciplina={handleDisciplinaSearch} searchDisciplina={searchDisciplina} />
+                        </div>
+                    </>
+                )
+        }
+    }
+
     return (
         <div className="page-content">
             <div className="page-content-header">
@@ -85,33 +140,27 @@ export default function ComunidadeUserPage() {
                     page='Comunidade'
                     text='Bem-vindo a comunidade do StudeNotes.'
                 />
-                <button type="button" className="btn-compartilhar">
+                {/* <button type="button" className="btn-compartilhar">
                     <Share size={16} />
                     Compartilhar
-                </button>
+                </button> */}
             </div>
             <Search
                 searchParams={searchParams}
                 onSearch={handleSearch}
             />
+            <div className="content-options-view">
+                <button type="button" onClick={() => handleOptionFrame('anotacoes')} className={`btn-content-top ${frameOption === 'anotacoes' && 'ativo'}`}>
+                    <p>Anotações</p>
+                    {frameOption === 'anotacoes' && <span className="btn-bar" />}
+                </button>
+                <button type="button" onClick={() => handleOptionFrame('tops')} className={`btn-content-top ${frameOption === 'tops' && 'ativo'}`}>
+                    <p>Tops</p>
+                    {frameOption === 'tops' && <span className="btn-bar" />}
+                </button>
+            </div>
             <div className="page-content-comunidade">
-                <div className="content-anotacoes-comunidade">
-                    {anotacoes.length === 0 ? (
-                        !loading && <ErrorDenied />
-                    ) : (
-                        anotacoes.map((anotacao, index) => (
-                            <CardComunidade
-                                ref={index === anotacoes.length - 1 ? lastAnotacaoRef : null}
-                                key={anotacao.id}
-                                anotacao={anotacao}
-                            />
-                        ))
-                    )}
-                    {loading && <LoadingMini />}
-                </div>
-                <div className="content-tops-comunidade">
-                    <TopsComunity setSearchDisciplina={handleDisciplinaSearch} searchDisciplina={searchDisciplina} />
-                </div>
+                {OptionFrame(frameOption)}
             </div>
         </div>
     );

@@ -148,10 +148,18 @@ export default function AddOrEditAnotacaoUserPage() {
                         </span>
                         <span className="input-group-add-edit-note w-full">
                             <label htmlFor="disciplina" className="label-add-edit-note">Disciplina</label>
-                            <select name="disciplina" id="disciplina" onChange={(event) => setDisciplina(event.target.value)} className={`${loading && `animate-pulse`} input-add-edit-note`}>
+                            <select
+                                name="disciplina"
+                                id="disciplina"
+                                value={disciplina}
+                                onChange={(e) => setDisciplina(e.target.value)}
+                                className={`input-add-edit-note ${loading ? 'animate-pulse' : ''}`}
+                            >
                                 <option value="">Selecione uma disciplina</option>
-                                {disciplinas.map((disciplinaOption, i) => (
-                                    <option value={disciplinaOption.id} key={i} selected={!loading && disciplina && disciplinaOption.id === disciplina.id}>{disciplinaOption.nome}</option>
+                                {disciplinas.map(({ id, nome }) => (
+                                    <option value={id} key={id}>
+                                        {nome}
+                                    </option>
                                 ))}
                             </select>
                         </span>

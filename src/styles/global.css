@@ -178,38 +178,47 @@ table{
 
 /* DASHBOARD TIPS */
 .dashboard-tip-title{
-    @apply font-medium text-sm dark:text-neutro-100 text-neutro-600
+    @apply font-medium text-sm
 }
-.line-horizontal-dashboad{
-    @apply w-full h-px my-1 bg-neutro-600 dark:bg-neutro-100
-
+.dashboard-tip-card-grey{
+    @apply bg-neutro-100 dark:bg-neutro-400 p-3 rounded-md flex justify-between items-center
 }
-.dashboard-tip-card-high{
-    @apply flex flex-col gap-2 p-2 rounded-lg 
+.dashboard-tip-card-white{
+    @apply bg-white dark:bg-neutro-500 p-3 rounded-md flex justify-between items-center
 }
-
+.dashboard-tip-card-neutro{
+    @apply bg-neutro-600 bg-opacity-20 dark:bg-neutro-400 p-3 rounded-md flex justify-between items-center
+}
+.dashboard-tip-card-rose{
+    @apply bg-rosa-100 bg-opacity-20 backdrop-blur-lg p-3 rounded-md flex justify-between items-center
+}
+.dashboard-tip-card-azul{
+    @apply bg-azul-200 bg-opacity-20 backdrop-blur-lg p-3 rounded-md flex justify-between items-center
+}
+.dashboard-tip-card-laranja{
+    @apply bg-laranja-100 bg-opacity-20 backdrop-blur-lg p-3 rounded-md flex justify-between items-center
+}
+.dashboard-tip-card-verde{
+    @apply bg-verde-100 bg-opacity-20 backdrop-blur-lg p-3 rounded-md flex justify-between items-center
+}
+.dashboard-tip-card-vermelho{
+    @apply bg-vermelho-100 bg-opacity-20 backdrop-blur-lg p-3 rounded-md flex justify-between items-center
+}
 .dashboard-tip-content{
-    @apply flex gap-2 items-baseline
+    @apply w-[40%] flex flex-col items-center justify-center
 }
-.dashboard-tip-content-high{
-    @apply flex gap-2 items-baseline bg-neutro-100 dark:bg-neutro-600 p-2 rounded-lg
-}
-.dashboard-tip-content-high .title{
-    @apply text-xs font-medium dark:text-neutro-100 text-neutro-600
-}
-
 .dashboard-tip-number{
-    @apply text-4xl font-semibold dark:text-neutro-100 text-neutro-600
+    @apply text-4xl font-medium dark:text-neutro-100
+}
+.dashboard-line-vertical{
+    @apply w-px h-[90%] bg-neutro-300
 }
 .dashboard-tip-text{
-    @apply text-xs dark:text-neutro-100 text-neutro-600
+    @apply text-xs dark:text-neutro-100
 }
-.dashboard-tip-text-name{
-    @apply text-xs dark:text-neutro-100 text-neutro-600 font-medium
+.dashboard-tip-card-simple-grey{
+    @apply border border-neutro-100 dark:border-neutro-300 rounded-md px-3 py-1 flex gap-2 flex-col
 }
-.dashboard-tip-text-email{
-    @apply text-xs dark:text-neutro-300 text-neutro-300 flex
-}
-.dashboard-tip-text-horario{
-    @apply text-xs dark:text-neutro-300 text-neutro-300 flex
-}
+.title{
+    @apply text-xs font-medium
+}   

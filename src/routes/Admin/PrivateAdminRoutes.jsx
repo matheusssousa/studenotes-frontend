@@ -18,8 +18,8 @@ import ViewDenunciaAdminPage from "../../pages/Admin/Denuncia/view";
 export default function PrivateRoutesAdmin(params) {
     return (
         <Routes>
-            <Route path="*" element={<Navigate to='/admin/home' />} />
-            <Route path="/admin/home" element={<HomeAdminPage />} />
+            <Route path="*" element={<Navigate to='/admin/dashboard' />} />
+            {/* <Route path="/admin/home" element={<HomeAdminPage />} /> */}
             <Route path="/admin/dashboard" element={<DashboardAdminPage />} />
             <Route path="/admin/comunidade" element={<ComunidadeAdminPage />} />
             <Route path="/admin/comunidade/view/:id?" element={<ViewComunidadeAdminPage />} />

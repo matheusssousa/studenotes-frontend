@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../../context/Theme/ThemeContext";
 import { useAuth } from "../../../context/Authenticate/AuthContext";
 import { Link, NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import { House, ChatsTeardrop, BookBookmark, User, UserCircleGear, ClockCounterClockwise, SquaresFour, DotsThree, TextAlignLeft, MoonStars, SunHorizon, ExclamationMark } from "@phosphor-icons/react";
 // import BigHeads from "../../../hooks/Avatars";
 import Logo from "../../../assets/Logo";
@@ -9,6 +10,7 @@ import Logo from "../../../assets/Logo";
 import './style.css';
 
 export default function SidebarAdmin(params) {
+    const ref = useRef(null);
     const { theme, setTheme } = useTheme();
     const { admin, LogoutAdmin } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,7 +21,7 @@ export default function SidebarAdmin(params) {
     const letters = `${firstName.charAt(0)}${lastName ? lastName.charAt(0) : ''}`;
 
     const links = [
-        { name: "Página Inicial", link: "/admin/home", icon: House },
+        // { name: "Página Inicial", link: "/admin/home", icon: House },
         { name: "Dashboard", link: "/admin/dashboard", icon: SquaresFour },
         { name: "Comunidade", link: "/admin/comunidade", icon: ChatsTeardrop },
         { name: "Denúncias", link: "/admin/denuncias", icon: ExclamationMark },
@@ -60,6 +62,18 @@ export default function SidebarAdmin(params) {
         }
     }
 
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setUserOptions(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [setUserOptions]);
+
     return (
         <nav className={`sidebar-admin ${sidebarOpen ? 'open' : 'close'}`}>
             <div className="row-cel-pc">
@@ -84,10 +98,6 @@ export default function SidebarAdmin(params) {
                     ))}
                 </div>
                 <div className="options">
-                    {theme === "light" ?
-                        <MoonStars size={23} onClick={() => setTheme("dark")} className="buttonmoon" /> :
-                        <SunHorizon size={23} onClick={() => setTheme("light")} className="buttonsun" />
-                    }
                     <button className={`letters-user${userOptions ? '-active' : ''}`} onClick={handleNavLinkUserOptionClick}>{letters}</button>
                 </div>
             </div>
@@ -107,12 +117,23 @@ export default function SidebarAdmin(params) {
                     </NavLink>
                 ))}
             </div>
-            <div className={`user-menu-options ${!userOptions && 'hidden'}`}>
-                <Link to='/admin/conta' className="text-center hover:drop-shadow duration-300">Conta</Link>
-                <button type="button" onClick={Logout} className="hover:drop-shadow duration-300">Sair</button>
+            <motion.div
+                ref={ref}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: userOptions ? 1 : 0, y: userOptions ? 0 : -10 }}
+                transition={{ duration: 0.2 }}
+                className={`user-menu-options ${!userOptions && 'hidden'}`}
+            >
+                {theme === "light" ?
+                    <button onClick={() => setTheme("dark")} type="button" className="buttonmoon"><MoonStars size={23} /> Modo Escuro</button> :
+                    <button onClick={() => setTheme("light")} type="button" className="buttonsun"><SunHorizon size={23} /> Modo Claro</button>
+                }
+                <div className="w-full h-px bg-neutro-300 bg-opacity-20 my-2" />
+                <Link to='admin/conta' className="text-center hover:text-neutro-300 duration-300">Minha conta</Link>
+                <button type="button" onClick={Logout} className="hover:text-neutro-300 duration-300">Sair</button>
                 <div className="w-full h-px bg-neutro-300 bg-opacity-20 my-2" />
                 <small className="text-center">{admin.name}</small>
-            </div>
+            </motion.div>
         </nav>
     )
 }

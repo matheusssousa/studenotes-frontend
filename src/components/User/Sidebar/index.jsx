@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useTheme } from "../../../context/Theme/ThemeContext";
 import { useAuth } from "../../../context/Authenticate/AuthContext";
 import { Link, NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import { House, ChatsTeardrop, TextAlignLeft, MoonStars, SunHorizon, BookmarksSimple, Note } from "@phosphor-icons/react";
 // import BigHeads from "../../../hooks/Avatars";
 import Logo from "../../../assets/Logo";
 
 export default function SidebarUser(params) {
+    const ref = useRef(null);
     const { theme, setTheme } = useTheme();
     const { user, LogoutUser } = useAuth();
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,12 +25,6 @@ export default function SidebarUser(params) {
         { name: "Comunidade", link: "/comunidade", icon: ChatsTeardrop },
     ];
 
-    const Logout = async (event) => {
-        event.preventDefault();
-        try {
-            await LogoutUser();
-        } catch (error) { }
-    }
     const handleNavLinkClick = () => {
         if (sidebarOpen) {
             setSidebarOpen(false);
@@ -52,7 +48,19 @@ export default function SidebarUser(params) {
             setUserOptions(!userOptions)
         }
     }
-    
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setUserOptions(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [setUserOptions]);
+
     return (
         <nav className={`sidebar-admin ${sidebarOpen ? 'open' : 'close'}`}>
             <div className="row-cel-pc">
@@ -74,11 +82,7 @@ export default function SidebarUser(params) {
                     ))}
                 </div>
                 <div className="options">
-                    {theme === "light" ?
-                        <MoonStars size={23} onClick={() => setTheme("dark")} className="buttonmoon" /> :
-                        <SunHorizon size={23} onClick={() => setTheme("light")} className="buttonsun" />
-                    }
-                    <button className={`letters-user${userOptions ?'-active':''}`} onClick={handleNavLinkUserOptionClick}>{letters}</button>
+                    <button className={`letters-user${userOptions ? '-active' : ''}`} onClick={handleNavLinkUserOptionClick}>{letters}</button>
                 </div>
             </div>
             <div className="menu-cel" aria-hidden='true'>
@@ -97,12 +101,23 @@ export default function SidebarUser(params) {
                     </NavLink>
                 ))}
             </div>
-            <div className={`user-menu-options ${!userOptions && 'hidden'}`}>
-                <Link to='/conta' className="text-center hover:drop-shadow duration-300">Conta</Link>
-                <button type="button" onClick={Logout} className="hover:drop-shadow duration-300">Sair</button>
-                <div className="w-full h-px bg-neutro-300 bg-opacity-20 my-2"/>
+            <motion.div
+                ref={ref}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: userOptions ? 1 : 0, y: userOptions ? 0 : -10 }}
+                transition={{ duration: 0.2 }}
+                className={`user-menu-options ${!userOptions && 'hidden'}`}
+            >
+                {theme === "light" ?
+                    <button onClick={() => setTheme("dark")} type="button" className="buttonmoon"><MoonStars size={23} /> Modo Escuro</button> :
+                    <button onClick={() => setTheme("light")} type="button" className="buttonsun"><SunHorizon size={23} /> Modo Claro</button>
+                }
+                <div className="w-full h-px bg-neutro-300 bg-opacity-20 my-2" />
+                <Link to='/conta' className="text-center hover:text-neutro-300 duration-300">Minha conta</Link>
+                <button type="button" onClick={LogoutUser} className="hover:text-neutro-300 duration-300">Sair</button>
+                <div className="w-full h-px bg-neutro-300 bg-opacity-20 my-2" />
                 <small className="text-center">{user.name}</small>
-            </div>
+            </motion.div>
         </nav>
     )
 }

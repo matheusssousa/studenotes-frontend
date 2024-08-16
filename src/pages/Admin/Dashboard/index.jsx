@@ -9,7 +9,6 @@ import DashboardAdminTip from "../../../components/Commons/DashboardTips/Admin";
 import DashboardDisciplinaTip from "../../../components/Commons/DashboardTips/Disciplina";
 import DashboardCategoriaTip from "../../../components/Commons/DashboardTips/Categorias";
 import DashboardComunidadeTip from "../../../components/Commons/DashboardTips/Comunidade";
-import DashboardUsoIATip from "../../../components/Commons/DashboardTips/UsoIA";
 
 export default function DashboardAdminPage(params) {
     const [informations, setInformations] = useState([]);
@@ -37,24 +36,20 @@ export default function DashboardAdminPage(params) {
                 text='O dashboard principal do sistema.'
             />
             {loading ? <Loading /> : (
-                <div className="conteudo-content">
-                    <div className="row h-1/2 items-start">
-                        <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-2 h-full">
-                            <div className="w-full flex flex-col gap-2 h-full">
-                                <DashboardUsuarioTip informations_usuario={informations.usuarios} />
-                                <DashboardAdminTip informations_admin={informations.admins} />
-                            </div>
-                            <DashboardDisciplinaTip informations_disciplina={informations.disciplinas} />
-                        </div>
-                        <div className="w-full md:w-1/2 flex flex-col md:flex-row gap-2 h-full">
-                            <DashboardCategoriaTip informations_categoria={informations.categorias} />
-                            <div className="w-full flex-col flex h-full gap-2">
-                                <DashboardAnotacaoTip informations_anotacao={informations.anotacoes} />
-                                <DashboardUsoIATip information_uso_ia={informations.uso_gpt} />
-                            </div>
-                        </div>
+                <div className="flex flex-col md:flex-row gap-2">
+                    <div className="w-full md:w-1/4 md:h-full flex flex-col p-3 bg-white dark:bg-neutro-500 rounded-lg">
+                        <DashboardUsuarioTip informations_usuario={informations.usuarios} />
+                        <div className="line-horizontal" />
+                        <DashboardAdminTip informations_admin={informations.admins} />
+                        <div className="line-horizontal" />
+                        <DashboardDisciplinaTip informations_disciplina={informations.disciplinas} />
                     </div>
-                    <div className="row h-1/2 items-start">
+                    <div className="w-full md:w-1/4 md:h-full flex flex-col p-3 rounded-lg">
+                        <DashboardCategoriaTip informations_categoria={informations.categorias} />
+                        <div className="line-horizontal" />
+                        <DashboardAnotacaoTip informations_anotacao={informations.anotacoes} informations_ia={informations.uso_gpt} />
+                    </div>
+                    <div className="w-full md:w-1/2 md:h-full flex flex-col p-3 rounded-lg">
                         <DashboardComunidadeTip informations_comentarios={informations.comentarios} informations_curtidas={informations.curtidas} informations_anotacao={[informations.anotacoes.compartilhadas, informations.anotacoes.recentes_compartilhadas, informations.anotacoes.compartilhadas_uso_gpt]} />
                     </div>
                 </div>

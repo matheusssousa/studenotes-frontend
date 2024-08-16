@@ -6,6 +6,10 @@ import MyRoute from "./routes/MyRoute";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import moment from "moment";
+import 'moment/locale/pt-br'; 
+moment.locale('pt-br');
+
 import './styles/global.css'
 
 const contextClass = {

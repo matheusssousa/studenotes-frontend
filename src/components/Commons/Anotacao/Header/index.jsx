@@ -55,7 +55,7 @@ export default function HeaderAnotacao({ params, voltar, restore, onDelete }) {
             </span>
             <div className="w-[5%] flex justify-end py-2">
                 {adminUser ? (
-                    <div className="content-buttons-action flex-col md:flex-row">
+                    <div className="content-buttons-action flex-row">
                         {restore ? (
                             <RestoreMinimalist onClick={() => restore(id)} />
                         ) : (

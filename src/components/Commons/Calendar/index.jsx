@@ -105,10 +105,10 @@ export default function Calendar({ anotacoes, setDataInicio, setDataFinal, loadi
                         initialDate={currentDate}
                         dayHeaderFormat={{ weekday: "long" }}
                         dayHeaderContent={(args) => (
-                            <div className={`${isToday(args.date) ? 'today' : ''} px-2 py-3`}>
+                            <div className={`${isToday(args.date) ? 'today' : ''} px-1 py-2 md:px-2 md:py-3`}>
                                 <div className={`flex flex-col items-center gap-1`}>
-                                    <span>{formatDayHeader(args.text)}</span>
-                                    <span className="text-2xl">{args.date.getDate()}</span>
+                                    <span className="text-xs md:text-base">{formatDayHeader(args.text)}</span>
+                                    <span className="md:text-2xl">{args.date.getDate()}</span>
                                     <div className="flex gap-1">
                                         {hasEvents(args.date) && hasEvents(args.date).map((anotacao, index) => (
                                             <div className="event-dot" key={index}></div>

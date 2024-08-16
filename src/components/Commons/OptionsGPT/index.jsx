@@ -98,12 +98,12 @@ export default function OptionsGPT({ setOptions, titulo, disciplina, anotacao, s
         <motion.div
             ref={ref}
             initial={{ width: 0, height: 0, opacity: 0 }}
-            animate={{ width: '50%', height: 170, opacity: 1, transition: { duration: 0.2 } }}
+            animate={{ width: '100%', height: 180, opacity: 1, transition: { duration: 0.2 } }}
             exit={{ width: 0, height: 0, opacity: 0, transition: { duration: 0.2 } }}
             className="options-gpt-container"
         >
             {loading ? <LoadingMini /> : perguntas.length > 0 ? (
-                <div className="text-xs dark:text-neutro-100">
+                <div className="text-xs dark:text-neutro-100 whitespace-pre-wrap h-full">
                     {perguntas}
                 </div>
             ) : (
@@ -114,7 +114,7 @@ export default function OptionsGPT({ setOptions, titulo, disciplina, anotacao, s
                         className={`btn-default text-xs ${button.disabled ? "disabled" : ""}`}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0, transition: { duration: 0.2, delay: index * 0.1 } }}
-                        whileHover={{ scale: 1.05 }}
+                        whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.95 }}
                         disabled={button.disabled}
                         onClick={() => handleChatGPT(button.option)}

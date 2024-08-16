@@ -5,8 +5,11 @@
     @apply flex w-full h-[80%] gap-5 max-h-full
 }
 .content-anotacoes-comunidade{
-    @apply w-[73%] h-full flex max-h-full overflow-y-auto gap-2 px-1 flex-wrap flex-row content-between
+    @apply w-full md:w-[73%] h-full flex max-h-full overflow-y-auto gap-2 px-1 flex-wrap flex-row content-between
 }
 .content-tops-comunidade{
-    @apply w-[27%] h-full flex flex-col max-h-full overflow-y-auto rounded-lg bg-white dark:bg-neutro-500 px-4 py-2
+    @apply w-full md:w-[27%] h-full flex flex-col max-h-full overflow-y-auto rounded-lg bg-white dark:bg-neutro-500 px-4 py-2
+}
+.content-options-view{
+    @apply flex justify-center items-center w-full dark:text-neutro-100 gap-2 md:hidden
 }

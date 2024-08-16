@@ -6,7 +6,7 @@ import BackButton from "../Buttons/Back";
 export default function MainHeader({ voltar, page, text, adicionar }) {
     return (
         <div className="w-full pt-1 select-none flex flex-col items-center justify-center">
-            <div className="w-full flex items-center justify-between gap-2 sm:gap-0">
+            <div className={`w-full flex items-center ${voltar ? 'justify-start' : 'justify-between'} gap-2 sm:gap-0`}>
                 {voltar && (
                     <BackButton voltar={voltar} />
                 )}

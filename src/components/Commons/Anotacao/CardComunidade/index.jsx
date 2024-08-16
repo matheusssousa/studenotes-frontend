@@ -23,6 +23,9 @@ const CardComunidade = React.forwardRef(({ anotacao }, ref) => {
             <div className="content-texto-card-anotacao break-all whitespace-pre-wrap items-center">
                 {anotacao.texto && (anotacao.texto.length > 450 ? anotacao.texto.substring(0, 450) + '...' : anotacao.texto)}
             </div>
+            <div className="content-texto-card-anotacao-mobile break-all whitespace-pre-wrap items-center">
+                {anotacao.texto && (anotacao.texto.length > 400 ? anotacao.texto.substring(0, 400) + '...' : anotacao.texto)}
+            </div>
             <div className="card-content-footer">
                 <div className="flex gap-1 dark:text-neutro-100">
                     {(user && user.id != anotacao.user_id) && (

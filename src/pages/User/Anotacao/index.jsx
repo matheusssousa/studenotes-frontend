@@ -108,11 +108,9 @@ export default function AnotacaoUserPage(params) {
                 page='Anotações'
                 text='Uma lista das suas anotações.'
                 adicionar='/anotacoes/addedit/'
-            />
+            />  
             <Search
                 searchParams={searchParams}
-                viewMode={viewMode}
-                setViewMode={setViewMode}
                 buscar={receiveAnotacoes}
             />
             {loading ? (
@@ -122,18 +120,11 @@ export default function AnotacaoUserPage(params) {
                     {anotacoes.length === 0 ? (
                         <ErrorDenied />
                     ) : (
-                        <>
-                            {viewMode === 'card' && (
-                                <div className="content-cards">
-                                    {anotacoes.map((anotacao, i) => (
-                                        <AnotacaoCard key={i} type='anotacoes' item={anotacao} delete={setDeleteAnotacao} restore={restoreAnotacoes} />
-                                    ))}
-                                </div>
-                            )}
-                            {viewMode === 'list' && (
-                                <AnotacaoTable items={anotacoes} delete={setDeleteAnotacao} restore={restoreAnotacoes} />
-                            )}
-                        </>
+                        <div className="content-cards">
+                            {anotacoes.map((anotacao, i) => (
+                                <AnotacaoCard key={i} type='anotacoes' item={anotacao} delete={setDeleteAnotacao} restore={restoreAnotacoes} />
+                            ))}
+                        </div>
                     )}
                     {pagination && (
                         <Pagination

@@ -27,7 +27,7 @@ const AnotacaoContent = ({ anotacao, setDeleteAnotacao, restoreAnotacao }) => {
                 onDelete={setDeleteAnotacao}
                 restore={anotacao.deleted_at && restoreAnotacao}
             />
-            <div className="w-full text-sm rounded-lg min-h-[60%] bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 p-1 md:p-5 text-justify break-all whitespace-pre-wrap">
+            <div className="w-full text-sm rounded-lg h-full p-2 md:min-h-[60%] bg-neutro-200 dark:bg-neutro-500 dark:text-neutro-100 md:p-5 text-justify break-all whitespace-pre-wrap">
                 <p>{anotacao.texto}</p>
             </div>
             <Arquivos arquivos={anotacao.arquivos} />

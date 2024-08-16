@@ -40,6 +40,7 @@ export default function LoginUserPage() {
                         <Link to="/forgotpassword" className="link-login">Esqueceu a senha?</Link>
                     </div>
                     <button type="submit" className="py-2 rounded-md text-neutro-100 duration-300 bg-azul-200 hover:bg-azul-300 hover:shadow-lg text-center w-[80%] md:w-[50%]">Entrar</button>
+                    <Link to="/register" className="link-login">Não tem uma conta? Registre-se</Link>
                 </form>
             </div>
             <div className="w-full h-1/3 md:w-1/2 xl:w-1/2 md:h-screen bg-azul-200 justify-center items-center flex">

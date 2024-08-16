@@ -33,13 +33,13 @@ export default function UploadFile({ arquivos, setArquivos }) {
                     }} />
                 <CloudArrowUp size={30} />
                 <p>Upload</p>
-                <small className="text-neutro-300 text-xs">Selecione ou arraste arquivos</small>
+                <small className="text-neutro-300 text-xs text-center">Selecione ou arraste arquivos</small>
             </label>
             {arquivos.length > 0 && (
                 <div className="selectedFiles">
                     {arquivos.map((file, index) => (
                         <div key={index} className="selectedFile">
-                            {file.name ? (file.name.length > 40 ? `${file.name.substring(0, 40)}...` : file.name) : (file.arquivo.length > 50 ? `${file.arquivo.substring(0, 50)}...` : file.arquivo)}
+                            <p className="w-[90%]">{file.name ? file.name : file.arquivo}</p>
                             <button
                                 onClick={() => {
                                     const newArquivos = [...arquivos];

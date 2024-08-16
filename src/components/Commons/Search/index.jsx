@@ -290,7 +290,7 @@ export default function Search({ searchParams, viewMode, setViewMode, buscar }) 
                             </span>
                         }
                     </div>
-                    <div className="row justify-end">
+                    <div className="flex flex-row gap-2 justify-end">
                         <button
                             type="button"
                             className="btn-clear"

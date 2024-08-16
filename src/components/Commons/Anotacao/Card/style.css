@@ -14,7 +14,7 @@
     @apply hidden md:flex text-xs text-justify
 }
 .content-texto-card-anotacao-mobile{
-    @apply flex md:hidden text-xs text-justify
+    @apply flex md:hidden text-xs text-justify dark:text-neutro-100
 }
 .content-options-card-anotacao{
     @apply flex w-full justify-between items-center

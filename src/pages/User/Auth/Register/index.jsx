@@ -1,70 +1,65 @@
 import React, { useState } from "react";
 import { useAuth } from "../../../../context/Authenticate/AuthContext";
 import { toast } from "react-toastify";
-import { checkPassword } from "../../../../hooks/Validation/ValidationPassword";
 import ApiUser from "../../../../services/ApiUser";
 import Logo from "../../../../assets/Logo";
-
 import "./style.css";
 
 export default function RegisterUserPage() {
     const { LoginUser } = useAuth();
-    const [name, setName] = useState(undefined);
-    const [email, setEmail] = useState(undefined);
-    const [password, setPassword] = useState(undefined);
-    const [passwordConfirmed, setPasswordConfirmed] = useState(undefined);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirmed, setPasswordConfirmed] = useState("");
+    const [passwordRequisites, setPasswordRequisites] = useState({
+        length: false,
+        specialChar: false,
+        uppercase: false,
+    });
+
+    const handlePasswordChange = (value) => {
+        setPassword(value);
+        setPasswordRequisites({
+            length: value.length >= 8,
+            specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(value),
+            uppercase: /[A-Z]/.test(value),
+        });
+    };
 
     const CadastrarDados = async (event) => {
         event.preventDefault();
-        const passwordValidation = checkPassword(password);
-        if (!passwordValidation.valid) {
-            passwordValidation.messages.forEach((message) => {
-                toast.error(message, {
-                    theme: "colored"
-                });
-            });
+
+        if (!passwordRequisites.length || !passwordRequisites.specialChar || !passwordRequisites.uppercase) {
+            toast.error("A senha não atende aos requisitos.");
             return;
         }
+
         if (password !== passwordConfirmed) {
-            toast.error("As senhas não conferem.", {
-                theme: "colored"
-            });
+            toast.error("As senhas não conferem.");
             return;
         }
 
         try {
             await ApiUser.post('/auth/register', {
-                name: name,
-                email: email,
-                password: password,
+                name,
+                email,
+                password,
                 password_confirmation: passwordConfirmed,
             });
-            toast.success("Cadastro realizado com sucesso! Foi enviado um e-mail de verificação para o seu endereço de e-mail.", {
-                theme: "colored"
-            });
-            LoginSistema(event);
+            toast.success("Cadastro realizado com sucesso! Foi enviado um e-mail de verificação para o seu endereço de e-mail.");
+            LoginSistema();
         } catch (error) {
-            console.log(error);
-            if (error.response.data.message === "O valor informado para o campo e-mail já está em uso.") {
-                return toast.error("Este e-mail já está sendo utilizado.", {
-                    theme: "colored"
-                });
-            }
-            toast.error("Erro ao cadastrar. Verifique os dados e tente novamente.", {
-                theme: "colored"
-            });
+            console.error(error);
+            const errorMessage = error.response?.data?.message || "Erro ao cadastrar. Verifique os dados e tente novamente.";
+            toast.error(errorMessage);
         }
     }
 
-    const LoginSistema = async (event) => {
-        event.preventDefault();
+    const LoginSistema = async () => {
         try {
-            await LoginUser({
-                email: email,
-                password: password,
-            });
-        } catch (error) { 
-            console.log(error)
+            await LoginUser({ email, password });
+        } catch (error) {
+            console.error(error);
         }
     }
 
@@ -79,29 +74,61 @@ export default function RegisterUserPage() {
                     <div className="flex flex-col gap-3 w-[80%] md:w-[50%]">
                         <span className="input-group-login">
                             <label htmlFor="name" className="label-login">Nome</label>
-                            <input type="text" name="name" id="name" value={name} onChange={(event) => setName(event.target.value)} className="input-login" required />
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                value={name}
+                                onChange={(event) => setName(event.target.value)}
+                                className="input-login"
+                                required
+                            />
                         </span>
                         <span className="input-group-login">
                             <label htmlFor="email" className="label-login">Email</label>
-                            <input type="email" name="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} className="input-login" required />
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                value={email}
+                                onChange={(event) => setEmail(event.target.value)}
+                                className="input-login"
+                                required
+                            />
                         </span>
                         <span className="input-group-login">
                             <label htmlFor="password" className="label-login">Senha</label>
-                            <input type="password" name="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} className="input-login" required />
+                            <input
+                                type='password'
+                                name="password"
+                                id="password"
+                                value={password}
+                                onChange={(event) => handlePasswordChange(event.target.value)}
+                                className="input-login"
+                                required
+                            />
                         </span>
-                        <div>
-                            <p className="text-xs font-semibold text-gray-500 ml-2 text-start">A senha deve conter mais de 8 caracteres.</p>
-                            <p className="text-xs font-semibold text-gray-500 ml-2 text-start">A senha deve conter ao menos um caractere especial.</p>
-                            <p className="text-xs font-semibold text-gray-500 ml-2 text-start">A senha deve conter ao menos um caractere maiúsculo.</p>
+                        <div className="text-xs font-semibold text-gray-500 ml-2 text-start">
+                            <p className={passwordRequisites.length ? "text-green-600" : ""}>A senha deve conter mais de 8 caracteres.</p>
+                            <p className={passwordRequisites.specialChar ? "text-green-600" : ""}>A senha deve conter ao menos um caractere especial.</p>
+                            <p className={passwordRequisites.uppercase ? "text-green-600" : ""}>A senha deve conter ao menos um caractere maiúsculo.</p>
                         </div>
                         <span className="input-group-login">
                             <label htmlFor="password_confirm" className="label-login">Confirmar Senha</label>
-                            <input type="password" name="password_confirm" id="password_confirm" value={passwordConfirmed} onChange={(event) => setPasswordConfirmed(event.target.value)} className="input-login" required />
+                            <input
+                                type="password"
+                                name="password_confirm"
+                                id="password_confirm"
+                                value={passwordConfirmed}
+                                onChange={(event) => setPasswordConfirmed(event.target.value)}
+                                className="input-login"
+                                required
+                            />
                         </span>
                     </div>
                     <button type="submit" className="py-2 rounded-md text-neutro-100 duration-300 bg-azul-200 hover:bg-azul-300 hover:shadow-lg text-center w-[80%] md:w-[50%]">Cadastrar</button>
                 </form>
             </div>
         </div>
-    )
+    );
 }

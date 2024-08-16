@@ -1,13 +1,13 @@
 /* Adicione isso ao seu arquivo style.css */
 .calendario {
     transition: ease 0.2s 100ms;
-    @apply w-full min-h-[40%] max-h-min flex flex-col;
+    @apply w-full h-full md:min-h-[40%] md:max-h-min flex flex-col;
 }
 .calendario-header {
     @apply flex items-center justify-between;
 }
 .calendario-footer{
-    @apply w-full h-full flex items-center justify-between;
+    @apply w-full h-24 flex items-center justify-between;
 
 }
 .button-date-atual{

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ApiUser from "../../../services/ApiUser";
 import { ChatTeardropText, Heart } from "@phosphor-icons/react";
+import Notification from "../../Commons/Notification";
 
 export default function UserDashboard(params) {
     const [infoAnotacoes, setInfoAnotacoes] = useState([]);
@@ -16,7 +17,7 @@ export default function UserDashboard(params) {
             setInfoAnotacoes(data.anotacoes);
             setInfoDisciplinas(data.disciplina);
             setInfoCategoria(data.categorias);
-            // setInfoNotificacoes(data.notificacoes);
+            setInfoNotificacoes(data.notificacoes);
         } catch (error) {
             console.log(error)
         }
@@ -77,7 +78,14 @@ export default function UserDashboard(params) {
                     </div>
                     <div className="w-[90%] h-px bg-neutro-250 dark:bg-neutro-400" />
                     <div className="h-1/2 w-full">
-                        {/* NOTIFICACOES */}
+                        {infoNotificacoes.length === 0 ?
+                            <div className="w-full h-full flex flex-col items-center justify-center">
+                                <p className="text-xs text-neutro-300">Nenhuma notificação</p>
+                            </div> : (
+                                infoNotificacoes.map((notification, index) => (
+                                    <Notification key={index} notification={notification} />
+                                )))
+                        }
                     </div>
                 </>
             )}
